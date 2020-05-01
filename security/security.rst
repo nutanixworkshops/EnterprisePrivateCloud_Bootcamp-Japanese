@@ -315,6 +315,7 @@ Nutanixの統合鍵管理サービス（KMS）によるソフトウェアベー�
 システム（ファイル、ディレクトリ、システムリソース、システムコール）に対して行われた変更やアクセスの履歴を読みやすいフォーマットで出力することは顧客の望むところであり、Nutanixクラスタ構築後1週間以内に要求される可能性が高いです。
 
 Nutanixは、数分で詳細なシステムイベントをsyslogサーバに転送することができます。このナレーション付きビデオでは、どのような監査ログが利用可能か、どこでsyslogサーバを設定するか、一般的な問題をトラブルシューティングするためにどのようなアクションを取ることができるかを学びます。
+
 .. raw:: html
 
   <center><iframe width="640" height="360" src="https://www.youtube.com/embed/YuhC5nWd5Is?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
@@ -325,6 +326,10 @@ VM セキュアブート
 AOS 5.16 の新機能である Secure Boot for user VMs は、ゲスト OS ブートローダが UEFI ファームウェアに含まれるデータベースによって認証された暗号鍵で署名されていることを AHV がチェックし、OS ブートローダの整合性を検証して信頼するセキュリティ機能です。
 
 .. figure:: images/3.png
+
+.. raw:: html
+
+  <center><iframe width="640" height="360" src="https://www.youtube.com/embed/dRs5QpFke2U?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
 まとめ
 +++++++++
