@@ -326,11 +326,6 @@ AOS 5.16 の新機能である Secure Boot for user VMs は、ゲスト OS ブ�
 
 .. figure:: images/3.png
 
-.. raw:: html
-
-  <center><iframe width="640" height="360" src="https://www.youtube.com/embed/YuhC5nWd5Is?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
-
-
 まとめ
 +++++++++
 
