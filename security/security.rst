@@ -4,14 +4,18 @@
 Platform Security
 -----------------
 
-At Nutanix, security is a first-class citizen that drives best practices providing both defense in depth and a hardened by default posture for releases. In efforts to stay agile and effective when fighting the ever-increasing cyber security threads, Nutanix’s Security Development Life Cycle addresses security at every step of the development process instead of applying it at the end as an afterthought. This includes automated security testing during development and threat modeling to assess and mitigate customer risk from code changes.
+Nutanixにとって、セキュリティは最も優先されており、いわゆる第一級市民(first-class citizen)です。
+製品リリースの基本姿勢として、多層防御(Defense in Depth)と堅牢性の両方のベストプラクティスを提供しています。
+増加し続けるサイバーセキュリティの脅威に対処するために、機微で効果的な状態を維持する様に努めています。
+Nutanixのセキュリティ開発ライフサイクルは、開発プロセスの各段階でセキュリティを後処理で適用するのではなく、開発プロセスの段階で対処しています。
+この備えには開発における自動セキュリティテストや脅威に対する評価を含み、コード変更による顧客リスクを軽減しています。
 
-Nutanix provides additional platform security capabilities, including:
+Nutanixは、次のような追加のプラットフォームセキュリティ機能を提供します。
 
-- Security Technical Implementation Guide (STIG) Automation
-- Software-based Data-at-Rest Encryption with integrated KMS
-- Prism Audit Logs
-- VM Secure Boot
+- セキュリティ技術実装ガイド（STIG）自動化
+- KMSを統合したソフトウェアベースの保存データ暗号化
+- Prism 監査ログ
+- VM セキュアブート
 
 Working with Nutanix STIGS
 ++++++++++++++++++++++++++
