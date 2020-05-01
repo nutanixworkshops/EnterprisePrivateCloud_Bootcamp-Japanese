@@ -31,7 +31,7 @@ STIGsは、米国国防総省およびPCI-DSSの複数のベースライン要�
 
    .. note::
 
-      Nutanix AOS および AHV STIGs は Nutanix ポータルの からダウンロード出来ます。 `here <https://portal.nutanix.com/#/page/static/stigs>`_ .
+      Nutanix AOS および AHV STIGs は Nutanix ポータルの`here <https://portal.nutanix.com/#/page/static/stigs>`_ からダウンロード出来ます。 
 
 STIGレポートの実行
 .....................
