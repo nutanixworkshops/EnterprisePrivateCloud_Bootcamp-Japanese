@@ -17,31 +17,37 @@ Nutanixは、次のような追加のプラットフォームセキュリティ�
 - Prism 監査ログ
 - VM セキュアブート
 
-Working with Nutanix STIGS
+Nutanix STIGSとの連携
 ++++++++++++++++++++++++++
 
-Nutanix also provides administrators with Security Technical Implementation Guides (STIGs), which are security tools encoded in a machine-readable format to facilitate automated validation, ongoing monitoring, and self-remediation. These reduce the time required to verify security compliance from weeks or months to days without slowing down product evolution. STIGs are based on well-established standards by National Institute of Standards and Technology (NIST) that can apply to multiple baseline requirements for DoD and PCI-DSS. However, Nutanix STIGs are specific to the Acropolis platform and therefore more effective.
+Nutanixは、管理者にセキュリティ技術実装ガイド(STIG)を提供しています。
+これは、自動化された検証、継続的な監視、および自己修正を容易にするために、機械で読める形式でエンコードされたセキュリティツールです。
+これにより、製品の進化を遅らせることなく、セキュリティコンプライアンスの検証に必要な時間を数週間から数ヶ月から数日に短縮することができます。
+STIGsは、米国国防総省およびPCI-DSSの複数のベースライン要件に適用可能な、米国国立標準技術研究所（NIST）による確立された標準に基づいています。
+しかし、NutanixのSTIGは、Acropolisプラットフォームに固有のものであり、より効果的です。
 
-In this lab you will see STIGs in action in order to see first-hand how they harden the Nutanix Enterprise Cloud OS and help reduce zero-day vulnerabilities.
+
+このラボでは、STIGsによるNutanix Enterprise Cloud OSの堅牢化と、どのようにゼロデイ脆弱性を軽減するのに役立つのかを確認するために、実際に動作しているのを確認します。
 
    .. note::
 
-      Nutanix AOS and AHV STIGs can be downloaded `here <https://portal.nutanix.com/#/page/static/stigs>`_ from the Nutanix Portal.
+      Nutanix AOS および AHV STIGs は Nutanix ポータルの からダウンロード出来ます。 `here <https://portal.nutanix.com/#/page/static/stigs>`.
 
-Running a STIG Report
+STIGレポートの実行
 .....................
 
-Follow the exercise below to manually run a STIG report on your Nutanix cluster. By default, these checks run on a Nutanix cluster once every 24 hours, whereas in a typical legacy infrastructure environment, STIGs would be applied manually at the time of deployment and have no automated means of ensuring the original configuration is unchanged over time.
+以下のエクササイズに従って、お使いのNutanixクラスタ上でSTIGレポートを手動で実行してください。
+デフォルトでは、これらのチェックはNutanixクラスタ上で24時間に1回実行されますが、一方、従来のレガシーインフラストラクチャ環境では、STIGはデプロイ時に手動で実施され、元の設定が変更されないということを自動検出する手段がありません。
 
-#. Connect to Controller VM (CVM) as nutanix user via SSH (Using Terminal, putty, or similar program)
+#. コントローラーVM(CVM)にユーザー名：nutanixを使用しSSHで接続します。(Terminal, putty などSSHクライアント機能を有するクライアントを使用してください）
 
-#. Change to the root directory of the CVM
+#. CVMのルートディレクトリに移動します。
 
    .. code-block:: bash
 
      cd /
 
-#. List the files available to the root user to execute within the /root directory.
+#. rootディレクトリ内でrootユーザーが実行できるファイルを一覧表示します。
 
    .. code-block:: bash
 
@@ -65,9 +71,9 @@ Follow the exercise below to manually run a STIG report on your Nutanix cluster.
      drwxr-x---. 2 root root   4096 Dec 13 23:17 sretools
      -rw-r-----. 1 root root    840 May  3  2018 sshdlocal.pp
 
-   There should be three .sh files that end in _stig.sh and you’ll want to run the one that outputs the report in the format you prefer.
+   _stig.sh で終わる3つの.shファイルが必要となります。レポートを出力するために実行します。
 
-#. In this example, we’ll run the generic text output “report_stig.sh”
+#. この例では、一般的なテキスト出力「report_stig.sh」を実行します。
 
    .. code-block:: bash
 
@@ -79,50 +85,51 @@ Follow the exercise below to manually run a STIG report on your Nutanix cluster.
 
        The command will take ~1 minute to complete.
 
-#. List the files in the folder and note the name of the report.
+#. フォルダ内のファイルをリストアップし、レポート名をメモします。
 
    .. code-block:: bash
 
      sudo -u root ls -l /home/log | grep STIG
 
-#. Copy the report to the nutanix home directory, substituting the actual file name for the asterisks.
+#. レポートをNutanixユーザーのホームディレクトリにコピーします。アスタリスク部分は実際のファイル名に置き換えてください。
 
    .. code-block:: bash
 
      sudo -u root cp /home/log/STIG-report-**-**-****-**-**-** /home/nutanix
 
-#. List the files in the /home/nutanix folder.
+#. /home/nutanix フォルダーのファイルをリストで表示させます。
 
    .. code-block:: bash
 
      ls -l ~
 
-#. Change the owner of the report file to be the Nutanix user, substituting the actual file name for the asterisks.
+#. レポートファイルのオーナーをNutanixユーザーに変更します。アスタリスク部分は実際のファイル名に置き換えてください。
 
    .. code-block:: bash
 
      sudo -u root chown nutanix:nutanix /home/nutanix/STIG-report-**-**-****-**-**-**
 
-#. Use a secure copy tool (SCP, WINSCP, PSCP, etc) to copy the report results file to your workstation from the CVM. Alternatively you can open and view the text file in your SSH session using ``vi``, ``more``, ``cat``, etc.
+#. セキュアコピーツール (SCP, WINSCP, PSCP, etc)を使ってCVMからあなたの端末へレポート結果ファイルをコピーします。
+あるいは(vi, more, cat, etc)などを使用して、SSHセッションでテキストファイルを開いて表示することもできます。
 
    .. note::
 
-     Be sure to login to the CVM using the **nutanix** username and browse to its home directory to find the file we created above.
+     **nutanix**ユーザーを使用してCVMにログインしそのホームディレクトリを参照して上記で作成したファイルを見つけてください。
 
-Analyzing the STIG Report
+STIGレポートの分析
 .........................
 
-The STIG report can be used for validation and accreditation requirements for security compliance.
+STIGレポートは、セキュリティコンプライアンスの検証および認定要件に使用できます。
 
-The format of each result within the report is as follows:
+レポート内の各結果の形式は次のとおりです。:
 
-- **Line 1** - Check name
-- **Line 2** - Description of the check
-- **Line 3** - Legend, or expected result of the check
-- **Line 4** - Check result
-- **Line 5** - Completion status of the check
+-　**行1**-名前確認
+-　**行2**-チェックの説明
+-　**行3**-凡例、またはチェックの予期される結果
+-　**行4**-結果確認
+-　**行5**-チェックの完了ステータス
 
-Below is an example of a non-finding in the STIG report, meaning that the check did not discover an unwanted configuration:
+以下は、STIGレポートの非検出の例です。これは、チェックで望まない構成が検出されなかったことを意味します。:
 
 ::
 
@@ -132,8 +139,7 @@ Below is an example of a non-finding in the STIG report, meaning that the check 
    yes
    Completed.
 
-And an example of a finding, where the check was found to have an unwanted configuration:
-
+チェックの結果望ましくない構成であることが検出された例です。:
 ::
 
    CAT I RHEL-07-021710 SRG-OS-000095-GPOS-00049 CCI-000381 CM-7 a, CM-7 b
@@ -142,36 +148,41 @@ And an example of a finding, where the check was found to have an unwanted confi
    no
    Completed.
 
-Compromising the Environment
+環境の侵害
 ............................
 
-In this final exercise you will embrace your inner dark side and compromise the security of the cluster by making non-compliant changes - and you would have gotten away with it too, if it weren't for you pesky STIGs (*any Scooby Doo fans in the audience? No? OK just me then, fine.*).
+この最後の演習では、規定外の変更を行いクラスタをセキュリティ的に危険に晒した場合にどうなるか見てみましょう。
+そして、それがSTIGsのためではなかった場合は、あまりにも厄介で逃げ出しているだろう。
 
-Example 1
+（* 観客の中にスクービードゥーファンはいますか？いない？OK。じゃあ私だけで良いです...*）
+※スクービードゥーは何かしらからドタバタ逃げ回る描写の多いコメディ作品)
+
+例 1
 =========
 
-#. The following text was extracted from one of the security checks under the AOS STIGs:
+#. 次のテキストは、AOS STIG のセキュリティチェックの1つから検出されました：:
 
    - **Rule Version (STIG-ID)**: NTNX-51-000034
    - **Rule Title**: The /etc/shadow file must be group-owned by root.
    - **Fix Text**: salt-call state.sls security/CVM/fdpermsownerCVM
 
-   In a Linux OS, secure user data, specifically encrypted passwords, are stored in the /etc/shadow file - making it a bad idea to provide non-root users with access to this sensitive file.
+  Linux OSでは、セキュアユーザーデータ、特に暗号化されたパスワードが /etc/shadow ファイルに保存されるため、
+  root以外のユーザーにこの機密ファイルへのアクセスを提供することは推奨されません。
 
-#. Change to the root directory of the CVM
+#. CVMのルートディレクトリに移動します
 
    .. code-block:: bash
 
      cd /
 
-#. Verify the current ownership:
+#. 現在のオーナーを確認します。
 
    .. code-block:: bash
 
      sudo -u root ls -l etc/shadow
      ----------. 1 root root 943 Dec 18 15:37 /etc/shadow
 
-#. Change the group ownership to **nutanix**:
+#. グループのオーナーを**nutanix**に変更します。:
 
    .. code-block:: bash
 
@@ -179,7 +190,7 @@ Example 1
      ls -l /etc/shadow
      ----------. 1 root nutanix 943 Dec 18 15:37 /etc/shadow
 
-#. Manually run the salt call to fix this vulnerability:
+#. 脆弱性を修正する為に、salt callを実行します。:
 
    .. code-block:: bash
 
@@ -187,18 +198,18 @@ Example 1
 
    .. note::
 
-      While the calls to remediate the identified issues are made manually in this lab, all STIG related automation takes place once every 24 hours by default.
+      識別された問題を修正するためにこのラボで手動で行われますが、すべてのSTIG関連の処理はデフォルトで24時間ごとに1回行われます。
 
-#. Verify the file is once again owned by the **root** group and not **nutanix**:
+#. ファイルの所有者が**nutanix**ではなく**root**グループによって再び所有されていることを確認します。:
 
    .. code-block:: bash
 
      sudo -u root ls -l etc/shadow
 
-Example 2
+例 2
 =========
 
-This example focuses on the following check from the previously created report:
+この例では、以前に作成されたレポートからの次のチェックに焦点を当てていきます:
 
 ::
 
@@ -207,62 +218,64 @@ This example focuses on the following check from the previously created report:
    yes
    Completed.
 
-If a world-writable directory, such as **/tmp**, were taken over by a bad actor, it could impact system operations and compromise security.
+**/tmp**などの誰でも書き込み可能なディレクトリが悪意のある人物に乗っ取られた場合、システムの運用に影響を与えセキュリティを危険にさらす可能性があります。
 
-#. Change to the root directory of the CVM
+#. CVMのルートディレクトリに移動します。
 
    .. code-block:: bash
 
      cd /
 
-#. You can search for this specific report from the CVM console where the report was run and using the following command, substituting the actual file name for the asterisks:
+#. コンソールからこの特定のレポートを検索します。アスタリスクは実際のファイル名に置き換えます。:
 
    .. code-block:: bash
 
      sudo -u root grep -A 4 -B 1 "All world-writable directories " /home/log/STIG-report-**-**-****-**-**-**
 
-#. Observe that the output matches the beginning of the example. Let’s compromise the system so that this check says “no” and then manually fix the issue.
+#. 出力が例の先頭と一致することを確認します。 このチェックで「いいえ」と表示されるようにシステムを危険にさらしてから、手動で問題を修正してください。
 
    .. note::
 
       If there is currently a finding for this check, another user may be in the middle of this exercise. You may still proceed.
 
-#. Verify the current ownership:
+#. 現在のオーナーを確認します。:
 
    .. code-block:: bash
 
      sudo -u root ls -l / | grep  tmp
      drwxrwxrwt.  14 root root  1024 Dec 21 02:59 tmp
 
-#. Change the group ownership:
+#. グループのオーナーを変更します。:
 
    .. code-block:: bash
 
      sudo -u root chown root:nutanix /tmp
 
-#. Verify the ownership change:
+#. オーナーの変更を確認します。:
 
    .. code-block:: bash
 
      sudo -u root ls -l / | grep  tmp
      drwxrwxrwt.  14 root nutanix  1024 Dec 21 03:16 tmp
 
-#. After we have achieved this, let’s re-run the report to see if this change has been detected
+#. レポートを再度実行して、この変更が検出されたかどうかを確認します
 
    .. code-block:: bash
 
      sudo -u root /root/report_stig.sh
      sudo -u root grep -A 4 -B 1 "All world-writable directories " /home/log/STIG-report-**-**-****-**-**-**
 
-#. Observe the result of the check is now **no**, indicating a finding.
+#. チェックの結果が**no**であることを確認します。
 
-#. Manually run the salt call to fix this vulnerability:
+
+#. 脆弱性を修正する為に、salt-callを実行します。:
 
    .. code-block:: bash
 
      sudo -u root salt-call state.sls security/CVM/fdpermsownerCVM
 
-#. List the / directory again and note that the ‘compromise’ has been reverted back. Optionally you can re-run the report and verify there is no longer a finding for the check.
+#. ディレクトリを再度リストし、‘compromise’が元に戻されたことを確認します。
+オプション: レポートを再実行して、チェックの結果がなくなったことを確認できます。
 
    .. code-block:: bash
 
@@ -270,59 +283,61 @@ If a world-writable directory, such as **/tmp**, were taken over by a bad actor,
      drwxrwxrwt.  14 root root  1024 Dec 21 03:42 tmp
 
 
-Software Based Encryption
+ソフトウェアベースの暗号化
 +++++++++++++++++++++++++
 
-Data at Rest Encryption is a critical platform security capability:
+保存データの暗号化は、プラットフォームセキュリティの重要機能です。:
 
-- Ensures that user data does not leave data centers via failed disk drives
-- Protects at-rest data against drive theft
-- Required for compliance in many Federal, Healthcare, Financial, and Legal environments
 
-Nutanix provides a number of different options for delivering Data at Rest Encryption.
+- 故障したディスクドライブを介してユーザーデータがデータセンターから流出を抑制します、
+- ドライブの盗難から保存データを保護します。
+- 多くの連邦、ヘルスケア、金融、および法的環境でのコンプライアンスに必要です。
+
+
+Nutanixは、保存データ暗号化するためのさまざまなオプションを提供します。
 
 .. figure:: images/1.png
 
-Software-based encryption with Nutanix's integrated key management service (KMS) can provide a frictionless experience for enabling encryption without impacting performance.
+Nutanixの統合鍵管理サービス（KMS）によるソフトウェアベースの暗号化は、パフォーマンスに影響を与えることなくスムーズに暗号化を有効にすることができます。
 
 .. figure:: images/2.png
 
-Enabling software-based encryption is a one time operation at a per cluster level, so cannot be performed in a shared, lab environment. However, the brief, narrated video below walks you through the few steps required to enable this feature.
+ソフトウェアベースの暗号化を有効にすることは、クラスタレベルで一度だけの操作のため、共有のラボ環境では実行できません。この機能を有効にするために必要ないくつかのステップを、以下のナレーション付きの簡単なビデオで説明します。
 
 .. raw:: html
 
   <center><iframe width="640" height="360" src="https://www.youtube.com/embed/-6fIL3FJjN8?rel=0&amp;showinfo=0&amp;t=53" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
-Audit Logs
+監査ログ
 ++++++++++
 
-System auditing is not only a good practice but often a security compliance requirement. Getting the history of changes or accesses made to a system (files, directories, system resources and system calls) into a service which can present those logs in a legible format is something your customers are going to want to do, and most likely within the first week of deploying their Nutanix cluster.
+システム監査はセキュリティ・コンプライアンスにおいて必須事項でもあります。
+システム（ファイル、ディレクトリ、システムリソース、システムコール）に対して行われた変更やアクセスの履歴を読みやすいフォーマットで出力することは顧客の望むところであり、Nutanixクラスタ構築後1週間以内に要求される可能性が高いです。
 
-Nutanix can forward detailed system events to a syslog server in a few short minutes. In this narrated video you will learn what audit logs are available, where to configure a syslog server and what actions you can take to troubleshoot common problems.
-
+Nutanixは、数分で詳細なシステムイベントをsyslogサーバに転送することができます。このナレーション付きビデオでは、どのような監査ログが利用可能か、どこでsyslogサーバを設定するか、一般的な問題をトラブルシューティングするためにどのようなアクションを取ることができるかを学びます。
 .. raw:: html
 
   <center><iframe width="640" height="360" src="https://www.youtube.com/embed/YuhC5nWd5Is?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
-VM Secure Boot
+VM セキュアブート
 ++++++++++++++
 
 New in AOS 5.16, Secure Boot for user VMs is a security feature in which AHV checks that the guest OS boot loader is signed with a cryptographic key authorized by a database contained in the UEFI firmware, verifying and trusting the integrity of the OS boot loader.
 
 .. figure:: images/3.png
 
-In 5.16, Secure Boot is not yet available through the Prism interface. In this brief, narrated video you will learn how to enable this feature for a VM using ``acli``.
+AOS 5.16 の新機能である Secure Boot for user VMs は、ゲスト OS ブートローダが UEFI ファームウェアに含まれるデータベースによって認証された暗号鍵で署名されていることを AHV がチェックし、OS ブートローダの整合性を検証して信頼するセキュリティ機能です。
 
 .. raw:: html
 
   <center><iframe width="640" height="360" src="https://www.youtube.com/embed/dRs5QpFke2U?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
-Takeaways
+まとめ
 +++++++++
 
-- Nutanix is committed to providing a secure platform out of the box, including:
+- Nutanixは、次のようなセキュアなプラットフォームを提供することをお約束します。
 
-   - Automated application and remediation of STIGs
-   - Multiple options for providing Data at Rest Encryption, including a simple to enable software-based option
-   - Audit logging, including the ability to ship system and Flow logs to an external syslog server
-   - Trusted boot technology for guest VMs running on AHV
+   - STIGの自動化されたアプリケーションとリメディエーション
+   - Data at Rest暗号化を提供するための複数のオプション（ソフトウェアベースのオプションを有効にするシンプルなものを含む
+   - システムログとフローログを外部のsyslogサーバに送信する機能を含む監査ログ
+   - AHV上で動作するゲストVMのための信頼性の高いブート技術
