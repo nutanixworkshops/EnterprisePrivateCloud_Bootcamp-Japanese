@@ -169,13 +169,13 @@ STIGレポートは、セキュリティコンプライアンスの検証およ�
   Linux OSでは、セキュアユーザーデータ、特に暗号化されたパスワードが /etc/shadow ファイルに保存されるため、
   root以外のユーザーにこの機密ファイルへのアクセスを提供することは推奨されません。
 
-#. CVMのルートディレクトリに移動します
+#. CVMのルートディレクトリに移動します。:
 
    .. code-block:: bash
 
      cd /
 
-#. 現在のオーナーを確認します。
+#. 現在のオーナーを確認します。:
 
    .. code-block:: bash
 
@@ -220,7 +220,7 @@ STIGレポートは、セキュリティコンプライアンスの検証およ�
 
 **/tmp**などの誰でも書き込み可能なディレクトリが悪意のある人物に乗っ取られた場合、システムの運用に影響を与えセキュリティを危険にさらす可能性があります。
 
-#. CVMのルートディレクトリに移動します。
+#. CVMのルートディレクトリに移動します。:
 
    .. code-block:: bash
 
@@ -265,7 +265,7 @@ STIGレポートは、セキュリティコンプライアンスの検証およ�
      sudo -u root /root/report_stig.sh
      sudo -u root grep -A 4 -B 1 "All world-writable directories " /home/log/STIG-report-**-**-****-**-**-**
 
-#. チェックの結果が**no**であることを確認します。
+#. チェックの結果が**no**であることを確認します。:
 
 
 #. 脆弱性を修正する為に、salt-callを実行します。:
@@ -322,11 +322,9 @@ Nutanixは、数分で詳細なシステムイベントをsyslogサーバに転�
 VM セキュアブート
 ++++++++++++++
 
-New in AOS 5.16, Secure Boot for user VMs is a security feature in which AHV checks that the guest OS boot loader is signed with a cryptographic key authorized by a database contained in the UEFI firmware, verifying and trusting the integrity of the OS boot loader.
+AOS 5.16 の新機能である Secure Boot for user VMs は、ゲスト OS ブートローダが UEFI ファームウェアに含まれるデータベースによって認証された暗号鍵で署名されていることを AHV がチェックし、OS ブートローダの整合性を検証して信頼するセキュリティ機能です。
 
 .. figure:: images/3.png
-
-AOS 5.16 の新機能である Secure Boot for user VMs は、ゲスト OS ブートローダが UEFI ファームウェアに含まれるデータベースによって認証された暗号鍵で署名されていることを AHV がチェックし、OS ブートローダの整合性を検証して信頼するセキュリティ機能です。
 
 .. raw:: html
 
