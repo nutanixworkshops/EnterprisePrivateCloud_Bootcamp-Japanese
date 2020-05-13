@@ -211,7 +211,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. figure:: images/15.png
 
-   Under....
+
 
 #. *Initials*\ **-WinTools** VMから**サンプルデータ**の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
 
@@ -232,34 +232,40 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. note::
 
-      ワイルドカードを使った検索も可能です。例えば、**.doc**
+      例えば、**.doc**など、ワイルドカードを使った検索も可能です。
+
 ..
-Using NFS Exports
+NFSを使ったエクスポート
 +++++++++++++++++
 
 In this exercise you will create and test a NFSv4 export, used to support clustered applications, store application data such as logging, or storing other unstructured file data commonly accessed by Linux clients.
+この演習では、アプリケーションのサポートデータやログなどのアプリケーションデータや　Linux クライアントから一般的に作成される の構造化されていないファイルデータをNFSv4経由でエクスポートする方法を説明します。
 
-Enabling NFS Protocol
+NFSプロトコルの有効化
 .....................
 
-.. note::
+.. ノート::
 
    Enabling NFS protocol only needs to be performed once per Files server, and may have already been completed in your environment. If NFS is already enabled, proceed to `Configure User Mappings`_.
+   NFSプロトコルの有効化は、Filesサーバごとに一度だけ行います。あなたの環境ではすでに有効になっているかもしれません。
+   NFSが既に有効になっている場合は、`ユーザマッピングの設定`に進みます。
 
-#. In **Prism Element > File Server**, select your file server and click **Protocol Management > Directory Services**.
+#. **Prism Element > File Server** と進み、あなたのファイルサーバーを選択し **Protocol Management > Directory Services** をクリックします。
 
    .. figure:: images/29.png
 
 #. Select **Use NFS Protocol** with **Unmanaged** User Management and Authentication, and click **Update**.
+#. **Use NFS Protocol** にチェックを入れ、User Management and Authentication **Unmanaged** と入力し **Update** をクリックします。
 
    .. figure:: images/30.png
 
-Creating the Export
+エクスポートの作成
 ...................
 
 #. In **Prism > File Server**, click **+ Share/Export**.
+#. **Prism > File Server** と進み、 **+ Share/Export** をクリックします。
 
-#. Fill out the following fields:
+#. 次のフィールドに入力します。
 
    - **Name** - logs
    - **Description (Optional)** - File share for system logs
@@ -270,9 +276,9 @@ Creating the Export
 
    .. figure:: images/24.png
 
-#. Click **Next**.
+#. **Next** をクリックします。
 
-#. Fill out the following fields:
+#. 次のフィールドを選択、入力します。
 
    - Select **Enable Self Service Restore**
       - These snapshots appear as a .snapshot directory for NFS clients.
@@ -283,20 +289,20 @@ Creating the Export
 
    .. figure:: images/25.png
 
-   By default an NFS export will allow read/write access to any host that mounts the export, but this can be restricted to specific IPs or IP ranges.
+デフォルトでは、NFSエクスポートは、エクスポートをマウントしているすべてのホストへの読み書きアクセスを許可しますが、これは特定のIPまたはIP範囲に制限することができます。
 
-#. Click **Next**.
+#. **Next** をクリックします。
 
-#. Review the **Summary** and click **Create**.
+#. **Summary** を確認し **Create** をクリックします。
 
-Testing the Export
+エクスポートのテスト
 ..................
 
-You will first provision a CentOS VM to use as a client for your Files export.
+最初に、ファイルエクスポートのクライアントとして使用するCentOS VMをプロビジョニングします。
 
-.. note:: If you have already deployed the :ref:`linux_tools_vm` as part of another lab, you may use this VM as your NFS client instead.
+.. note:: 他の演習で :ref:`linux_tools_vm` を作成している場合は新たに作成は不要です。
 
-#. In **Prism > VM > Table**, click **+ Create VM**.
+#. **Prism > VM > Table* と進み、**+ Create VM** をクリックします。
 
 #. Fill out the following fields:
 
@@ -313,16 +319,16 @@ You will first provision a CentOS VM to use as a client for your Files export.
       - **VLAN Name** - Secondary
       - Select **Add**
 
-#. Click **Save**.
+#. **Save** をクリックします。
 
-#. Select the *Initials*\ **-NFS-Client** VM and click **Power on**.
+#. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。
 
-#. Note the IP address of the VM in Prism, and connect via SSH using the following credentials:
+#. Prismで*Initials*\ **-NFS-Client** VMのIPアドレスをメモし、次の認証情報を使用してSSH経由で接続します。
 
-   - **Username** - root
-   - **Password** - nutanix/4u
+   - **ユーザー名** - root
+   - **パスワード** - nutanix/4u
 
-#. Execute the following:
+#. 以下を実行します。
 
      .. code-block:: bash
 
@@ -343,66 +349,73 @@ You will first provision a CentOS VM to use as a client for your Files export.
        total 1
        drwxrwxrwx. 2 root root 2 Mar  9 18:53 logs
 
-#. Observe that the **logs** directory is mounted in ``/filesmnt/logs``.
+#. 実行結果から ``/filesmnt/logs``のように、 logsディレクトリがマウントされたことを確認します。
 
-#. Reboot the VM and observe the export is no longer mounted. To persist the mount, add it to ``/etc/fstab`` by executing the following:
+#. VMを再起動するとマウントが外れるため、起動時にマウントするように以下のコマンドを実行し ``/etc/fstab`` に追記します。
 
      .. code-block:: bash
 
        echo 'Intials-Files.ntnxlab.local:/ /filesmnt nfs4' >> /etc/fstab
 
-#. The following command will add 100 2MB files filled with random data to ``/filesmnt/logs``:
+#. 以下のコマンドを実行し、``/filesmnt/logs`` ディレクトリに2MBのランダムデータを100個作成します。
 
      .. code-block:: bash
 
        mkdir /filesmnt/logs/host1
        for i in {1..100}; do dd if=/dev/urandom bs=8k count=256 of=/filesmnt/logs/host1/file$i; done
 
-#. Return to **Prism > File Server > Share > logs** to monitor performance and usage.
+#. **Prism > File Server > Share > logs** に戻り、パフォーマンスと使用状況を監視します。.
 
-   Note that the utilization data is updated every 10 minutes.
+   使用率のデータは10分毎の更新であることに注意してください。
 
-Multi-Protocol Shares
+
+マルチプロトコル共有
 +++++++++++++++++++++
 
-Files provides the ability to provision both SMB shares and NFS exports separately - but also now supports the ability to provide multi-protocol access to the same share. In the exercise below, you will configure your existing *Initials*\ **-FiestaShare** to allow NFS access, allowing developer users to re-direct application logs to this location.
+Files は、SMB 共有と NFS エクスポートの両方を別々にプロビジョニングする機能を提供しますが、同じ共有にマルチプロトコルアクセスを提供する機能もサポートしています。
 
-Configure User Mappings
+
+ユーザーマッピングの構成
 .......................
 
-A Nutanix Files share has the concept of a native and non-native protocol.  All permissions are applied using the native protocol. Any access requests using the non-native protocol requires a user or group mapping to the permission applied from the native side. There are several ways to apply user and group mappings including rule based, explicit and default mappings.  You will first configure a default mapping.
+Nutanixファイル共有には、ネイティブプロトコルと非ネイティブプロトコルの概念があります。
+すべてのパーミッションはネイティブプロトコルを使用して適用されます。
+非ネイティブプロトコルを使用したアクセス要求は、ネイティブ側から適用されたパーミッションへのユーザーまたはグループのマッピングを必要とします。
+ユーザーとグループのマッピングを適用するには、ルールベースのマッピング、明示的なマッピング、デフォルトのマッピングなど、いくつかの方法があります。
 
-#. In **Prism Element > File Server**, select your file server and click **Protocol Management > User Mapping**.
+最初にデフォルトのマッピングを設定します。
 
-#. Click **Next** twice to advance to **Default Mapping**.
+#. **Prism Element > File Server**  と進み、あなたのファイルサーバーを選択し **Protocol Management > User Mapping** をクリックします。
 
-#. From the **Default Mapping** page choose both **Deny access to NFS export** and **Deny access to SMB share** as the defaults for when no mapping is found.
+#. **Next** を2回クリックし **Default Mapping** に進みます。
+
+#. **Default Mapping** ページにて **Deny access to NFS export** と **Deny access to SMB share** を指定します。
 
    .. figure:: images/31.png
 
-#. Click **Next > Save** to complete the default mapping.
+#.  **Next > Save** とクリックし、デフォルトマッピングの設定を完了します。
 
-#. In **Prism Element > File Server**, select your *Initials*\ **-FiestaShare** and click **Update**.
+#. **Prism Element > File Server** と進み、 *Initials*\ **-FiestaShare** を選択し **Update** をクリックします。
 
-#. Under **Basics**, select **Enable multiprotocol access for NFS** and click **Next**.
+#. **Basics** ページ下部の **Enable multiprotocol access for NFS** にチェックを入れ **Next** をクリックします。
 
    .. figure:: images/32.png
 
-#. Under **Settings > Multiprotocol Access** select **Simultaneous access to the same files from both protocols**.
+#.  **Settings > Multiprotocol Access** にて、 **Simultaneous access to the same files from both protocols** にチェックを入れます。
 
    .. figure:: images/33.png
 
-#. Click **Next > Save** to complete updating the share settings.
+#. **Next > Save** とクリックし、共有設定の更新を完了します。
 
-Testing the Export
+エクスポートのテスト
 .......................
 
-#. To test the NFS export, connect via SSH to your *Initials*\ **-LinuxToolsVM** VM:
+#. NFSエクスポートをテストするために、SSH経由で *Initials*\ **-LinuxToolsVM** VM にアクセスします。
 
-   - **User Name** - root
-   - **Password** - nutanix/4u
+   - **ユーザー名** - root
+   - **パスワード** - nutanix/4u
 
-#. Execute the following commands:
+#. 次のコマンドを実行します。
 
      .. code-block:: bash
 
@@ -413,11 +426,13 @@ Testing the Export
        dir: cannot open directory /filesmulti: Permission denied
        [root@CentOS ~]#
 
-   .. note:: The mount operation is case sensitive.
+   .. note:: コマンド操作では、大文字と小文字が区別されます。
 
-Because the default mapping is to deny access the Permission denied error is expected. You will now add an explicit mapping to allow access to the non-native NFS protocol user. We will need to get the user ID (UID) to create the explicit mapping.
+デフォルトのマッピングではアクセスを拒否するように設定されているため、Permission denied エラーが発生することが予想されます。
+ここで、非ネイティブのNFSプロトコルユーザーへのアクセスを許可するための明示的なマッピングを追加します。
+明示的なマッピングを作成するには、ユーザーID（UID）を取得する必要があります。
 
-#. Execute the following command and take note of the UID:
+#. 次のコマンドを実行して、UIDをメモします。
 
      .. code-block:: bash
 
@@ -425,13 +440,13 @@ Because the default mapping is to deny access the Permission denied error is exp
        uid=0(root) gid=0(root) groups=0(root)
        [root@CentOS ~]#
 
-#. In **Prism Element > File Server**, select your file server and click **Protocol Management > User Mapping**.
+#. **Prism Element > File Server**  と進み、あなたのファイルサーバーを選択し **Protocol Management > User Mapping** をクリックします。
 
-#. Click **Next** to advance to **Explicit Mapping**.
+#. **Next** をクリックし **Explicit Mapping** まで進みます。
 
-#. Under **One-to-onemapping list**, click **Add manually**.
+#. **One-to-onemapping list** で手動で追加します。
 
-#. Fill out the following fields:
+#.  次のフィールドに入力します。
 
    - **SMB Name** - NTNXLAB\\devuser01
    - **NFS ID** - UID from previous step (0 if root)
@@ -439,11 +454,11 @@ Because the default mapping is to deny access the Permission denied error is exp
 
    .. figure:: images/34.png
 
-#. Under **Actions**, click **Save**.
+#. **Actions**の**Save**をクリックします。
 
-#. Click **Next > Next > Save** to complete updating your mappings.
+#. **Next > Next > Save** とクリックし、ユーザーマッピングを更新します。
 
-#. Return to your *Initials*\ **-LinuxToolsVM** SSH session and try to access the share again:
+#. *Initials*\ **-LinuxTools VM**に戻り、共有に再度アクセスを試みます。
 
      .. code-block:: bash
 
@@ -451,14 +466,13 @@ Because the default mapping is to deny access the Permission denied error is exp
        Documents\ -\ Copy  Graphics\ -\ Copy  Pictures\ -\ Copy  Presentations\ -\ Copy  Recordings\ -\ Copy  Technical\ PDFs\ -\ Copy  XYZ-MyFolder
        [root@CentOS ~]#
 
-#. From your SSH session, create a text file and then validate you can access the file from your Windows client.
+#. SSHセッションでテキストファイルを作成し、Windowsクライアントからファイルにアクセス出来ることを確認します。
 
 Takeaways
 +++++++++
 
-What are the key things you should know about **Nutanix Files**?
+**Nutanix Files** について、知っておくと良いこと。
 
-- Files can be rapidly deployed on top of existing Nutanix clusters, providing SMB and NFS storage for user shares, home directories, departmental shares, applications, and any other general purpose file storage needs.
-- Files is not a point solution. VM, File, Block, and Object storage can all be delivered by the same platform using the same management tools, reducing complexity and management silos.
-- Files can scale up and scale out with One Click performance optimization.
-- File Analytics helps you better understand how data is utilized by your organizations to help you meet your data auditing, data access minimization and compliance requirements.
+- Filesは既存のNutanixクラスタ上に迅速に展開でき、SMBやNFS環境を構築することができます。）
+- Filesは局所的なソリューションではありません。 VM、Files、Block、Objectストレージ、これらを同じプラットフォームで提供でき、複雑さや管理がサイロ化するリスクを軽減できます。また、最適なスケールアップやスケールアウトをワンクリックで提供できます。
+- File Analyticsはデータがどの様に組織で使用されているのかを明確にし、それらを管理する助けになります。 それはデータへのアクセスを最小限に抑え、セキュリティ・コンプライアンスの要件を満たすのにも一役買います。
