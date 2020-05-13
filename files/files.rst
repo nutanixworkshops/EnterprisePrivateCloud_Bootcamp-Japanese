@@ -27,11 +27,11 @@ Nutanix Filesは高性能で、スケーラビリティのある迅速なイノ�
 
 FilesはデータストレージにNutanixボリュームグループを利用しているため、圧縮、消去コーディング、スナップショット、レプリケーションなど、同じ基本的なストレージの利点を利用することができます。
 
-In **Prism Element > File Server > File Server**, select **BootcampFS** and click **Protect**.
+#. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
 
    .. figure:: images/10.png
 
-   デフォルトのSelf Service Restoreスケジュールに着目すると、注目すべきはこれがWindowsの前バージョンのスナップショットスケジュールを機能的に制御するという点です。
+   デフォルトのSelf Service RestoreスケジュールがWindowsの前バージョンのスナップショットスケジュールを機能的に制御します。
    Windowsの以前のバージョン機能をサポートすることで、エンドユーザーはストレージ管理者やバックアップ管理者を介さずにファイルへの変更をロールバックすることができます。
    これらのローカルスナップショットは、ファイルサーバクラスタをローカルの障害から保護するものではなく、ファイルサーバクラスタ全体のレプリケーションをリモートのNutanixクラスタに実行することができることに注意してください。
 
@@ -43,9 +43,9 @@ SMB共有の管理
 共有の作成
 ..................
 
-#. In **Prism Element > File Server**, click **+ Share/Export**.
+#. **Prism Element > File Server** と進み、  **+ Share/Export** をクリックします。
 
-#. Fill out the following fields:
+#. 以下のフィールドに入力します。
 
    - **名前** - *Initials*\ **-FiestaShare**
    - **説明 (オプション)** - Fiesta app team share, used by PM, ENG, and MKT
@@ -56,29 +56,34 @@ SMB共有の管理
 
    .. figure:: images/2.png
 
-   これはシングルノードAOS、つまりシングルFSVMなので、標準共有で全てまかないます。標準共有とは、すべてのルートディレクトリとファイルがシングルFSVM経由で提供される状態です
+   これはシングルノード、つまりシングルFSVMなので標準共有で全てまかないます。
+   標準共有とは、すべてのルートディレクトリとファイルがシングルのFSVMで提供される状態です。
 
-   これが3ノードのFilesクラスタ以上であれば、分散共有を作成するオプションがあります。
+   これが3ノードのFSVMクラスタ以上であれば、分散共有を作成するオプションがあります。
    分散共有は、ホームディレクトリやユーザープロファイル、アプリケーションフォルダを共有するのに適しています。
    このタイプの共有では、ルートディレクトリ及びファイルへの要求をすべてのFSVMから行うことが可能で、接続に対してロードバランシングが可能です。
 
-#. **次へ**をクリックします。
+#. **次へ** をクリックします。
 
-#.  **Enable Access Based Enumeration** 、 **Self Service Restore**にチェックを入れ. **Blocked File Types** に .flv,.mov を入力します。
+#.  **Enable Access Based Enumeration** と **Self Service Restore** にチェックを入れ、 **Blocked File Types** に .flv,.mov を入力します。
 
    .. figure:: images/3.png
 
    .. note::
 
-      **Access Based Enumeration (ABE)** 特定のユーザーが読み取りアクセス権を持つファイルとフォルダーのみがそのユーザーに表示されるようにします。 これは通常、Windowsファイル共有で有効です。
+      **Access Based Enumeration (ABE)**
+      特定のユーザーが読み取りアクセス権を持つファイルとフォルダーのみがそのユーザーに表示する機能です。 これは通常、Windowsファイル共有で有効です。
 
-      **Self Service Restore** Windowsの以前のバージョン機能をから、Nutanixスナップショットに基づいて個々のファイルを以前のリビジョンに簡単に復元できます。
+      **Self Service Restore**
+       Windowsの以前のバージョン機能をから、Nutanixスナップショットに基づいて個々のファイルを以前のリビジョンに簡単に復元可能な機能です。
 
-      **Blocked File Types** 特定のタイプのファイル（大容量の個人用メディアファイルなど）を企業の共有に書き込まないように制限することができます。また、これはサーバ毎、共有グループ毎に設定でき、サーバ全体のルールよりも優先して適応されます。
+      **Blocked File Types**
+      特定のタイプのファイル（大容量の個人用メディアファイルなど）を企業の共有に書き込まないように制限する機能です。
+      また、これはサーバ毎もしくは、共有グループ毎に設定でき、サーバ全体のルールよりも優先して適応されます。
 
-#. **次へ**をクリックします。
+#. **次へ** をクリックします。
 
-#. **サマリー** を確認し **作成**をクリックします。
+#. **サマリー** を確認し **作成** をクリックします。
 
    .. figure:: images/4.png
 
@@ -86,23 +91,23 @@ SMB共有の管理
    Filesは、Active Directory内の個々のユーザー、または特定のActive Directoryセキュリティグループのいずれかに対して
    共有ごとにソフトクォータまたはハードクォータを設定する機能を提供します。
 
-#. In **Prism Element > File Server > Share/Export**, select your share and click **+ Add Quota Policy**.
+#. In **Prism Element > File Server > Share/Export** と進み、 あなたが作成した共有を選択し **+ Add Quota Policy** をクリックします。
 
-#. 以下のフィールドに入力し、**保存**をクリックします。:
+#. 以下のフィールドに入力し、**保存** をクリックします。
 
-   - Select **グループ**
-   - **ユーザーもしくはグループ** - SSP Developers
-   - **クォータ** - 10 GiB
-   - **タイプ** - Hard Limit
+  - Select **Group**
+  - **User or Group** - SSP Developers
+  - **Quota** - 10 GiB
+  - **Enforcement Type** - Hard Limit
 
    .. figure:: images/9.png
 
-#. **保存**をクリックします。
+#. **保存** をクリックします。
 
-Testing the Share
+共有のテスト
 .................
 
-#.  *Initials*\ **-WinTools** のコンソールから  **NTNXLABのadministratorアカウント以外**でログインします:
+#.  *Initials*\ **-WinTools** のコンソールから  **NTNXLABのadministratorアカウント以外** でログインします:
 
    .. note::
 
@@ -117,11 +122,11 @@ Testing the Share
 
    .. note::
 
-     Windows Tools VMは既に** NTNXLAB.local **ドメインに参加しています。 ドメインに参加しているVMを使用して、次の手順を実行します。
+     Windows Tools VMは既に ** NTNXLAB.local ** ドメインに参加しています。 ドメインに参加しているVMを使用して、次の手順を実行します。
 
-#. **エクスプローラー**で ``\\BootcampFS.ntnxlab.local\`` を開きます.
+#. **エクスプローラー** で ``\\BootcampFS.ntnxlab.local\`` を開きます.
 
-#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードし、共有に置きます。。:
+#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードし、共有に置きます。
 
    - **If using a PHX cluster** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
    - **If using a RTP cluster** - http://10.55.251.38/workshop_staging/peer/SampleData_Small.zip
@@ -130,18 +135,18 @@ Testing the Share
 
    .. figure:: images/5.png
 
-   - **NTNXLAB\\Administrator**ユーザーは、ファイルクラスターの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与しました。
+   - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスターの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与しました。
    - 他のユーザーのアクセス管理は、他のSMB共有と同じです。
 
-..   #.  ``\\BootcampFS.ntnxlab.local\``, の *Initials*\ **-FiestaShare を右クリックし、プロパティを開きます **.
+..   #.  ``\\BootcampFS.ntnxlab.local\``, の *Initials*\ **-FiestaShare を右クリックし、プロパティを開きます **
 
-   #. **セキュリティ** タブの **詳細**を選択します.
+   #. **セキュリティ** タブの **詳細** を選択します.
 
       .. figure:: images/6.png
 
-   #. **Users (BootcampFS\\Users)** を選択し、**Remove** をクリックします。.
+   #. **Users (BootcampFS\\Users)** を選択し、**Remove** をクリックします。
 
-   #. **Add**をクリックします。
+   #. **Add** をクリックします。
 
    #. **プリンシパルを選択** を選択し、**オブジェクト名** のフィールドに **Everyone** を入力し、**OK** をクリックします。
 
@@ -162,7 +167,7 @@ Testing the Share
 
    これで、すべてのユーザーが *Initials*\ **-FiestaShare** 共有内にフォルダーとファイルを作成できるようになります。
 
-#. **PowerShell** を開き、以下のコマンドを使ってブロックされたファイルタイプのファイルを作成を試みます。:
+#. **PowerShell** を開き、以下のコマンドを使ってブロックされたファイルタイプのファイルを作成を試みます。
 
    .. code-block:: PowerShell
 
@@ -183,7 +188,7 @@ File Analytics
 File Analyticsは、Prism Elementの自動化されたワンクリック操作により、スタンドアロンVMとして数分でデプロイされます。
 このVMは、あなたの環境に既にデプロイされ、有効化されています。
 
-#. **Prism Element > File Server > File Server** , **BootcampFS** と選択し、 **File Analytics**をクリックします。
+#. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し、 **File Analytics** をクリックします。
 
    .. figure:: images/12.png
 
@@ -207,18 +212,18 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
 #. **Scan File System** ウィンドウを閉じて、のブラウザーを更新します。
 
-#. **Data Age**, **File Distribution by Size** と **File Distribution by Type**のダッシュボードパネルが更新されます。
+#. **Data Age**, **File Distribution by Size** と **File Distribution by Type** のダッシュボードパネルが更新されます。
 
    .. figure:: images/15.png
 
 
 
-#. *Initials*\ **-WinTools** VMから**サンプルデータ**の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
+#. *Initials*\ **-WinTools** VMから**サンプルデータ** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
 
    .. note::
 　ファイルを開く際に、OpenOfficeのウィザードが表示された場合は、次へを押して完了させます。
 
-#. **Dashboard**ページを更新し、**Top 5 Active Users**, **Top 5 Accessed Files** そして **File Operations** パネルを確認します。
+#. **Dashboard** ページを更新し、**Top 5 Active Users** , **Top 5 Accessed Files** そして **File Operations** パネルを確認します。
 
    .. figure:: images/17.png
 
@@ -232,13 +237,12 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. note::
 
-      例えば、**.doc**など、ワイルドカードを使った検索も可能です。
+      例えば、**.doc** など、ワイルドカードを使った検索も可能です。
 
 ..
 NFSを使ったエクスポート
 +++++++++++++++++
 
-In this exercise you will create and test a NFSv4 export, used to support clustered applications, store application data such as logging, or storing other unstructured file data commonly accessed by Linux clients.
 この演習では、アプリケーションのサポートデータやログなどのアプリケーションデータや　Linux クライアントから一般的に作成される の構造化されていないファイルデータをNFSv4経由でエクスポートする方法を説明します。
 
 NFSプロトコルの有効化
@@ -246,7 +250,6 @@ NFSプロトコルの有効化
 
 .. ノート::
 
-   Enabling NFS protocol only needs to be performed once per Files server, and may have already been completed in your environment. If NFS is already enabled, proceed to `Configure User Mappings`_.
    NFSプロトコルの有効化は、Filesサーバごとに一度だけ行います。あなたの環境ではすでに有効になっているかもしれません。
    NFSが既に有効になっている場合は、`ユーザマッピングの設定`に進みます。
 
@@ -254,7 +257,6 @@ NFSプロトコルの有効化
 
    .. figure:: images/29.png
 
-#. Select **Use NFS Protocol** with **Unmanaged** User Management and Authentication, and click **Update**.
 #. **Use NFS Protocol** にチェックを入れ、User Management and Authentication **Unmanaged** と入力し **Update** をクリックします。
 
    .. figure:: images/30.png
@@ -262,7 +264,6 @@ NFSプロトコルの有効化
 エクスポートの作成
 ...................
 
-#. In **Prism > File Server**, click **+ Share/Export**.
 #. **Prism > File Server** と進み、 **+ Share/Export** をクリックします。
 
 #. 次のフィールドに入力します。
