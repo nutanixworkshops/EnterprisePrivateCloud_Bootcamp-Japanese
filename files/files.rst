@@ -65,12 +65,10 @@ SMB共有の管理
 
 #. **次へ** をクリックします。
 
-#.  **Enable Access Based Enumeration** と **Self Service Restore** にチェックを入れ、 **Blocked File Types** に .flv,.mov を入力します。
-
+#. **Enable Access Based Enumeration** と **Self Service Restore** にチェックを入れ、 **Blocked File Types** に .flv,.mov を入力します。
   .. figure:: images/3.png
 
   .. note::
-
     **Access Based Enumeration (ABE)**
       特定のユーザーが読み取りアクセス権を持つファイルとフォルダーのみがそのユーザーに表示する機能です。 これは通常、Windowsファイル共有で有効です。
 
