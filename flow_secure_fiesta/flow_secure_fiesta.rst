@@ -46,7 +46,7 @@ Prism Centralを使用して、カテゴリをメタデータとしてVMにタ�
 #. 値の名前として *Initials*-**Web** を指定します。このカテゴリはWebアプリケーション層を想定して適用します。
 
 #. 続けて :fa:`plus-circle` アイコンをクリックして、カテゴリに値を入力します。値の名前として *Initials*-**DB** を指定します。
-このカテゴリはMySQLデータベース層を想定して適用します。
+   このカテゴリはMySQLデータベース層を想定して適用します。
 
    .. figure:: images/14.png
 
@@ -93,7 +93,6 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
    .. figure:: images/20.png
 
-   Next you will define the **Inbound** rules, which control which sources you will allow to communicate with your application. You can allow all inbound traffic, or define whitelisted sources. By default, the security policy is set to deny all incoming traffic.
    次に、アプリケーションとの通信を許可するソースを制御する **Inbound** ルールを定義します。
    すべての受信トラフィックを許可することも、ホワイトリストのソースを定義することもできます。
 
@@ -139,7 +138,6 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
    - Specify *Your Prism Central IP*\ /32
 
    .. note::
-
      **/32** は範囲ではなく、単一のIPを示します。
 
    .. figure:: images/23.png
@@ -148,7 +146,6 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
 #. **AppTier:**\ *Initials*-**Web** の左側に表示される **+** アイコンをクリックし、 **TCP** , ポート番号 **22** を指定して、**Save** をクリックします。
 
-#. Repeat Step 18 for  to allow Calm to communicate with the database VM.
 #. **AppTier:**\ *Initials*-**DB** に対してもステップ18と同様の操作を繰り返し、CalmがデータベースVMと通信出来る様にします。
 
    .. figure:: images/24.png
@@ -166,14 +163,12 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
 #. **Add** をクリックします。
 
-#. Select the **+** icon that appears to the right of **AppTier:**\ *Initials*-**Web**, specify **UDP** port **53** and click **Save** to allow DNS traffic. Repeat this for **AppTier:**\ *Initials*-**DB**.
-
-
-#. **AppTier:**\ *Initials*-**Web** の右側に表示される **+** を選択して **UDP** ポート **53** を指定して、 **Save** をクリック することでDNSのトラフィックを許可します。同様に **AppTier:**\ *Initials*-**DB** に対しても行います。
+#. **AppTier:**\ *Initials*-**Web** の右側に表示される **+** を選択して **UDP** ポート **53** を指定して、 **Save** をクリック することで
+   DNSのトラフィックを許可します。同様に **AppTier:**\ *Initials*-**DB** に対しても行います。
 
    .. figure:: images/26.png
 
-  アプリケーション層は他の層と通信を必要としポリシーはこのトラフィックを許可する必要があります。Webなどの一部の層は、同じ層内での通信を必要としません。
+   アプリケーション層は他の層と通信を必要としポリシーはこのトラフィックを許可する必要があります。Webなどの一部の層は、同じ層内での通信を必要としません。
 
 #. アプリケーション内の通信を定義するには、**Set Rules within App** をクリックします。
 
@@ -196,7 +191,7 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
 #. **Next** をクリックして、ここまで設定してきたセキュリティポリシーを確認します。
 
-#.**Save and Monitor** をクリックしてポリシーを保存します。
+#. **Save and Monitor** をクリックしてポリシーを保存します。
 
 カテゴリ値の割り当て
 .........................
