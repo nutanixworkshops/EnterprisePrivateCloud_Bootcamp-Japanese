@@ -274,7 +274,7 @@ STIGレポートは、セキュリティコンプライアンスの検証およ�
 
      sudo -u root salt-call state.sls security/CVM/fdpermsownerCVM
 
-#. ディレクトリを再度リストし、‘compromise’が元に戻されたことを確認します。
+#. ディレクトリを再度リストし、‘compromise’ が元に戻されたことを確認します。
    オプション: レポートを再実行して、チェックの結果がなくなったことを確認できます。
 
    .. code-block:: bash
