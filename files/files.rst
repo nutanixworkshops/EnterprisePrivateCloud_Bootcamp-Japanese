@@ -112,16 +112,14 @@ SMB共有の管理
 
       これらのアカウントを使用してはRDP経由で接続することはできません。
 
-   - user01 - user25
-   - devuser01 - devuser25
-   - operator01 - operator25
+   - **user01** - user25
+   - **devuser01** - devuser25
+   - **operator01** - operator25
    - **Password** nutanix/4u
 
    .. figure:: images/16.png
 
-   .. note::
-
-     Windows Tools VMは既に ** NTNXLAB.local ** ドメインに参加しています。 ドメインに参加しているVMを使用して、次の手順を実行します。
+     Windows Tools VMは既に **NTNXLAB.local** ドメインに参加しています。 ドメインに参加しているVMを使用して、次の手順を実行します。
 
 #. **エクスプローラー** で ``\\BootcampFS.ntnxlab.local\`` を開きます.
 
@@ -183,7 +181,7 @@ SMB共有の管理
 File Analytics
 ++++++++++++++
 
-この演習では新機能“統合File Analytics”を見てみましょう、これは既存の共有をスキャンし、異常アラートを作成します。また、スキャン結果の詳細も確認できます。
+この演習では新機能 “File Analytics” を見てみましょう。これは既存の共有をスキャンし、異常アラートを作成します。また、スキャン結果の詳細も確認できます。
 File Analyticsは、Prism Elementの自動化されたワンクリック操作により、スタンドアロンVMとして数分でデプロイされます。
 このVMは、あなたの環境に既にデプロイされ、有効化されています。
 
@@ -191,7 +189,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. figure:: images/12.png
 
-   .. note::
+   .. note ::
 
       File Analyticsはすでに有効になっているはずですが、プロンプトが表示された場合はすべての共有をスキャンするためにFiles管理者権限が必要となります。
 
@@ -205,7 +203,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. figure:: images/14.png
 
-   .. note::
+   .. note ::
 
       共有が表示されない場合は、入力されるまでしばらくお待ちください...
 
@@ -215,9 +213,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. figure:: images/15.png
 
-
-
-#. *Initials*\ **-WinTools** VMから**サンプルデータ** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
+#. *Initials*\ **-WinTools** VMから**SampleData** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
 
    .. note::
 　ファイルを開く際に、OpenOfficeのウィザードが表示された場合は、次へを押して完了させます。
