@@ -110,7 +110,7 @@ STIGレポートの実行
      sudo -u root chown nutanix:nutanix /home/nutanix/STIG-report-**-**-****-**-**-**
 
 #. セキュアコピーツール (SCP, WINSCP, PSCP, etc)を使ってCVMからあなたの端末へレポート結果ファイルをコピーします。
-あるいは(vi, more, cat, etc)などを使用して、SSHセッションでテキストファイルを開いて表示することもできます。
+   あるいは(vi, more, cat, etc)などを使用して、SSHセッションでテキストファイルを開いて表示することもできます。
 
    .. note::
 
