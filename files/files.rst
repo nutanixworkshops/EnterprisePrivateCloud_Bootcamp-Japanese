@@ -47,7 +47,7 @@ SMB共有の管理
 
 #. 以下のフィールドに入力します。
 
-   - **Name** - *Initials*\**-FiestaShare**
+   - **Name** - *Initials*\ **-FiestaShare**
    - **Description (Optional)** - Fiesta app team share, used by PM, ENG, and MKT
    - **File Server** - **BootcampFS**
    - **Share Path (Optional)** - Leave blank. This field allows you to specify an existing path in which to create the nested share.
