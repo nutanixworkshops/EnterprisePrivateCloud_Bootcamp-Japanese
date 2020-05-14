@@ -256,7 +256,7 @@ NFSプロトコルの有効化
 
    .. figure:: images/29.png
 
-#. **Use NFS Protocol** にチェックを入れ、User Management and Authentication **Unmanaged** と入力し **Update** をクリックします。
+#. **Use NFS Protocol** にチェックを入れ、**User Management and Authentication に Unmanaged と入力し **Update** をクリックします。
 
    .. figure:: images/30.png
 
