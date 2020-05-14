@@ -250,7 +250,7 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 Flowによる可視化
 ........................
 
-#. **Prism Central** へ戻り、 :fa:`bars` **> Virtual Infrastructure > Policies > Security Policies > と進み、 *\ *Initials*-**Fiesta** をクリックします。
+#. **Prism Central** へ戻り、 :fa:`bars` **> Virtual Infrastructure > Policies > Security Policies >** と進み、  *Initials*-**Fiesta** をクリックします。
 
 #. **Environment: Dev** がインバウンドソースとして表示されていることを確認します。ソースとラインは黄色で表示され、クライアントVMからのトラフィックが検出されたことを示します。
 
