@@ -27,7 +27,7 @@ Prism Centralを使用して、カテゴリをメタデータとしてVMにタ�
 
 #. **Prism Central** の :fa:`bars` **> Virtual Infrastructure > Categories** と進みます。
 
-#.**AppType** にチェックを入れ **Actions > Update** をクリックします。
+#. **AppType** にチェックを入れ **Actions > Update** をクリックします。
 
    .. figure:: images/12.png
 
