@@ -252,7 +252,7 @@ NFSプロトコルの有効化
 
    .. figure:: images/29.png
 
-#. **Use NFS Protocol** にチェックを入れ、**User Management and Authentication に Unmanaged と入力し **Update** をクリックします。
+#. **Use NFS Protocol** にチェックを入れ、**User Management and Authentication** に Unmanaged と入力し **Update** をクリックします。
 
    .. figure:: images/30.png
 
@@ -298,7 +298,7 @@ NFSプロトコルの有効化
 
 .. note:: 他の演習で :ref:`linux_tools_vm` を作成している場合は新たに作成は不要です。
 
-#. **Prism > VM > Table* と進み、**+ Create VM** をクリックします。
+#. **Prism**  > VM >Table** と進み、**+ Create VM** をクリックします。
 
 #. Fill out the following fields:
 
@@ -319,7 +319,7 @@ NFSプロトコルの有効化
 
 #. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。
 
-#. Prismで*Initials*\ **-NFS-Client** VMのIPアドレスをメモし、次の認証情報を使用してSSH経由で接続します。
+#. Prismで *Initials*\ **-NFS-Client** VMのIPアドレスをメモし、次の認証情報を使用してSSH経由で接続します。
 
    - **ユーザー名** - root
    - **パスワード** - nutanix/4u
