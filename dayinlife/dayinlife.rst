@@ -274,7 +274,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
    デフォルトのOperatorロールには、ブループリントからデプロイされたVMとアプリケーションを削除する機能が含まれていますが、これは私たちの環境では望ましくありません。新しいロールを最初から構築するのではなく、既存のロールにクローンを作成し、ニーズに合わせて変更できます。必要なOperatorのロールは、VMメトリックを表示し、電源操作を実行し、vCPUやメモリなどのVM構成を更新して、アプリケーションのパフォーマンスの問題に対処できる必要があります。
 
-#. 組み込み**Operator**　ロールをクリックし、**Duplicate**　をクリックします。
+#. 組み込み **Operator**　ロールをクリックし、**Duplicate**　をクリックします。
 
 #. 次のフィールドに入力し、**Save**　をクリックしてカスタムのロールを作成します。
 
@@ -380,7 +380,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 #. `ここを右クリックして、フィエスタマルチブループリントをダウンロードします。 <https://raw.githubusercontent.com/nutanixworkshops/ts2020/master/pc/dayinlife/Fiesta-Multi.json>`_.
 
-#. **Prism Central > Calm**　に移動し、左手のメニューから　**Blueprints**　を選択、**Upload Blueprint**をクリックします。
+#. **Prism Central > Calm**　に移動し、左手のメニューから　**Blueprints**　を選択、**Upload Blueprint** をクリックします。
 
    .. figure:: images/25.png
 
@@ -392,7 +392,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    .. figure:: images/26.png
 
-#. ブループリントを起動するには、最初にネットワークをVMに割り当てる必要があります。**NodeReact**　サービスを選択し、右手の**VM**メ　ニューで、 **NIC 1**　ネットワークとして**Primary**　を選択します。
+#. ブループリントを起動するには、最初にネットワークをVMに割り当てる必要があります。**NodeReact**　サービスを選択し、右手の **VM** メニューで、 **NIC 1**　ネットワークとして **Primary**　を選択します。
 
 #. Categoryメニューにおいて*Initials*\ **-Team: Fiesta**　と　**Environment: Dev**　を選択します。
 
@@ -436,7 +436,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
       gmznERCNf9Kaxl/hlyV5dZBe/2LIK+/jLGNu9EJLoraaCBFshJKF
       -----END RSA PRIVATE KEY-----
 
-#. **Save**　をクリックし、終了後　**Back**を　クリックします。
+#. **Save**　をクリックし、終了後　**Back** を　クリックします。
 
    数分以内に、新谷さんは仮想インフラストラクチャとアプリケーションのセルフサービスをエンドユーザーに直接提供するための基礎を築きました。
 
@@ -491,7 +491,9 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    .. figure:: images/30.png
 
-   .. 注意::
+   .. note::
+
+      注意:
 
       ブループリントに慣れていない場合は、時間をかけてFiesta-Multiブループリントの以下の主要コンポーネントを調べてみてください。
 
@@ -585,7 +587,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
    - **User Name** - adminuser01@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. :fa:`bars` **> Virtual Infrastructure > VMs**を開きます。Prism Centralの　**Entity Browser**　は、VM、イメージ、クラスター、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
+#. :fa:`bars` **> Virtual Infrastructure > VMs** を開きます。Prism Centralの　**Entity Browser**　は、VM、イメージ、クラスター、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
 
 #. **Filters**　を選択して、使用可能なオプションを確認します。次のサンプルフィルターを指定し、対応するボックスがオンになっていることを確認します。
 
