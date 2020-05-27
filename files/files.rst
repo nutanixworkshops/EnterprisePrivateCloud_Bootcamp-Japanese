@@ -1,44 +1,51 @@
 .. title:: Files
 
 --------------------------------
-Consolidating Storage with Files
+ファイルとストレージの統合
 --------------------------------
 
-*The estimated time to complete this lab is 45 minutes.*
+*このラボの所要想定時間は45分です。*
 
-Traditionally, file storage has been yet another silo within IT, introducing unnecessary complexity and suffering from the same issues of scale and lack of continuous innovation seen in SAN storage. Nutanix believes there is no room for silos in the Enterprise Cloud. By approaching file storage as an app, running in software on top of a proven HCI core, Nutanix Files  delivers high performance, scalability, and rapid innovation through One Click management.
+従来のファイルストレージはサイロ化した伝統的構造をしています。 例えばSANストレージのように技術的な進歩を欠いたり、拡張性に難があったりと、我々を悩ませてきました。
+Nutanixではエンタープライズクラウドにこのようなサイロの居場所はないと考えています。
+仮想基盤として実績のあるHCI上のソフトウェアで実行可能なアプリケーションの様にファイルストレージを実装することで、
+Nutanix Filesは高性能で、スケーラビリティのある迅速なイノベーションをワンクリックで管理可能にします。
 
-**In this lab you will work with Files to manage SMB shares and NFS exports and explore the new functionality for Files deployments with File Analytics.**
+**このラボでは、Filesを使ってSMB共有とNFSサーバの管理を体験していただき、File Analyticsを用いたFilesの新たなる機能性を探りましょう。**
 
-For the purpose of time, and sharing infrastructure resources, a Files cluster has already been provisioned on your cluster. The **BootcampFS** Files is a single node instance, typical **Files** deployments would start with 3 File Server VMs, with the ability to scale up and scale out as required for performance.
+今回は時間短縮のためのため、共有リソースの各クラスタ上にFilesクラスタが構築済みです。
+**BootcampFS** はシングルノードで展開されていますが、通常 **Flies** の展開は3台のFile Server VMで開始し、パフォーマンスの必要に応じてスケールアップやスケールアウトすることが出来ます。
 
-**BootcampFS** has been configured to use the **Primary** network to communicate with the backend storage, iSCSI connections from the **CVM** to **Volume Groups**, and the **Secondary** network for communication with clients, Active Directory, anti-virus services, etc.
+**BootcampFS** は、プライマリネットワークを使用してバックエンドストレージと通信し、CVM からボリュームグループへの iSCSI 接続を行い、セカンダリネットワークを使用してクライアント、Active Directory、アンチウィルスサービスなどと通信するように設定されています。
+
 
 .. figure:: images/1.png
 
-.. note::
+   .. note::
 
-  It is typically desirable in production environments to deploy Files with dedicated virtual networks for client and storage traffic. When using two networks, Files will, by design, disallow client traffic the storage network, meaning VMs assigned to the primary network will be unable to access shares.
+  本番環境では、一般的にクライアントとストレージ トラフィックのために専用の仮想ネットワークを使用して Files を配置することが望ましいとされています。2つのネットワークを使用する場合、Filesは設計上、クライアントトラフィックがストレージネットワークにアクセスできないようにします。
 
-As Files leverages Nutanix Volume Groups for data storage, it can take advantage of the same underlying storage benefits such as compression, erasure coding, snapshots, and replication.
+FilesはデータストレージにNutanixボリュームグループを利用しているため、圧縮、消去コーディング、スナップショット、レプリケーションなど、同じ基本的なストレージの利点を利用することができます。
 
-In **Prism Element > File Server > File Server**, select **BootcampFS** and click **Protect**.
+#. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
 
    .. figure:: images/10.png
 
-Observe the default Self Service Restore schedules, this feature controls the snapshot schedule for Windows' Previous Versions functionality. Supporting Windows Previous Versions allows end users to roll back changes to files without engaging storage or backup administrators. Note these local snapshots do not protect the file server cluster from local failures and that replication of the entire file server cluster can be performed to remote Nutanix clusters.
+   デフォルトのSelf Service RestoreスケジュールがWindowsの前バージョンのスナップショットスケジュールを機能的に制御します。
+   Windowsの以前のバージョン機能をサポートすることで、エンドユーザーはストレージ管理者やバックアップ管理者を介さずにファイルへの変更をロールバックすることができます。
+   これらのローカルスナップショットは、ファイルサーバクラスタをローカルの障害から保護するものではなく、ファイルサーバクラスタ全体のレプリケーションをリモートのNutanixクラスタに実行することができることに注意してください。
 
-Managing SMB Shares
+SMB共有の管理
 +++++++++++++++++++
 
-In this exercise you will create and test a SMB share, used to support the unstructured file data needs of a cross-departmental team for the Fiesta application.
+このエクササイズではSMB共有の構築と管理を行います。SMB共有は、非構造化ファイルデータを共有する混成チームなどによるFiestaアプリケーションの開発をサポートするために使用されます。
 
-Creating the Share
+共有の作成
 ..................
 
-#. In **Prism Element > File Server**, click **+ Share/Export**.
+#. **Prism Element > File Server** と進み、  **+ Share/Export** をクリックします。
 
-#. Fill out the following fields:
+#. 以下のフィールドに入力します。
 
    - **Name** - *Initials*\ **-FiestaShare**
    - **Description (Optional)** - Fiesta app team share, used by PM, ENG, and MKT
@@ -49,94 +56,100 @@ Creating the Share
 
    .. figure:: images/2.png
 
-   Because this is a single node AOS cluster and therefore a single file server VM, all shares will be **Standard** shares. A Standard share means that all top level directories and files within the share, as well as connections to the share, are served from a single file server VM.
+   今回はシングルノード、つまりシングルのFSVMによる標準共有で全てまかないます。
+   標準共有とは、すべてのルートディレクトリとファイルがシングルのFSVMで提供される状態です。
 
-   If this were a three node Files cluster or larger you’d have an option to create a **Distributed** share.  Distributed shares are appropriate for home directories, user profiles, and application folders. This type of share shards top level directories across all Files VMs and load balances connections across all Files VMs within the Files cluster.
+   これが3ノードのFSVMクラスタ以上であれば、分散共有を作成するオプションがあります。
+   分散共有は、ホームディレクトリやユーザープロファイル、アプリケーションフォルダを共有するのに適しています。
+   このタイプの共有では、ルートディレクトリ及びファイルへの要求をすべてのFSVMから行うことが可能で、接続に対してロードバランシングが可能です。
 
-#. Click **Next**.
+#. **次へ** をクリックします。
 
-#. Select **Enable Access Based Enumeration** and **Self Service Restore**. Select **Blocked File Types** and enter a comma separated list of extensions like .flv,.mov.
+#. **Enable Access Based Enumeration** と **Self Service Restore** にチェックを入れ、 **Blocked File Types** に .flv,.mov を入力します。
 
    .. figure:: images/3.png
 
-   .. note::
+  .. note::
+    **Access Based Enumeration (ABE)**
+      特定のユーザーが読み取りアクセス権を持つファイルとフォルダーのみがそのユーザーに表示する機能です。 これは通常、Windowsファイル共有で有効です。
 
-      **Access Based Enumeration (ABE)** ensures that only files and folders which a given user has read access are visible to that user. This is commonly enabled for Windows file shares.
+    **Self Service Restore**
+      Windowsの以前のバージョン機能をから、Nutanixスナップショットに基づいて個々のファイルを以前のリビジョンに簡単に復元可能な機能です。
 
-      **Self Service Restore** allows users to leverage Windows Previous Version to easily restore individual files to previous revisions based on Nutanix snapshots.
+    **Blocked File Types**
+      特定のタイプのファイル（大容量の個人用メディアファイルなど）を企業の共有に書き込まないように制限する機能です。
+      また、これはサーバ毎もしくは、共有グループ毎に設定でき、サーバ全体のルールよりも優先して適応されます。
 
-      **Blocked File Types** allow Files administrators to restrict certain types of files (such as large, personal media files) from being written to corporate shares. This can be configured on a per Server or per Share basis, with per Share settings overriding Server wide settings.
+#. **Next** をクリックします。
 
-#. Click **Next**.
-
-#. Review the **Summary** and click **Create**.
+#. **Summary** を確認し **Create* をクリックします。
 
    .. figure:: images/4.png
 
-   It is common for shares utilized by many people to leverage quotas to ensure fair use of resources. Files offers the ability to set either soft or hard quotas on a per share basis for either individual users within Active Directory, or specific Active Directory Security Groups.
+   多くの人が利用する共有では、リソースの公平な使用を確保するためにクォータを活用するのが一般的です。
+   Filesは、Active Directory内の個々のユーザー、または特定のActive Directoryセキュリティグループのいずれかに対して
+   共有ごとにソフトクォータまたはハードクォータを設定する機能を提供します。
 
-#. In **Prism Element > File Server > Share/Export**, select your share and click **+ Add Quota Policy**.
+#. **Prism Element > File Server > Share/Export** と進み、 あなたが作成した共有を選択し **+ Add Quota Policy** をクリックします。
 
-#. Fill out the following fields and click **Save**:
+#. 以下のフィールドに入力し、**Save** をクリックします。
 
-   - Select **Group**
-   - **User or Group** - SSP Developers
-   - **Quota** - 10 GiB
-   - **Enforcement Type** - Hard Limit
+  - Select **Group**
+  - **User or Group** - SSP Developers
+  - **Quota** - 10 GiB
+  - **Enforcement Type** - Hard Limit
 
    .. figure:: images/9.png
 
-#. Click **Save**.
+#. **保存** をクリックします。
 
-Testing the Share
+共有のテスト
 .................
 
-#. Connect to your *Initials*\ **-WinTools** VM via VM console as a **non-Administrator NTNXLAB** domain account:
+#.  *Initials*\ **-WinTools** のコンソールから  **NTNXLABのadministratorアカウント以外** でログインします
 
    .. note::
 
-      You will not be able to connect using these accounts via RDP.
+      これらのアカウントを使用してはRDP経由で接続することはできません。
 
-   - user01 - user25
-   - devuser01 - devuser25
-   - operator01 - operator25
+   - **user01** - user25
+   - **devuser01** - devuser25
+   - **operator01** - operator25
    - **Password** nutanix/4u
 
    .. figure:: images/16.png
 
-   .. note::
+     Windows Tools VMは既に **NTNXLAB.local** ドメインに参加しています。 ドメインに参加しているVMを使用して、次の手順を実行します。
 
-     The Windows Tools VM has already been joined to the **NTNXLAB.local** domain. You could use any domain joined VM to complete the following steps.
+#. **エクスプローラー** で ``\\BootcampFS.ntnxlab.local\`` を開きます.
 
-#. Open ``\\BootcampFS.ntnxlab.local\`` in **File Explorer**.
-
-#. Open a browser within your *Initials*\ **-WinTools** desktop and download sample data to populate in your share:
+#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードし、共有に置きます。
 
    - **If using a PHX cluster** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
    - **If using a RTP cluster** - http://10.55.251.38/workshop_staging/peer/SampleData_Small.zip
 
-#. Extract the contents of the zip file into your file share.
+#. zipファイルを展開します。
 
    .. figure:: images/5.png
 
-   - The **NTNXLAB\\Administrator** user was specified as a Files Administrator during deployment of the Files cluster, giving it read/write access to all shares by default.
-   - Managing access for other users is no different than any other SMB share.
+   - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスターの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与しました。
+   - 他のユーザーのアクセス管理は、他のSMB共有と同じです。
 
-..   #. From ``\\BootcampFS.ntnxlab.local\``, right-click *Initials*\ **-FiestaShare > Properties**.
+..   #.  ``\\BootcampFS.ntnxlab.local\``, の *Initials*\ **-FiestaShare を右クリックし、プロパティを開きます **
 
-   #. Select the **Security** tab and click **Advanced**.
+   #. **セキュリティ** タブの **詳細** を選択します.
 
       .. figure:: images/6.png
 
-   #. Select **Users (BootcampFS\\Users)** and click **Remove**.
+   #. **Users (BootcampFS\\Users)** を選択し、**Remove** をクリックします。
 
-   #. Click **Add**.
+   #. **Add** をクリックします。
 
-   #. Click **Select a principal** and specify **Everyone** in the **Object Name** field. Click **OK**.
+   #. **プリンシパルを選択** を選択し、**オブジェクト名** のフィールドに **Everyone** を入力し、**OK** をクリックします。
 
       .. figure:: images/7.png
 
-   #. Fill out the following fields and click **OK**:
+   #. 下記フィールドを入力し **OK** をクリックします。:
 
       - **Type** - Allow
       - **Applies to** - This folder only
@@ -147,191 +160,108 @@ Testing the Share
 
       .. figure:: images/8.png
 
-   #. Click **OK > OK > OK** to save the permission changes.
+   #. **OK > OK > OK** とクリックし、変更を保存します。
 
-   All users will now be able to create folders and files within the *Initials*\ **-FiestaShare** share.
+   これで、すべてのユーザーが *Initials*\ **-FiestaShare** 共有内にフォルダーとファイルを作成できるようになります。
 
-#. Open **PowerShell** and try to create a file with a blocked file type by executing the following command:
+#. **PowerShell** を開き、以下のコマンドを使ってブロックされたファイルタイプのファイルを作成を試みます。
 
    .. code-block:: PowerShell
 
       New-Item \\BootcampFS\INITIALS-FiestaShare\MyFile.flv
 
-   Observe that creation of the new file is denied.
+   新しいファイルの作成が拒否されたことを確認します。
 
-#. Return to **Prism Element > File Server > Share/Export**, select your share. Review the **Share Details**, **Usage** and **Performance** tabs to understand the high level information available on a per share basis, including the number of files & connections, storage utilization over time, latency, throughput, and IOPS.
+#. **Prism Element > File Server > Share/Export** に戻り、共有を選択します。 使用状況やパフォーマンスタブを見て共有毎の詳細情報を確認します(ファイル数や接続数、ストレージ使用率、レイテンシ、スループット、IOPSなど)。
 
    .. figure:: images/11.png
 
-   In the next exercise, you will see how Files can provide further insights into usage of each File Server and Share.
+  次の演習では、ファイルを使用して各ファイルサーバーと共有の使用状況をさらに詳しく分析する方法を説明します。
 
 File Analytics
 ++++++++++++++
 
-In this exercise you will explore the new, integrated File Analytics capabilities available in Nutanix Files, including scanning existing shares, creating anomaly alerts, and reviewing audit details. File Analytics is deployed in minutes as a standalone VM through an automated, One Click operation in Prism Element. This VM has already been deployed and enabled in your environment.
+この演習では新機能 “File Analytics” を見てみましょう。これは既存の共有をスキャンし、異常アラートを作成します。また、スキャン結果の詳細も確認できます。
+File Analyticsは、Prism Elementの自動化されたワンクリック操作により、スタンドアロンVMとして数分でデプロイされます。
+このVMは、あなたの環境に既にデプロイされ、有効化されています。
 
-#. In **Prism Element > File Server > File Server**, select **BootcampFS** and click **File Analytics**.
+#. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し、 **File Analytics** をクリックします。
 
    .. figure:: images/12.png
 
-   .. note::
+   .. note ::
 
-      File Analytics should already be enabled, but if prompted you will need to provide your Files administrator account, as Analytics will need to be able to scan all shares.
+      File Analyticsはすでに有効になっているはずですが、プロンプトが表示された場合はすべての共有をスキャンするためにFiles管理者権限が必要となります。
 
       - **Username**: NTNXLAB\\administrator
       - **Password**: nutanix/4u
 
       .. figure:: images/old13.png
 
-#. As this is a shared environment, the dashboard will likely already be populated with data from shares created by other users. To scan your newly created share, click :fa:`gear` **> Scan File System**. Select your share and click **Scan**.
+#. これは共有環境であるため、ダッシュボードには他のユーザーが作成した共有のデータがすでに表示されている可能性があります。 新しく作成した共有をスキャンするには、:fa:`gear` **> Scan File System** をクリックします。
+   作成した共有を選択し、[スキャン]をクリックします
 
    .. figure:: images/14.png
 
-   .. note::
+   .. note ::
 
-      If your share is not shown, please give it some time to get populated...
+      共有が表示されない場合は、入力されるまでしばらくお待ちください...
 
-#. Close the **Scan File System** window and refresh your browser.
+#. **Scan File System** ウィンドウを閉じて、のブラウザーを更新します。
 
-#. You should see the **Data Age**, **File Distribution by Size** and **File Distribution by Type** dashboard panels update.
+#. **Data Age**, **File Distribution by Size** と **File Distribution by Type** のダッシュボードパネルが更新されます。
 
    .. figure:: images/15.png
 
-   Under....
+#. *Initials*\ **-WinTools** VMから**SampleData** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
 
-#. From your *Initials*\ **-WinTools** VM, create some audit trail activity by opening several of the files under **Sample Data**.
+   .. note::
+　ファイルを開く際に、OpenOfficeのウィザードが表示された場合は、次へを押して完了させます。
 
-   .. note:: You may need to complete a short wizard for OpenOffice if using that application to open a file.
-
-#. Refresh the **Dashboard** page in your browser to see the **Top 5 Active Users**, **Top 5 Accessed Files** and **File Operations** panels update.
+#. **Dashboard** ページを更新し、**Top 5 Active Users** , **Top 5 Accessed Files** そして **File Operations** パネルを確認します。
 
    .. figure:: images/17.png
 
-#. To access the audit trail for your user account, click on your user under **Top 5 Active Users**.
+#. ユーザーアカウントの監査証跡にアクセスするには、**Top 5 Active Users** でユーザーをクリックします。
+
+#. または、ツールバーから **Audit Trails** を選択して、ユーザーまたは特定のファイルを検索することもできます。
 
    .. figure:: images/17b.png
-
-#. Alternatively, you can select **Audit Trails** from the toolbar and search for your user or a given file.
 
    .. figure:: images/18.png
 
    .. note::
 
-      You can use wildcards for your search, for example **.doc**
+      例えば、**.doc** など、ワイルドカードを使った検索も可能です。
+
 ..
-   #. Next, we will create rules to detect anomalous behavior on the File Server. From the toolbar, click :fa:`gear` **> Define Anomaly Rules**.
-
-      .. figure:: images/19.png
-
-      .. note::
-
-         Anomaly Rules are defined on a per File Server basis, so the below rules may have already been created by another user.
-
-   #. Click **Define Anomaly Rules** and create a rule with the following settings:
-
-      - **Events:** Delete
-      - **Minimum Operation %:** 1
-      - **Minimum Operation Count:** 10
-      - **User:** All Users
-      - **Type:** Hourly
-      - **Interval:** 1
-
-   #. Under **Actions**, click **Save**.
-
-   #. Choose **+ Configure new anomaly** and create an additional rule with the following settings:
-
-      - **Events**: Create
-      - **Minimum Operation %**: 1
-      - **Minimum Operation Count**: 10
-      - **User**: All Users
-      - **Type**: Hourly
-      - **Interval**: 1
-
-   #. Under **Actions**, click **Save**.
-
-      .. figure:: images/20.png
-
-   #. Click **Save** to exit the **Define Anomaly Rules** window.
-
-   #. To test the anomaly alerts, return to your *Initials*\ **-WinTools** VM and make a second copy of the sample data (via Copy/Paste) within your *Initials*\ **-FiestaShare** share.
-
-   #. Delete the original sample data folders.
-
-      .. figure:: images/21.png
-
-      While waiting for the Anomaly Alerts to populate, next we’ll create a permission denial.
-
-      .. note:: The Anomaly engine runs every 30 minutes.  While this setting is configurable from the File Analytics VM, modifying this variable is outside the scope of this lab.
-
-   #. Create a new directory called *Initials*\ **-MyFolder** in the *Initials*\ **-FiestaShare** share.
-
-   #. Create a text file in the *Initials*\ **-MyFolder** directory and take out your deep seeded worldly frustrations on your for a few moments to populate the file. Save the file as *Initials*\ **-file.txt**.
-
-      .. figure:: images/22.png
-
-   #. Right-click *Initials*\ **-MyFolder > Properties**. Select the **Security** tab and click **Advanced**. Observe that **Users (BootcampFS\\Users)** lack the **Full Control** permission, meaning that they would be unable to delete files owned by other users.
-
-      .. figure:: images/23.png
-
-   #. Open a PowerShell window as another non-Administrator user account by holding **Shift** and right-clicking the **PowerShell** icon in the taskbar and selecting **Run as different user**.
-
-      .. figure:: images/24.png
-
-   #. Change Directories to *Initials*\ **-MyFolder** in the *Initials*\ **-FiestaShare** share.
-
-        .. code-block:: bash
-
-           cd \\BootcampFS.ntnxlab.local\XYZ-FiestaShare\XYZ-MyFolder
-
-   #. Execute the following commands:
-
-        .. code-block:: bash
-
-           cat .\XYZ-file.txt
-           rm .\XYZ-file.txt
-
-      .. figure:: images/25.png
-
-   #. Return to **Analytics > Dashboard** and note the **Permission Denials** and **Anomaly Alerts** widgets have updated.
-
-      .. figure:: images/26.png
-
-   #. Under **Permission Denials**, select your user account to view the full **Audit Trail** and observe that the specific file you tried to removed is recorded, along with IP address and timestamp.
-
-      .. figure:: images/27.png
-
-   #. Select **Anomalies** from the toolbar for an overview of detected anomalies.
-
-      .. figure:: images/28.png
-
-File Analytics puts simple, yet powerful information in the hands of storage administrators, allowing them to understand and audit both utilization and access within a Nutanix Files environment.
-
-Using NFS Exports
+NFSを使ったエクスポート
 +++++++++++++++++
 
-In this exercise you will create and test a NFSv4 export, used to support clustered applications, store application data such as logging, or storing other unstructured file data commonly accessed by Linux clients.
+この演習では、アプリケーションのサポートデータやログなどのアプリケーションデータや　Linux クライアントから一般的に作成される の構造化されていないファイルデータをNFSv4経由でエクスポートする方法を説明します。
 
-Enabling NFS Protocol
+NFSプロトコルの有効化
 .....................
 
-.. note::
+.. note ::
 
-   Enabling NFS protocol only needs to be performed once per Files server, and may have already been completed in your environment. If NFS is already enabled, proceed to `Configure User Mappings`_.
+   NFSプロトコルの有効化は、Filesサーバごとに一度だけ行います。あなたの環境ではすでに有効になっているかもしれません。
+   NFSが既に有効になっている場合は、`ユーザマッピングの設定`に進みます。
 
-#. In **Prism Element > File Server**, select your file server and click **Protocol Management > Directory Services**.
+#. **Prism Element > File Server** と進み、あなたのファイルサーバーを選択し **Protocol Management > Directory Services** をクリックします。
 
    .. figure:: images/29.png
 
-#. Select **Use NFS Protocol** with **Unmanaged** User Management and Authentication, and click **Update**.
+#. **Use NFS Protocol** にチェックを入れ、**User Management and Authentication** に Unmanaged と入力し **Update** をクリックします。
 
    .. figure:: images/30.png
 
-Creating the Export
+エクスポートの作成
 ...................
 
-#. In **Prism > File Server**, click **+ Share/Export**.
+#. **Prism > File Server** と進み、 **+ Share/Export** をクリックします。
 
-#. Fill out the following fields:
+#. 次のフィールドに入力します。
 
    - **Name** - logs
    - **Description (Optional)** - File share for system logs
@@ -342,9 +272,9 @@ Creating the Export
 
    .. figure:: images/24.png
 
-#. Click **Next**.
+#. **Next** をクリックします。
 
-#. Fill out the following fields:
+#. 次のフィールドを選択、入力します。
 
    - Select **Enable Self Service Restore**
       - These snapshots appear as a .snapshot directory for NFS clients.
@@ -355,20 +285,20 @@ Creating the Export
 
    .. figure:: images/25.png
 
-   By default an NFS export will allow read/write access to any host that mounts the export, but this can be restricted to specific IPs or IP ranges.
+デフォルトでは、NFSエクスポートは、エクスポートをマウントしているすべてのホストへの読み書きアクセスを許可しますが、これは特定のIPまたはIP範囲に制限することができます。
 
-#. Click **Next**.
+#. **Next** をクリックします。
 
-#. Review the **Summary** and click **Create**.
+#. **Summary** を確認し **Create** をクリックします。
 
-Testing the Export
+エクスポートのテスト
 ..................
 
-You will first provision a CentOS VM to use as a client for your Files export.
+最初に、ファイルエクスポートのクライアントとして使用するCentOS VMをプロビジョニングします。
 
-.. note:: If you have already deployed the :ref:`linux_tools_vm` as part of another lab, you may use this VM as your NFS client instead.
+.. note:: 他の演習で :ref:`linux_tools_vm` を作成している場合は新たに作成は不要です。
 
-#. In **Prism > VM > Table**, click **+ Create VM**.
+#. **Prism**  > VM >Table** と進み、**+ Create VM** をクリックします。
 
 #. Fill out the following fields:
 
@@ -385,16 +315,16 @@ You will first provision a CentOS VM to use as a client for your Files export.
       - **VLAN Name** - Secondary
       - Select **Add**
 
-#. Click **Save**.
+#. **Save** をクリックします。
 
-#. Select the *Initials*\ **-NFS-Client** VM and click **Power on**.
+#. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。
 
-#. Note the IP address of the VM in Prism, and connect via SSH using the following credentials:
+#. Prismで *Initials*\ **-NFS-Client** VMのIPアドレスをメモし、次の認証情報を使用してSSH経由で接続します。
 
-   - **Username** - root
-   - **Password** - nutanix/4u
+   - **ユーザー名** - root
+   - **パスワード** - nutanix/4u
 
-#. Execute the following:
+#. 以下を実行します。
 
      .. code-block:: bash
 
@@ -415,66 +345,73 @@ You will first provision a CentOS VM to use as a client for your Files export.
        total 1
        drwxrwxrwx. 2 root root 2 Mar  9 18:53 logs
 
-#. Observe that the **logs** directory is mounted in ``/filesmnt/logs``.
+#. 実行結果から ``/filesmnt/logs``のように、 logsディレクトリがマウントされたことを確認します。
 
-#. Reboot the VM and observe the export is no longer mounted. To persist the mount, add it to ``/etc/fstab`` by executing the following:
+#. VMを再起動するとマウントが外れるため、起動時にマウントするように以下のコマンドを実行し ``/etc/fstab`` に追記します。
 
      .. code-block:: bash
 
        echo 'Intials-Files.ntnxlab.local:/ /filesmnt nfs4' >> /etc/fstab
 
-#. The following command will add 100 2MB files filled with random data to ``/filesmnt/logs``:
+#. 以下のコマンドを実行し、``/filesmnt/logs`` ディレクトリに2MBのランダムデータを100個作成します。
 
      .. code-block:: bash
 
        mkdir /filesmnt/logs/host1
        for i in {1..100}; do dd if=/dev/urandom bs=8k count=256 of=/filesmnt/logs/host1/file$i; done
 
-#. Return to **Prism > File Server > Share > logs** to monitor performance and usage.
+#. **Prism > File Server > Share > logs** に戻り、パフォーマンスと使用状況を監視します。.
 
-   Note that the utilization data is updated every 10 minutes.
+   使用率のデータは10分毎の更新であることに注意してください。
 
-Multi-Protocol Shares
+
+マルチプロトコル共有
 +++++++++++++++++++++
 
-Files provides the ability to provision both SMB shares and NFS exports separately - but also now supports the ability to provide multi-protocol access to the same share. In the exercise below, you will configure your existing *Initials*\ **-FiestaShare** to allow NFS access, allowing developer users to re-direct application logs to this location.
+Files は、SMB 共有と NFS エクスポートの両方を別々にプロビジョニングする機能を提供しますが、同じ共有にマルチプロトコルアクセスを提供する機能もサポートしています。
 
-Configure User Mappings
+
+ユーザーマッピングの構成
 .......................
 
-A Nutanix Files share has the concept of a native and non-native protocol.  All permissions are applied using the native protocol. Any access requests using the non-native protocol requires a user or group mapping to the permission applied from the native side. There are several ways to apply user and group mappings including rule based, explicit and default mappings.  You will first configure a default mapping.
+Nutanixファイル共有には、ネイティブプロトコルと非ネイティブプロトコルの概念があります。
+すべてのパーミッションはネイティブプロトコルを使用して適用されます。
+非ネイティブプロトコルを使用したアクセス要求は、ネイティブ側から適用されたパーミッションへのユーザーまたはグループのマッピングを必要とします。
+ユーザーとグループのマッピングを適用するには、ルールベースのマッピング、明示的なマッピング、デフォルトのマッピングなど、いくつかの方法があります。
 
-#. In **Prism Element > File Server**, select your file server and click **Protocol Management > User Mapping**.
+最初にデフォルトのマッピングを設定します。
 
-#. Click **Next** twice to advance to **Default Mapping**.
+#. **Prism Element > File Server**  と進み、あなたのファイルサーバーを選択し **Protocol Management > User Mapping** をクリックします。
 
-#. From the **Default Mapping** page choose both **Deny access to NFS export** and **Deny access to SMB share** as the defaults for when no mapping is found.
+#. **Next** を2回クリックし **Default Mapping** に進みます。
+
+#. **Default Mapping** ページにて **Deny access to NFS export** と **Deny access to SMB share** を指定します。
 
    .. figure:: images/31.png
 
-#. Click **Next > Save** to complete the default mapping.
+#.  **Next > Save** とクリックし、デフォルトマッピングの設定を完了します。
 
-#. In **Prism Element > File Server**, select your *Initials*\ **-FiestaShare** and click **Update**.
+#. **Prism Element > File Server** と進み、 *Initials*\ **-FiestaShare** を選択し **Update** をクリックします。
 
-#. Under **Basics**, select **Enable multiprotocol access for NFS** and click **Next**.
+#. **Basics** ページ下部の **Enable multiprotocol access for NFS** にチェックを入れ **Next** をクリックします。
 
    .. figure:: images/32.png
 
-#. Under **Settings > Multiprotocol Access** select **Simultaneous access to the same files from both protocols**.
+#.  **Settings > Multiprotocol Access** にて、 **Simultaneous access to the same files from both protocols** にチェックを入れます。
 
    .. figure:: images/33.png
 
-#. Click **Next > Save** to complete updating the share settings.
+#. **Next > Save** とクリックし、共有設定の更新を完了します。
 
-Testing the Export
+エクスポートのテスト
 .......................
 
-#. To test the NFS export, connect via SSH to your *Initials*\ **-LinuxToolsVM** VM:
+#. NFSエクスポートをテストするために、SSH経由で *Initials*\ **-LinuxToolsVM** VM にアクセスします。
 
-   - **User Name** - root
-   - **Password** - nutanix/4u
+   - **ユーザー名** - root
+   - **パスワード** - nutanix/4u
 
-#. Execute the following commands:
+#. 次のコマンドを実行します。
 
      .. code-block:: bash
 
@@ -485,11 +422,13 @@ Testing the Export
        dir: cannot open directory /filesmulti: Permission denied
        [root@CentOS ~]#
 
-   .. note:: The mount operation is case sensitive.
+   .. note:: コマンド操作では、大文字と小文字が区別されます。
 
-Because the default mapping is to deny access the Permission denied error is expected. You will now add an explicit mapping to allow access to the non-native NFS protocol user. We will need to get the user ID (UID) to create the explicit mapping.
+デフォルトのマッピングではアクセスを拒否するように設定されているため、Permission denied エラーが発生することが予想されます。
+ここで、非ネイティブのNFSプロトコルユーザーへのアクセスを許可するための明示的なマッピングを追加します。
+明示的なマッピングを作成するには、ユーザーID（UID）を取得する必要があります。
 
-#. Execute the following command and take note of the UID:
+#. 次のコマンドを実行して、UIDをメモします。
 
      .. code-block:: bash
 
@@ -497,13 +436,13 @@ Because the default mapping is to deny access the Permission denied error is exp
        uid=0(root) gid=0(root) groups=0(root)
        [root@CentOS ~]#
 
-#. In **Prism Element > File Server**, select your file server and click **Protocol Management > User Mapping**.
+#. **Prism Element > File Server**  と進み、あなたのファイルサーバーを選択し **Protocol Management > User Mapping** をクリックします。
 
-#. Click **Next** to advance to **Explicit Mapping**.
+#. **Next** をクリックし **Explicit Mapping** まで進みます。
 
-#. Under **One-to-onemapping list**, click **Add manually**.
+#. **One-to-onemapping list** で手動で追加します。
 
-#. Fill out the following fields:
+#.  次のフィールドに入力します。
 
    - **SMB Name** - NTNXLAB\\devuser01
    - **NFS ID** - UID from previous step (0 if root)
@@ -511,11 +450,11 @@ Because the default mapping is to deny access the Permission denied error is exp
 
    .. figure:: images/34.png
 
-#. Under **Actions**, click **Save**.
+#. **Actions** の **Save** をクリックします。
 
-#. Click **Next > Next > Save** to complete updating your mappings.
+#. **Next > Next > Save** とクリックし、ユーザーマッピングを更新します。
 
-#. Return to your *Initials*\ **-LinuxToolsVM** SSH session and try to access the share again:
+#. *Initials*\ **-LinuxTools VM** に戻り、共有に再度アクセスを試みます。
 
      .. code-block:: bash
 
@@ -523,14 +462,14 @@ Because the default mapping is to deny access the Permission denied error is exp
        Documents\ -\ Copy  Graphics\ -\ Copy  Pictures\ -\ Copy  Presentations\ -\ Copy  Recordings\ -\ Copy  Technical\ PDFs\ -\ Copy  XYZ-MyFolder
        [root@CentOS ~]#
 
-#. From your SSH session, create a text file and then validate you can access the file from your Windows client.
+#. SSHセッションでテキストファイルを作成し、Windowsクライアントからファイルにアクセス出来ることを確認します。
 
-Takeaways
+
+まとめ
 +++++++++
 
-What are the key things you should know about **Nutanix Files**?
+**Nutanix Files** について、
 
-- Files can be rapidly deployed on top of existing Nutanix clusters, providing SMB and NFS storage for user shares, home directories, departmental shares, applications, and any other general purpose file storage needs.
-- Files is not a point solution. VM, File, Block, and Object storage can all be delivered by the same platform using the same management tools, reducing complexity and management silos.
-- Files can scale up and scale out with One Click performance optimization.
-- File Analytics helps you better understand how data is utilized by your organizations to help you meet your data auditing, data access minimization and compliance requirements.
+- Filesは既存のNutanixクラスタ上に迅速に展開でき、SMBやNFS環境を構築することができます。
+- Filesは局所的なソリューションではありません。 VM、Files、Block、Objectストレージ、これらを同じプラットフォームで提供でき、複雑さや管理がサイロ化するリスクを軽減できます。また、最適なスケールアップやスケールアウトをワンクリックで提供できます。
+- File Analyticsはデータがどの様に組織で使用されているのかを明確にし、それらを管理する助けになります。 それはデータへのアクセスを最小限に抑え、セキュリティ・コンプライアンスの要件を満たすのにも一役買います。
