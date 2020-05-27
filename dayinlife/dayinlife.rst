@@ -40,7 +40,7 @@
 
    .. figure:: images/4.png
 
-#. **ストレージコンテナ** に一意の**Name**を指定し、**Advanced Settings** をクリックして追加の構成オプションを確認します。
+#. **ストレージコンテナ** に一意の **Name** を指定し、**Advanced Settings** をクリックして追加の構成オプションを確認します。
 
    .. figure:: images/5.png
 
@@ -172,7 +172,7 @@ VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファ
 
    .. figure:: images/12.png
 
-#. VMの起動が完了したら、**IP Address**をメモします。
+#. VMの起動が完了したら、**IP Address** をメモします。
 
    .. figure:: images/11.png
 
@@ -187,7 +187,7 @@ VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファ
 
 PrismやacliはVMを作成するための簡単なワークフローを提供しますが、新谷さんは定期的にこれらのリクエストが殺到しており、老朽化したインフラストラクチャの近代化と息子のサッカーの試合観戦にもっと時間を費やしたいと思っています。
 
-次の演習では、キャロルはプライベートクラウドゲームをアップし、**Prism Central**のネイティブ機能を利用してIaaSセルフサービスをユーザーに提供します。
+次の演習では、キャロルはプライベートクラウドゲームをアップし、**Prism Central** のネイティブ機能を利用してIaaSセルフサービスをユーザーに提供します。
 
 #. **Prism Element**　の　**Home**　ページに移動します。
 
@@ -219,7 +219,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 #. **Save** をクリックします。
 
-#. 既存の**Environment** カテゴリをクリックして、次のフィールドに入力します。**Environment**　は　**SYSTEM**　カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
+#. 既存の **Environment** カテゴリをクリックして、次のフィールドに入力します。**Environment**　は　**SYSTEM**　カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
 
    .. figure:: images/16.png
 
@@ -243,7 +243,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 #. **Save**　をクリックします。
 
-#. 前の演習で新谷さんによってプロビジョニングされた　**Initials-WinToolsVM**　を選択し、**Actions > Manage Categories**　をクリックします。 **Initials-Team: Fiesta**カテゴリを割り当て、 **Save**　をクリックします。
+#. 前の演習で新谷さんによってプロビジョニングされた　**Initials-WinToolsVM**　を選択し、**Actions > Manage Categories**　をクリックします。 **Initials-Team: Fiesta** カテゴリを割り当て、 **Save**　をクリックします。
 
 ロールの探索
 ===============
