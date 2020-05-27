@@ -15,32 +15,32 @@
 
 この演習では、数回クリックするだけでPrism(Nutanixプラットフォームの管理コンソール)を介して仮想環境に対してストレージをプロビジョニングし、監視する方法を体験します。従来のSANストレージの計画と管理とは異なり、これらのステップは非常に簡単です。
 
-#. **Cluster Assignment Spreadsheet**からあなたの**Prism Element**のクラスタIPを探します。
+#. **Cluster Assignment Spreadsheet** からあなたの **Prism Element** のクラスタIPを探します。
 
-#. ブラウザーで**Prism Element**を開き、次のローカルユーザー資格情報を使用してログインします。
+#. ブラウザーで **Prism Element** を開き、次のローカルユーザー資格情報を使用してログインします。
 
    - **Username** - admin
    - **Password** - *HPOC Password*
 
    .. figure:: images/1.png
 
-#. ドロップダウンメニューから**Storage(ストレージ)**を選択します。
+#. ドロップダウンメニューから **Storage(ストレージ)** を選択します。
 
    .. figure:: images/2.png
 
-#. **Storage Summary(ストレージ概要)**ウィジェットと**Capacity Optimization(容量最適化)**ウィジェットの上にマウスを置くと、それぞれが何を表示しているかの説明が表示されます。
+#. **Storage Summary(ストレージ概要)** ウィジェットと **Capacity Optimization(容量最適化)** ウィジェットの上にマウスを置くと、それぞれが何を表示しているかの説明が表示されます。
 
-   ここで重要なのはNutanixが**Data Reduction(データ削減の節約)**として定義しているのは、データ圧縮、重複排除、消失符号化による節約のみであるということです。 一方、**Overall Efficiency(全体の効率性)**では他ベンダが”データ削減”として定義しているのと同じく、シンプロビジョニングやインテリジェントクローニングやゼロサプレッション等のデータ効率のための機能を含んだものとなっています。
+   ここで重要なのはNutanixが **Data Reduction(データ削減の節約)** として定義しているのは、データ圧縮、重複排除、消失符号化による節約のみであるということです。 一方、**Overall Efficiency(全体の効率性)** では他ベンダが”データ削減”として定義しているのと同じく、シンプロビジョニングやインテリジェントクローニングやゼロサプレッション等のデータ効率のための機能を含んだものとなっています。
 
    .. figure:: images/3.png
 
-#. **Table(テーブル)**を選択し、**+ Storage Container(ストレージコンテナ)**をクリックします。
+#. **Table(テーブル)** を選択し、**+ Storage Container(ストレージコンテナ)** をクリックします。
 
    ストレージコンテナーは、ストレージの論理ポリシーを表し、予約の作成、圧縮、重複排除、イレージャーコーディングなどのデータ効率化機能の有効化/無効化、冗長係数（RF）の構成を可能にします。Nutanixクラスタ上のすべてのストレージコンテナは、ストレージプールと呼ばれる、クラスタ内のすべての物理ディスクを引き続き利用します。典型的なNutanixクラスターには少数のストレージコンテナーがあり、通常、さまざまなデータ効率化テクノロジーの恩恵を受けるワークロードに対応しています。
 
    .. figure:: images/4.png
 
-#. **ストレージコンテナ**に一意の**Name**を指定し、**Advanced Settings**をクリックして追加の構成オプションを確認します。
+#. **ストレージコンテナ** に一意の**Name**を指定し、**Advanced Settings** をクリックして追加の構成オプションを確認します。
 
    .. figure:: images/5.png
 
@@ -51,7 +51,7 @@
    Nutanixには、インラインまたは後処理データ圧縮という2つの選択肢があります。インラインまたはプロセス後の圧縮に関係なく、OpLogに入る書き込みデータは> 4kであり、良好な圧縮を示し、圧縮されてOpLogに書き込まれます。インライン圧縮（Delay = 0）の場合、データのシーケンシャルストリームまたは大きなサイズのI / O（> 64K）は、エクステントストアに書き込むときに圧縮されます。後処理（遅延> 0）の場合、データは、OpLogからエクステントストアに排出された後、圧縮遅延が満たされた後に圧縮されます。
 
    圧縮により、データベースなどのアプリケーションのディスク上のスペースが節約され、ストレージに書き込まれる書き込みの数が少なくなります。ポストプロセス圧縮は、すべてのコンテナでデフォルトでオンになっています。5.18以降、すべてのコンテナでインライン圧縮がデフォルトでオンになります。ほとんどすべてのユースケースでインライン圧縮をオンにすることをお勧めします。圧縮に理想的でないワークロードは、暗号化されたデータセットまたはすでに圧縮されたデータセットです。
-   
+
    **消去コーディング**
 
    可用性と必要なストレージの量のバランスをとるために、分散ストレージファブリック（DSF）はイレイジャーコード（EC）を使用してデータをエンコードする機能を提供します。パリティが計算されるRAID（レベル4、5、6など）と同様に、ECは異なるノード間でデータブロックのストリップをエンコードし、パリティを計算します。ホストまたはディスク、あるいはその両方に障害が発生した場合、パリティデータを使用して、欠落しているデータブロックが計算されます（デコード）。DSFの場合、データブロックは別のノードにあり、別のvDiskに属している必要があります。ECは後処理操作であり、コールドデータの書き込み（7日以上上書きされていないデータ）に対して実行されます。ストリップ内のデータブロックとパリティブロックの数は、ノードの数と許容される構成済みの障害に基づいてシステムによって選択されます。
@@ -76,11 +76,11 @@
          :target: https://nutanixbible.com/#anchor-book-of-acropolis-data-protection
          :alt: Nutanix Bible - Data Protection
 
-#. **Save**をクリックしてストレージを作成し、クラスター内の使用可能なすべてのホストにマウントします。
+#. **Save** をクリックしてストレージを作成し、クラスター内の使用可能なすべてのホストにマウントします。
 
    vSphereまたはHyper-V環境では、ストレージコンテナーを作成すると、ハイパーバイザーにストレージをマウントするプロセスも自動化されます。
 
-#. 既存のストレージコンテナーを選択し、さまざまなデータ削減/回避機能による個々の節約と、全体的な効率に基づいて利用可能なストレージの予測である**Effective Capacity**を確認します。これらの値は、**Storage Container Details**テーブルにあります。
+#. 既存のストレージコンテナーを選択し、さまざまなデータ削減/回避機能による個々の節約と、全体的な効率に基づいて利用可能なストレージの予測である **Effective Capacity** を確認します。これらの値は、**Storage Container Details** テーブルにあります。
 
    残念ながら、共有環境でクラスターのデータ復元機能を簡単にテストすることはできませんが、以下の短いビデオでは、クラスター内のノードが予期せず失われた場合のPrismのエクスペリエンスについて説明します。
 
@@ -96,13 +96,13 @@
 
 AHVは、すべてのVMネットワーキングにOpen vSwitch（OVS）を活用します。OVSは、Linuxカーネルに実装され、マルチサーバー仮想化環境で動作するように設計されたオープンソースソフトウェアスイッチです。各AHVサーバーはOVSインスタンスを維持し、すべてのOVSインスタンスが結合して単一の論理スイッチを形成します。各ノードは通常、仮想ネットワークとして公開される複数のVLANにトランク/タグ付けされた物理スイッチポートにアップリンクされます。
 
-#. **Prism Element**ドロップダウンメニューから**VM**を選択します。
+#. **Prism Element** ドロップダウンメニューから **VM** を選択します。
 
-#. **Network Config**を選択します。
+#. **Network Config** を選択します。
 
    .. figure:: images/9.png
 
-#. **+ Create Network**をクリックし、:ref:`clusterassignments`:にある**User**固有のネットワークの詳細を使用して、次のフィールドに入力します。
+#. **+ Create Network** をクリックし、:ref:`clusterassignments`:にある **User** 固有のネットワークの詳細を使用して、次のフィールドに入力します。
 
    - **Name** - *Initials*-Network_IPAM
    - **VLAN ID** - A value (< 4096) other than your **Primary** or **Secondary** network VLANs
@@ -113,17 +113,17 @@ AHVは、すべてのVMネットワーキングにOpen vSwitch（OVS）を活用
    - Select **+ Create Pool**
    - **Start Address** - 10.0.0.100
    - **End Address** - 10.0.0.150
-   - Click **Submit**
+   - **Submit** をクリックします
 
    .. figure:: images/network_config_03.png
 
    AHVは統合DHCPサービス（IPAM）を提供できるため、仮想化管理者は構成済みプールからIPをVMに割り当てることができます。また、仮想NICをVMに追加するときに、IPをDHCP予約として簡単に指定できます。
 
-#. **Save**をクリックします。
+#. **Save** をクリックします。
 
    これで、構成された仮想ネットワークがクラ​​スター内のすべてのノードで利用できるようになります。AHVの仮想ネットワークはESXiの分散仮想スイッチのように動作します。つまり、クラスター内の個々のホストごとに同じ設定を構成する必要はありません。
 
-#. **Network Configuration**ウィンドウを閉じます。
+#. **Network Configuration** ウィンドウを閉じます。
 
    これで完了です、簡単なものです！
 
@@ -132,9 +132,9 @@ VM作成リクエストへの応答
 
 仮想化管理者は通常、新しいVMの展開を担当します。この演習では、新谷さんがNutanix管理者としてPrismにAHV VMをデプロイする手順を説明します。
 
-#. **Prism Element**のドロップダウンメニューから**VM**ページに移動します。
+#. **Prism Element** のドロップダウンメニューから　**VM**　ページに移動します。
 
-#. **+ Create VM**をクリックします。
+#. **+ Create VM** をクリックします。
 
    .. figure:: images/10.png
 
@@ -160,7 +160,7 @@ VM作成リクエストへの応答
 
 VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファイル、またはLinux OS構成用のCloud-Initファイルを指定する機能もあります。
 
-#. **Save**をクリックしてVMを作成します。
+#. **Save**　をクリックしてVMを作成します。
 
    .. 注意::
 
@@ -168,7 +168,7 @@ VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファ
 
       Nutanix CVMのいずれかにSSH接続し、acliを使用して追加のVMの作成を試みることができます。
 
-#. テーブルの上部にある検索フィールドを使用して、リクエストされたVMをフィルタリングします。VMを選択し、表の下のアクションのリストから**Power On**をクリックします。
+#. テーブルの上部にある検索フィールドを使用して、リクエストされたVMをフィルタリングします。VMを選択し、表の下のアクションのリストから　**Power On**　をクリックします。
 
    .. figure:: images/12.png
 
@@ -178,7 +178,7 @@ VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファ
 
 以前のインフラストラクチャでは、新谷さんは新しく作成されたVMネットワークが期待どおりに機能しないという問題があり、問題の原因を特定するためにネットワーク管理者と長いトラブルシューティングセッションに従事する必要がありました。AHVを使用すると、新谷さんはプロビジョニングした仮想マシンの完全なネットワークパスを簡単に視覚化できます。
 
-#. **Prism Element**の**Network**ページを選択し、VLANまたはVM名でフィルタリングして、自分で試してみてください。
+#. **Prism Element**　の　**Network**　ページを選択し、VLANまたはVM名でフィルタリングして、自分で試してみてください。
 
    .. figure:: images/13.png
 
@@ -189,9 +189,9 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 次の演習では、キャロルはプライベートクラウドゲームをアップし、**Prism Central**のネイティブ機能を利用してIaaSセルフサービスをユーザーに提供します。
 
-#. **Prism Element**の**Home**ページに移動します。
+#. **Prism Element**　の　**Home**　ページに移動します。
 
-#. **Launch**ボタンをクリックし、**Prism Central**に次の資格情報でログインします。
+#. **Launch**　ボタンをクリックし、**Prism Central**　に次の資格情報でログインします。
 
    - **User Name** - admin
    - **Password** - *HPOC Password*
@@ -201,17 +201,17 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 カテゴリの探索
 ====================
 
-**Category**はキーと値のペアです。カテゴリは、いくつかの基準（場所、製品レベル、アプリ名など）に基づいてエンティティ（VM、ネットワーク、イメージなど）に割り当てられます。次に、ポリシーを、特定のカテゴリ値が割り当てられているエンティティにマッピングできます。
+**Category**　はキーと値のペアです。カテゴリは、いくつかの基準（場所、製品レベル、アプリ名など）に基づいてエンティティ（VM、ネットワーク、イメージなど）に割り当てられます。次に、ポリシーを、特定のカテゴリ値が割り当てられているエンティティにマッピングできます。
 
 たとえば、開発、財務、人事などの値を含む部門カテゴリがあるとします。この場合、開発と人事に適用される1つのバックアップポリシーと、財務のみに適用される別の（より厳格な）バックアップポリシーを作成できます。カテゴリを使用すると、エンティティグループ全体にさまざまなポリシーを実装でき、Prism Centralを使用すると、確立された関係をすばやく表示できます。
 
 この演習では、新谷さんのカスタムカテゴリを作成して、Fiestaアプリチームの適切なリソースへのアクセスを調整します。
 
-#. **Prism Central**にて:fa:`bars` **> Virtual Infrastructure > Categories**を選択します。
+#. **Prism Central**　にて:fa:`bars` **> Virtual Infrastructure > Categories**　を選択します。
 
    .. figure:: images/14.png
 
-#. **New Category**をクリックし、次のフィールドに入力します。
+#. **New Category**　をクリックし、次のフィールドに入力します。
 
    - **Name** - *Initials*\ -Team
    - **Purpose** - Allowing resource access based on Application Team
@@ -219,13 +219,13 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 #. **Save**をクリックします。
 
-#. 既存の**Environment**カテゴリをクリックして、次のフィールドに入力します。**Environment**は**SYSTEM**カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
+#. 既存の**Environment**カテゴリをクリックして、次のフィールドに入力します。**Environment**　は　**SYSTEM**　カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
 
    .. figure:: images/16.png
 
-#. :fa:`bars` **> Virtual Infrastructure > VMs**を選択します。
+#. :fa:`bars` **> Virtual Infrastructure > VMs**　を選択します。
 
-#. **AutoAD**と**NTNX-BootcampFS-1**のVMsのチェックボックスにチェックした状態で**Actions > Manage Categories**をクリックします。
+#. **AutoAD**　と　**NTNX-BootcampFS-1**　のVMsのチェックボックスにチェックした状態で　**Actions > Manage Categories**　をクリックします。
 
    .. figure:: images/17.png
 
@@ -233,7 +233,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
       参加者の数によっては、選択する必要があるVMの一部が別のページにある場合があります。対象のVMを検索するか、クリックして追加のページを表示してVMを選択するか、追加の行を表示することを選択します。これらの手法はいずれも、インターフェースの右上部分で実行できます。
 
-#. 検索バーで**Environment**と入力し、**Production**の値を選択してから、プラス記号をクリックします。
+#. 検索バーで　**Environment**　と入力し、**Production**　の値を選択してから、プラス記号をクリックします。
 
    .. figure:: images/18.png
 
@@ -241,9 +241,9 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
       セキュリティ、保護、またはリカバリポリシーに関連付けられているカテゴリの場合、関連するポリシーがこのウィンドウに表示され、カテゴリをエンティティに適用した場合の影響が示されます。
 
-#. **Save**をクリックします。
+#. **Save**　をクリックします。
 
-#. 前の演習で新谷さんによってプロビジョニングされた**Initials-WinToolsVM**を選択し、**Actions > Manage Categories**をクリックします。 **Initials-Team: Fiesta**カテゴリを割り当て、 **Save**をクリックします。
+#. 前の演習で新谷さんによってプロビジョニングされた　**Initials-WinToolsVM**　を選択し、**Actions > Manage Categories**　をクリックします。 **Initials-Team: Fiesta**カテゴリを割り当て、 **Save**　をクリックします。
 
 ロールの探索
 ===============
@@ -252,17 +252,17 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 新谷さんは、Fiestaチームで作業する2種類のユーザー、テスト環境用にVMをプロビジョニングする必要があるDeveloper、および組織内の複数の環境を監視するが、各環境を変更する機能が非常に制限されているOperatorをサポートする必要があります。
 
-#. **Prism Central**で:fa:`bars` **> Administration > Roles**を選択する。
+#. **Prism Central**　で:fa:`bars` **> Administration > Roles**　を選択する。
 
    組み込みの開発者ロールにより、ユーザーはVMの作成と変更、Calmブループリントの作成、プロビジョニング、管理などを行うことができます。
 
-#. 組み込みの**Developer**ロールをクリックし、必要に応じてロールの承認されたアクションを確認します。**Manage Assignment**をクリックします。
+#. 組み込みの　**Developer**　ロールをクリックし、必要に応じてロールの承認されたアクションを確認します。**Manage Assignment**　をクリックします。
 
    .. figure:: images/19.png
 
-#. **Users and Groups**で、ntnxlab.localドメインから自動的に検出される**SSP Developers**のユーザーグループを指定します。
+#. **Users and Groups**　で、ntnxlab.localドメインから自動的に検出される　**SSP Developers**　のユーザーグループを指定します。
 
-#. **Entities**で、ドロップダウンメニューを使用して次のリソースを指定します。
+#. **Entities**　で、ドロップダウンメニューを使用して次のリソースを指定します。
 
    - **AHV Cluster** - *Your Assigned Cluster*
    - **AHV Subnet** - Secondary
@@ -270,13 +270,13 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
    .. figure:: images/20.png
 
-#. **Save**をクリックし、右上のXをクリックしてこの画面を閉じます。
+#. **Save**　をクリックし、右上のXをクリックしてこの画面を閉じます。
 
    デフォルトのOperatorロールには、ブループリントからデプロイされたVMとアプリケーションを削除する機能が含まれていますが、これは私たちの環境では望ましくありません。新しいロールを最初から構築するのではなく、既存のロールにクローンを作成し、ニーズに合わせて変更できます。必要なOperatorのロールは、VMメトリックを表示し、電源操作を実行し、vCPUやメモリなどのVM構成を更新して、アプリケーションのパフォーマンスの問題に対処できる必要があります。
 
-#. 組み込み**Operator**ロールをクリックし、**Duplicate**をクリックします。
+#. 組み込み**Operator**　ロールをクリックし、**Duplicate**　をクリックします。
 
-#. 次のフィールドに入力し、**Save**をクリックしてカスタムのロールを作成します。
+#. 次のフィールドに入力し、**Save**　をクリックしてカスタムのロールを作成します。
 
    - **Role Name** - *Initials*\ -SmoothOperator
    - **Description** - Limited operator accounts
@@ -286,7 +286,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
    .. figure:: images/21.png
 
-#. **Prism**を更新し、**SmoothOperator**ロールをクリックします。**Manage Assignment**をクリックします。
+#. **Prism**　を更新し、**SmoothOperator**　ロールをクリックします。**Manage Assignment**　をクリックします。
 
 #. 次の割り当てを作成します。
 
@@ -295,7 +295,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
    Operator01は、環境カテゴリのいずれかでタグ付けされたすべてのVMにアクセスできるユーザーですが、特定のクラスターへの一般的なアクセス権はありません。
 
-   **New Users**をクリックして、同じロールに割り当てを追加します。
+   **New Users**　をクリックして、同じロールに割り当てを追加します。
 
    - **Users and Groups** - operator02
    - **Entity Categories** - Environment:Dev, *Initials*\ -Team:Fiesta
@@ -304,9 +304,9 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
    .. figure:: images/22.png
 
-   **Save**をクリックします。
+   **Save**　をクリックします。
 
-#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを**Prism Admin**、または**Super Admin**ロールにマップ出来ます。:fa:`bars` **> Prism Central Settings > Role Mapping**に移動し、**Cluster Admin**、もしくは**User Admin**のロールをADアカウントに追加します。
+#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを　**Prism Admin**　、または　**Super Admin**　ロールにマップ出来ます。:fa:`bars` **> Prism Central Settings > Role Mapping**　に移動し、**Cluster Admin**　、もしくは　**User Admin**　のロールをADアカウントに追加します。
 
    .. figure:: images/28.png
 
@@ -319,9 +319,9 @@ Nutanix Calmを使用すると、プライベート（AHV、ESXi）とパブリ�
 
 インフラストラクチャ以外の管理者がCalmにアクセスしてアプリケーションを作成または管理できるようにするには、まずユーザーまたはグループをプロジェクトに割り当てる必要があります。プロジェクトは、ユーザーのロール、インフラストラクチャリソース、およびリソースクォータを定義する論理単位として機能します。プロジェクトは、一連の共通の要件または共通の構造と機能を持つユーザーを定義します。たとえば、Fiestaプロジェクトで協力するエンジニアのチームなどです。
 
-#. **Prism Central**において、:fa:`bars` **> Services > Calm**を選択します。
+#. **Prism Central**　において、:fa:`bars` **> Services > Calm**　を選択します。
 
-#. 左手のメニューで**Projects**を選択し、**+ Create Project**をクリックします。
+#. 左手のメニューで　**Projects**　を選択し、**+ Create Project**　をクリックします。
 
    .. figure:: images/23.png
 
@@ -333,17 +333,17 @@ Nutanix Calmを使用すると、プライベート（AHV、ESXi）とパブリ�
 
    - **Project Name** - *Initials*\ -FiestaProject
 
-   - Under **Infrastructure**, select **Select Provider > Nutanix**
+   - Under **Infrastructure**,　 select **Select Provider > Nutanix**
 
    - Click **Select Clusters & Subnets**
 
    - Select *Your Assigned Cluster*
 
-   - Under **Subnets**, select **Primary**, **Secondary**, and click **Confirm**
+   - Under **Subnets**　, select **Primary**, **Secondary**, and click **Confirm**
 
    - Mark *Primary* as the default network by clicking the :fa:`star`
 
-   - Under **Users, Groups, and Roles**, select **+ User**
+   - Under **Users, Groups, and Roles**　, select **+ User**
 
       - **Name** - SSP Developers
       - **Role** - Developer
@@ -363,11 +363,11 @@ Nutanix Calmを使用すると、プライベート（AHV、ESXi）とパブリ�
 
    .. figure:: images/24.png
 
-#. **Save & Configure Environment**をクリックします。
+#. **Save & Configure Environment**　をクリックします。
 
 ``Environmentページに遷移しますが、ここでは何も設定する必要はありません。次のステップに移動して下さい。``
 
-すべてのオペレーターアカウントではなく、**Operator02**のみが**Calm**プロジェクトへのアクセス権を与えられたことに注意してください。
+すべてのオペレーターアカウントではなく、**Operator02**　のみが　**Calm**　プロジェクトへのアクセス権を与えられたことに注意してください。
 
 ブループリントの構築
 ==================
@@ -380,31 +380,31 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 #. `ここを右クリックして、フィエスタマルチブループリントをダウンロードします。 <https://raw.githubusercontent.com/nutanixworkshops/ts2020/master/pc/dayinlife/Fiesta-Multi.json>`_.
 
-#. **Prism Central > Calm**に移動し、左手のメニューから**Blueprints**を選択、**Upload Blueprint**をクリックします。
+#. **Prism Central > Calm**　に移動し、左手のメニューから　**Blueprints**　を選択、**Upload Blueprint**をクリックします。
 
    .. figure:: images/25.png
 
-#. **Fiesta-Multi.json**を選択します。
+#. **Fiesta-Multi.json**　を選択します。
 
-#. **Blueprint Name**にイニシャルが入るように名前を変更します。異なるプロジェクト感であっても、ブループリント名は一意でなければなりません。
+#. **Blueprint Name**　にイニシャルが入るように名前を変更します。異なるプロジェクト感であっても、ブループリント名は一意でなければなりません。
 
-#. ご自身のプロジェクトを選択し、**Upload**をクリックします。
+#. ご自身のプロジェクトを選択し、**Upload**　をクリックします。
 
    .. figure:: images/26.png
 
-#. ブループリントを起動するには、最初にネットワークをVMに割り当てる必要があります。**NodeReact**サービスを選択し、右手の**VM**メニューで、 **NIC 1**ネットワークとして**Primary**を選択します。
+#. ブループリントを起動するには、最初にネットワークをVMに割り当てる必要があります。**NodeReact**　サービスを選択し、右手の**VM**メ　ニューで、 **NIC 1**　ネットワークとして**Primary**　を選択します。
 
-#. Categoryメニューにおいて*Initials*\ **-Team: Fiesta**と**Environment: Dev**を選択します。
+#. Categoryメニューにおいて*Initials*\ **-Team: Fiesta**　と　**Environment: Dev**　を選択します。
 
    .. figure:: images/27.png
 
-#. **NIC 1**と**Category**の割当を**MySQL**サービスに対しても行います。
+#. **NIC 1**　と　**Category**　の割当を　**MySQL**　サービスに対しても行います。
 
-#. **Credentials**をクリックし、ブループリントによってプロビジョニングされるCentOS VMへの認証に使用される秘密鍵を定義します。
+#. **Credentials**　をクリックし、ブループリントによってプロビジョニングされるCentOS VMへの認証に使用される秘密鍵を定義します。
 
    .. figure:: images/27b.png
 
-#. **CENTOS**の認証情報を展開してお好みの秘密鍵を記入するか、以下の値を**SSH Private Key**に入力します。
+#. **CENTOS**　の認証情報を展開してお好みの秘密鍵を記入するか、以下の値を　**SSH Private Key**　に入力します。
 
    ::
 
@@ -436,7 +436,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
       gmznERCNf9Kaxl/hlyV5dZBe/2LIK+/jLGNu9EJLoraaCBFshJKF
       -----END RSA PRIVATE KEY-----
 
-#. **Save**をクリックし、終了後**Back**をクリックします。 
+#. **Save**　をクリックし、終了後　**Back**を　クリックします。
 
    数分以内に、新谷さんは仮想インフラストラクチャとアプリケーションのセルフサービスをエンドユーザーに直接提供するための基礎を築きました。
 
@@ -449,7 +449,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 ここで新谷さんが助け舟を出します。彼女はダンがPrismを通してFiestaプロジェクト内のリソースを簡単に展開できるようにするために以下の演習に従うことを勧めます。
 
-#. **admin**アカウントからログアウトし、以下の楠田さんのアカウントで**Prism Central**にログインします。
+#. **admin**　アカウントからログアウトし、以下の楠田さんのアカウントで　**Prism Central**　にログインします。
 
    - **User Name** - devuser01@ntnxlab.local
    - **Password** - nutanix/4u
@@ -460,7 +460,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 #. :fa:`bars`メニューにアクセスして、環境へのアクセスが大幅に制限されていることを確認して下さい。
 
-#. **VMs**ページに*Initials*\ **-WinToolsVM**が楠田さんが管理可能なVMとして表示されます。
+#. **VMs**　ページに*Initials*\ **-WinToolsVM**　が楠田さんが管理可能なVMとして表示されます。
 
 #. VMをクリックして、楠田さんが彼のVMに関連付けられた基本的なメトリックを取得し、VMの構成、電源操作を制御し、さらにはVMを削除できることに注意してください。
 
@@ -468,7 +468,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    VMのセルフサービスによる作成には、2つのワークフローがあります。従来のVM作成ウィザードとCalmです。楠田さんの要件の1つは、彼の開発ワークフローの一部として必要な複数のツールを実行するLinux仮想マシンです。
 
-#. **Create VM**をクリックし、次のフィールドに入力して、ラボの前半で新谷さんが実行した手動のVM導入プロセスと同様に、従来の仮想マシンをプロビジョニングします。
+#. **Create VM**　をクリックし、次のフィールドに入力して、ラボの前半で新谷さんが実行した手動のVM導入プロセスと同様に、従来の仮想マシンをプロビジョニングします。
 
    - **Create VM from** - Disk Images
    - **Select Disk Images** - Linux_ToolsVM.qcow2
@@ -485,9 +485,9 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    楠田さんは、ツールVMに加えて、Fiestaアプリケーションの新しいビルドのテストに使用できるインフラストラクチャを展開したいと考えています。エンドユーザーが単一のVMプロビジョニングと手動による構築作業によって複雑なアプリケーションを展開するのは遅く、一貫性がなく、ユーザー満足度は高くありません。幸運なことに、新谷さんによってプロジェクトに公開された、事前に作成されたFiestaアプリケーションのブループリントを活用できます。
 
-#. :fa:`bars` **> Services > Calm**を選択します。
+#. :fa:`bars` **> Services > Calm**　を選択します。
 
-#. 左手のメニューから**Blueprints**を選択し、**Fiesta-Multi**ブループリントを開きます。
+#. 左手のメニューから　**Blueprints**　を選択し、**Fiesta-Multi**　ブループリントを開きます。
 
    .. figure:: images/30.png
 
@@ -495,50 +495,50 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
       ブループリントに慣れていない場合は、時間をかけてFiesta-Multiブループリントの以下の主要コンポーネントを調べてみてください。
 
-      - **NodeReact**または**MySQL**サービスを選択し、画面の右側の構成ペインでVM構成を確認します。
+      - **NodeReact**　または　**MySQL**　サービスを選択し、画面の右側の構成ペインでVM構成を確認します。
 
          .. figure:: images/31.png
 
-      - **Package**タブに移動し**Configure Install**をクリックして、選択したサービスのインストールタスクを表示します。これらは、各サービスまたはVMの構成に関連付けられたスクリプトとアクションです。
+      - **Package**　タブに移動し　**Configure Install**　をクリックして、選択したサービスのインストールタスクを表示します。これらは、各サービスまたはVMの構成に関連付けられたスクリプトとアクションです。
 
          .. figure:: images/32.png
 
-      - **Application Profile**の下で**AHV**を選択し、ブループリントのために定義された変数を表示します。変数はランタイムでのカスタマイズが可能であり、アプリケーションプロファイルごとに使用して、AHV、ESXi、AWS、GCP、Azureなどの複数の環境に同一アプリケーションをプロビジョニングできる単一のブループリントを構築することもできます。
+      - **Application Profile**　の下で　**AHV**　を選択し、ブループリントのために定義された変数を表示します。変数はランタイムでのカスタマイズが可能であり、アプリケーションプロファイルごとに使用して、AHV、ESXi、AWS、GCP、Azureなどの複数の環境に同一アプリケーションをプロビジョニングできる単一のブループリントを構築することもできます。
 
          .. figure:: images/33.png
 
-      - **Application Profile**配下の**Create**をクリックし、サービス間の依存関係を視覚化します。依存関係は明示的に定義できますが、変数の割り当てに応じて、Calmは暗黙的な依存関係も識別します。このブループリントでは、MySQLデータベースが実行されるまでWeb層のインストールプロセスが開始されないことがわかります。
+      - **Application Profile**　配下の　**Create**　をクリックし、サービス間の依存関係を視覚化します。依存関係は明示的に定義できますが、変数の割り当てに応じて、Calmは暗黙的な依存関係も識別します。このブループリントでは、MySQLデータベースが実行されるまでWeb層のインストールプロセスが開始されないことがわかります。
 
          .. figure:: images/34.png
 
-      - ブループリントエディタの上部にあるツールバーの**Credentials**をクリックし、**CENTOS**の認証情報を展開します。ブループリントには複数の資格情報を含めることができ、これらを使用してVMを認証し、スクリプトを実行したり、資格情報を安全に直接スクリプトに渡したりできます。
+      - ブループリントエディタの上部にあるツールバーの　**Credentials**　をクリックし、**CENTOS**　の認証情報を展開します。ブループリントには複数の資格情報を含めることができ、これらを使用してVMを認証し、スクリプトを実行したり、資格情報を安全に直接スクリプトに渡したりできます。
 
          .. figure:: images/35.png
 
-      - **Back**をクリックします。
+      - **Back**　をクリックします。
 
-#. **Launch**をクリックして、ブループリントのインスタンスをプロビジョニングします。
+#. **Launch**　をクリックして、ブループリントのインスタンスをプロビジョニングします。
 
    .. figure:: images/36.png
 
-#. 次のフィールドに入力して、**Create**をクリックします。
+#. 次のフィールドに入力して、**Create**　をクリックします。
 
    - **Name of of the Application** - *Initials* -FiestaMySQL
    - **db_password** - nutanix/4u
 
    .. figure:: images/37.png
 
-#. **Audit**タブを選択して、Fiesta開発環境のデプロイメントを監視します。アプリの完全なプロビジョニングには約5分かかります。
+#. **Audit**　タブを選択して、Fiesta開発環境のデプロイメントを監視します。アプリの完全なプロビジョニングには約5分かかります。
 
    .. figure:: images/38.png
 
-#. アプリケーションのプロビジョニング中、:fa:`bars` **> Administration > Projects**を選択し、プロジェクトをクリックします。
+#. アプリケーションのプロビジョニング中、:fa:`bars` **> Administration > Projects**　を選択し、プロジェクトをクリックします。
 
-#. **Summary**、**Usage**、**VMs**、**Users**のタブを確認します。これらの情報により、プロジェクト、VM、またはユーザーレベルで、どれだけリソースが消費されているかを簡単に把握できます。
+#. **Summary**　、**Usage**　、**VMs**　、**Users**　のタブを確認します。これらの情報により、プロジェクト、VM、またはユーザーレベルで、どれだけリソースが消費されているかを簡単に把握できます。
 
    .. figure:: images/39.png
 
-#. **Calm > Applications >** *Initials*\ **-FiestaMySQL**に戻り、アプリケーションが **Provisioning**状態から**Running**状態になるのを待ちます。**Services**タブから**NodeReact**サービスを選択して、Web層のIPを取得します。
+#. **Calm > Applications >** *Initials*\ **-FiestaMySQL**　に戻り、アプリケーションが **Provisioning**　状態から　**Running**　状態になるのを待ちます。**Services**　タブから　**NodeReact**　サービスを選択して、Web層のIPを取得します。
 
    .. figure:: images/40.png
 
@@ -553,23 +553,23 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 倉さんと宇土（うど）さんをご紹介します。 倉さんは、ITヘルプデスクでレベル3の運用エンジニアとして働いており、宇土さんはFiestaチームの品質保証としてインターンとして働いています。以下の簡単な演習では、新谷さんによって定義されたロールと割り当てられたカテゴリに基づいて、それらのアクセスレベルを調べて比較します。
 
-#. **devuser01**アカウントからログアウトし、倉さんの認証情報を使って**Prism Central**にログインします。
+#. **devuser01**　アカウントからログアウトし、倉さんの認証情報を使って　**Prism Central**　にログインします。
 
    - **User Name** - operator01@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. 予想どおり、**Environment**カテゴリ値が割り当てられたすべてのVMが使用可能です。VM を**Create**または**Delete**する機能はありませんが、VM構成を電源管理および変更する機能はあります。
+#. 予想どおり、**Environment**　カテゴリ値が割り当てられたすべてのVMが使用可能です。VM を　**Create**　または　**Delete**　する機能はありませんが、VM構成を電源管理および変更する機能はあります。
 
    このユーザーは他に何にアクセスできますか？Calmにはアクセスできますか？
 
    .. figure:: images/42.png
 
-#. **operator01**アカウントからログアウトし、宇土さんの資格情報を使用して**Prism Central**にログインします。
+#. **operator01**　アカウントからログアウトし、宇土さんの資格情報を使用して　**Prism Central**　にログインします。
 
    - **User Name** - operator02@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. *Initials*\ **-Team: Fiesta**カテゴリでタグ付けされたリソースのみを管理できます。
+#. *Initials*\ **-Team: Fiesta**　カテゴリでタグ付けされたリソースのみを管理できます。
 
    .. figure:: images/43.png
 
@@ -580,14 +580,14 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 新谷さんは、レガシーインフラストラクチャを近代的なアーキテクチャへと刷新するにあたり、大規模で多様な環境をすべてPrism Centralで管理および監視することを検討しています。以下の演習では、Nutanix環境で複数のクラスターにまたがるエンティティを操作するための一般的なワークフローを探ります。
 
-#. **operator02**アカウントからログアウトし、CarolのAD認証情報を使用して account and log back into **Prism Central** with Carol's AD credentials:
+#. **operator02**　アカウントからログアウトし、CarolのAD認証情報を使用して account and log back into **Prism Central** with Carol's AD credentials:
 
    - **User Name** - adminuser01@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. :fa:`bars` **> Virtual Infrastructure > VMs**を開きます。Prism Centralの**Entity Browser**は、VM、イメージ、クラスター、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
+#. :fa:`bars` **> Virtual Infrastructure > VMs**を開きます。Prism Centralの　**Entity Browser**　は、VM、イメージ、クラスター、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
 
-#. **Filters**を選択して、使用可能なオプションを確認します。次のサンプルフィルターを指定し、対応するボックスがオンになっていることを確認します。
+#. **Filters**　を選択して、使用可能なオプションを確認します。次のサンプルフィルターを指定し、対応するボックスがオンになっていることを確認します。
 
    - **Name** - Contains *Initials*
    - **Categories** - *Initials*\ -Team: Fiesta
@@ -596,7 +596,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    VM効率、メモリ使用量、ストレージレイテンシなど、利用可能な他の有用なフィルターに注意してください。
 
-#. フィルターされたVMをすべて選択し、**Label**アイコンをクリックして、フィルターされたVMのグループにカスタムラベルを適用します。 (例: *Initials* AHV Fiesta VMs).
+#. フィルターされたVMをすべて選択し、**Label**　アイコンをクリックして、フィルターされたVMのグループにカスタムラベルを適用します。 (例: *Initials* AHV Fiesta VMs).
 
    .. figure:: images/44.png
 
@@ -604,9 +604,9 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    .. figure:: images/45.png
 
-#. **Focus**ドロップダウンを選択して、ボックス外のさまざまなビューにアクセスします。VMがDR計画の一部として含まれているかどうかを理解するには、どのビューを使用する必要がありますか？
+#. **Focus**　ドロップダウンを選択して、ボックス外のさまざまなビューにアクセスします。VMがDR計画の一部として含まれているかどうかを理解するには、どのビューを使用する必要がありますか？
 
-#. **Focus > + Add Custom**をクリックして、**CPU Usage**、**CPU Ready Time**、**IO Latency**、**Working Set Size Read**、**Working Set Size Write**を表示するVMビュー（XYZ-VM-Viewなど）を作成します。このようなビューは、VMパフォーマンスの問題を特定するのに役立ちます。
+#. **Focus > + Add Custom**　をクリックして、**CPU Usage**　、**CPU Ready Time**　、**IO Latency**　、**Working Set Size Read**　、**Working Set Size Write**　を表示するVMビュー（XYZ-VM-Viewなど）を作成します。このようなビューは、VMパフォーマンスの問題を特定するのに役立ちます。
 
    .. figure:: images/46.png
 
@@ -642,4 +642,4 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 2時間以内の時間で、ストレージ、ネットワーク、ワークロードの導入、環境の監視、ソフトウェアの更新に関して、Prismが仮想インフラストラクチャ管理者にスムーズな体験を提供する方法を示しました。ネイティブのPrism Central機能をActive Directoryと組み合わせて使用​​して、アクセスを制御し、管理者以外のユーザのセルフサービスを有効にする方法を見てきました。さらに、Nutanix Calmを介してプライベートクラウドの豊富なアプリケーション自動化機能を有効にしました。
 
-ただし、プライベートクラウドは、IaaS、セルフサービス、およびアプリケーションの自動化だけで構築されているわけではありません。今後のラボでは、Nutanixがその基盤をどのように構築して、**Prism Pro**機能による高度な監視および運用機能を提供するか、ストレージテクノロジーを**Files**に統合するか、ネイティブマイクロセグメンテーションを**Flow**に統合する方法を確認します。
+ただし、プライベートクラウドは、IaaS、セルフサービス、およびアプリケーションの自動化だけで構築されているわけではありません。今後のラボでは、Nutanixがその基盤をどのように構築して、**Prism Pro**　機能による高度な監視および運用機能を提供するか、ストレージテクノロジーを　**Files**　に統合するか、ネイティブマイクロセグメンテーションを　**Flow**　に統合する方法を確認します。
