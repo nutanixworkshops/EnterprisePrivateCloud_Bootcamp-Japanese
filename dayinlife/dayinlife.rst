@@ -68,9 +68,9 @@
 
    冗長係数は、データコピーの数を制御します。このクラスターには冗長係数を構成できないことに注意してください。これは、RF3をサポートするために必要なノードの最小数が5であるためです。
 
-   .. 注意::
+   .. note::
 
-      Nutanixがデータを保護する方法またはデータ削減を実装する方法の詳細については、下の図をクリックしてNutanixバイブルの関連セクションを確認してください。
+      注意: Nutanixがデータを保護する方法またはデータ削減を実装する方法の詳細については、下の図をクリックしてNutanixバイブルの関連セクションを確認してください。
 
       .. figure:: https://nutanixbible.com/imagesv2/data_protection.png
          :target: https://nutanixbible.com/#anchor-book-of-acropolis-data-protection
