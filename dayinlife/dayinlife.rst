@@ -1,107 +1,108 @@
 .. _dayinlife:
 
 -----------------
-A Day in the Life
+ある情シス部員の日常
 -----------------
 
-In this lab you will follow a day in the life of Carol O'Kay, a 10 year veteran of administrating virtual environments on 3-tier architecture, who has recently deployed her first Nutanix cluster. The Nutanix cluster is being used for a mix of production IT workloads, and supporting the engineering efforts for her company's primary application, an inventory management solution called Fiesta, used to support the company's retail storefronts.
+このラボでは、この道10年のベテランである情シス部員、新谷さんの1日を追います。彼は3層アーキテクチャの仮想環境を管理しており、最近Nutanixを導入しました。Nutanixクラスタは、本番環境において様々なITワークロード向けに使用されています。また、会社の主要なアプリケーションであるFiestaと呼ばれる在庫管理ソリューションの開発作業をサポートしています。
 
-.. note::
+.. 注意::
 
-   If there are multiple people utilizing the same Nutanix cluster to complete this lab, certain steps may have already been completed. If this occurs, just skip that particular step, and continue on with the lab after you've verified the step(s) was completed correctly.
+   同じNutanixクラスタを複数人で共用している場合、いくつかの手順はすでに完了している可能性があります。ステップが正しく完了していることを確認した後、ラボを続行してください。
 
-Configuring Storage
+ストレージの構成
 +++++++++++++++++++
 
-In this brief exercise, you will experience how IT generalists can provision and monitor primary storage for their virtualized environment through Prism with just a few clicks - a stark contrast to planning and managing traditional SAN storage.
+この演習では、数回クリックするだけでPrism(Nutanixプラットフォームの管理コンソール)を介して仮想環境に対してストレージをプロビジョニングし、監視する方法を体験します。従来のSANストレージの計画と管理とは異なり、これらのステップは非常に簡単です。
 
-#. Using your **Cluster Assignment Spreadsheet**, identify your **Prism Element** cluster IP.
+#. **Cluster Assignment Spreadsheet**からあなたの**Prism Element**のクラスタIPを探します。
 
-#. In a browser, open **Prism Element** and log in using the following local user credentials:
+#. ブラウザーで**Prism Element**を開き、次のローカルユーザー資格情報を使用してログインします。
 
    - **Username** - admin
    - **Password** - *HPOC Password*
 
    .. figure:: images/1.png
 
-#. Select **Storage** from the drop down menu.
+#. ドロップダウンメニューから**Storage(ストレージ)**を選択します。
 
    .. figure:: images/2.png
 
-#. Mouse over the **Storage Summary** and **Capacity Optimization** widgets for explanations of what each is displaying.
+#. **Storage Summary(ストレージ概要)**ウィジェットと**Capacity Optimization(容量最適化)**ウィジェットの上にマウスを置くと、それぞれが何を表示しているかの説明が表示されます。
 
-   It's important to understand that Nutanix considers the **Data Reduction** ratio as savings ONLY from compression, deduplication, and erasure coding. The **Overall Efficiency**, comparable to what many other vendors consider "Data Reduction," incorporates the aforementioned data efficiency features, as well as data avoidance features like thin provisioning, intelligent cloning, and zero suppression.
+   ここで重要なのはNutanixが**Data Reduction(データ削減の節約)**として定義しているのは、データ圧縮、重複排除、消失符号化による節約のみであるということです。 一方、**Overall Efficiency(全体の効率性)**では他ベンダが”データ削減”として定義しているのと同じく、シンプロビジョニングやインテリジェントクローニングやゼロサプレッション等のデータ効率のための機能を含んだものとなっています。
 
    .. figure:: images/3.png
 
-#. Select **Table** and click **+ Storage Container**.
+#. **Table(テーブル)**を選択し、**+ Storage Container(ストレージコンテナ)**をクリックします。
 
-   Storage Containers represent logical policies for storage, allowing you to create reservations, enable/disable data efficiency features like compression, deduplication, and erasure coding, and to configure Redundancy Factor (RF). Every Storage Container on a Nutanix cluster still leverages all physical disks within the cluster, referred to as the Storage Pool. A typical Nutanix cluster will have a small number of Storage Containers, typically corresponding to workloads that benefit from different data efficiency technologies.
+   ストレージコンテナーは、ストレージの論理ポリシーを表し、予約の作成、圧縮、重複排除、イレージャーコーディングなどのデータ効率化機能の有効化/無効化、冗長係数（RF）の構成を可能にします。Nutanixクラスタ上のすべてのストレージコンテナは、ストレージプールと呼ばれる、クラスタ内のすべての物理ディスクを引き続き利用します。典型的なNutanixクラスターには少数のストレージコンテナーがあり、通常、さまざまなデータ効率化テクノロジーの恩恵を受けるワークロードに対応しています。
 
    .. figure:: images/4.png
 
-#. Provide a unique **Name** for the **Storage Container**, and click **Advanced Settings** to explore additional configuration options.
+#. **ストレージコンテナ**に一意の**Name**を指定し、**Advanced Settings**をクリックして追加の構成オプションを確認します。
 
    .. figure:: images/5.png
 
-   Nutanix provides different ways to optimize storage capacity that are intelligent and adaptive to workloads characteristics. Nutanix uses native data avoidance (thin provisioning, intelligent cloning and zero suppression) and data reduction (compression, deduplication, and erasure coding) techniques to handle data efficiently. All data reduction optimizations are performed at the container level, so different containers can use different settings.
+   Nutanixは、インテリジェントでワークロード特性に適応するストレージ容量を最適化するさまざまな方法を提供します。Nutanixは、ネイティブデータ回避（シンプロビジョニング、インテリジェントクローニング、ゼロ抑制）およびデータ削減（圧縮、重複排除、消失符号化）技術を使用して、データを効率的に処理します。すべてのデータ削減最適化はコンテナーレベルで実行されるため、コンテナーごとに異なる設定を使用できます。
 
-   **Compression**
+   **圧縮**
 
-      Nutanix provides two choices - inline or post-process data compression. Irrespective of inline or post-process compression, write data coming into OpLog that is >4k and shows good compression, will be written compressed in OpLog. For inline compression (Delay=0), sequential streams of data or large size I/Os (>64K) will be compressed when writing to the Extent Store. For post-process (Delay > 0), data is compressed after it is drained from OpLog to the Extent Store, after compression delay is met.
+   Nutanixには、インラインまたは後処理データ圧縮という2つの選択肢があります。インラインまたはプロセス後の圧縮に関係なく、OpLogに入る書き込みデータは> 4kであり、良好な圧縮を示し、圧縮されてOpLogに書き込まれます。インライン圧縮（Delay = 0）の場合、データのシーケンシャルストリームまたは大きなサイズのI / O（> 64K）は、エクステントストアに書き込むときに圧縮されます。後処理（遅延> 0）の場合、データは、OpLogからエクステントストアに排出された後、圧縮遅延が満たされた後に圧縮されます。
 
-      Compression provides on-disk space savings for applications such as databases, and results in a lower number of writes being written to storage. Post-process compression is turned ON by default on all containers. Starting 5.18, inline compression will be turned ON by default on all containers. We recommend turning ON inline compression for almost all use cases. Workloads not ideal for compression are encrypted datasets or already compressed datasets.
+   圧縮により、データベースなどのアプリケーションのディスク上のスペースが節約され、ストレージに書き込まれる書き込みの数が少なくなります。ポストプロセス圧縮は、すべてのコンテナでデフォルトでオンになっています。5.18以降、すべてのコンテナでインライン圧縮がデフォルトでオンになります。ほとんどすべてのユースケースでインライン圧縮をオンにすることをお勧めします。圧縮に理想的でないワークロードは、暗号化されたデータセットまたはすでに圧縮されたデータセットです。
+   
+   **消去コーディング**
 
-   **Erasure Coding**
+   可用性と必要なストレージの量のバランスをとるために、分散ストレージファブリック（DSF）はイレイジャーコード（EC）を使用してデータをエンコードする機能を提供します。パリティが計算されるRAID（レベル4、5、6など）と同様に、ECは異なるノード間でデータブロックのストリップをエンコードし、パリティを計算します。ホストまたはディスク、あるいはその両方に障害が発生した場合、パリティデータを使用して、欠落しているデータブロックが計算されます（デコード）。DSFの場合、データブロックは別のノードにあり、別のvDiskに属している必要があります。ECは後処理操作であり、コールドデータの書き込み（7日以上上書きされていないデータ）に対して実行されます。ストリップ内のデータブロックとパリティブロックの数は、ノードの数と許容される構成済みの障害に基づいてシステムによって選択されます。
 
-      To provide a balance between availability and the amount of storage required, Distributed Storage Fabric (DSF) provides the ability to encode data using erasure codes (EC). Like RAID (levels 4, 5, 6, etc.) where parity is calculated, EC encodes a strip of data blocks across different nodes and calculates parity. In the event of a host and/or disk failure, the parity data is used to calculate any missing data blocks (decoding).  In the case of DSF, the data block must be on a different node and belong to a different vDisk. EC is a post-process operation and is done on write cold data (Data that hasn’t been overwritten in more than 7 days). The number of data and parity blocks in a strip is chosen by the system based on number of nodes and configured failures to tolerate.
+   消失符号化は書き込みコールドデータで機能し、より使いやすいストレージを提供するため、ミッションクリティカルではないワークロードと大量の書き込みコールドデータがあるワークロードに対してEC-Xをオンにします。詳細については、`アプリケーション固有のベストプラクティスガイド <https://portal.nutanix.com/page/documents/solutions/list/>`_を参照してください。
 
-      Turn on EC-X for non-mission-critical workloads and workloads that have a significant amount of write cold data, since erasure coding works on write cold data and provides more usable storage. For more information refer to `application specific best practice guides <https://portal.nutanix.com/page/documents/solutions/list/>`_.
+   **重複排除**
 
-   **Deduplication**
+   有効にすると、分散ストレージファブリック（DSF）は容量層とパフォーマンス層の重複排除を実行します。データは、メタデータとして保存されているSHA-1ハッシュを使用して、取り込み時にフィンガープリントされます。同じフィンガープリントを持つ複数のコピーに基づいて重複データが検出された場合、バックグラウンドプロセスが重複を削除します。重複排除されたデータが読み取られると、それは統合キャッシュに配置され、同じフィンガープリントのデータに対する後続の要求は、キャッシュから直接満たされます。
 
-      When enabled, Distributed Storage Fabric (DSF) does capacity-tier and performance-tier deduplication. Data is fingerprinted on ingest using a SHA-1 hash that is stored as metadata. When duplicate data is detected based on multiple copies with the same fingerprint, a background process removes the duplicates. When deduplicated data is read, it is placed in a unified cache, and any subsequent requests for data with the same fingerprint are satisfied directly from cache.
+   完全クローン、P2V移行、永続デスクトップには重複排除が推奨されます。
 
-      Deduplication is recommended for full clones, P2V migrations and Persistent Desktops.
+   **冗長係数**
 
-   **Redundancy Factor**
+   冗長係数は、データコピーの数を制御します。このクラスターには冗長係数を構成できないことに注意してください。これは、RF3をサポートするために必要なノードの最小数が5であるためです。
 
-      Redundancy Factor controls the number of data copies. Observe that the Redundancy Factor cannot be configured for this cluster, this is due to the minimum number of nodes required to support RF3 is 5.
+   .. 注意::
 
-   .. note::
-
-      For more information on how Nutanix protects your data or implements data reduction, click the diagram below to review the relevant section of the Nutanix Bible.
+      Nutanixがデータを保護する方法またはデータ削減を実装する方法の詳細については、下の図をクリックしてNutanixバイブルの関連セクションを確認してください。
 
       .. figure:: https://nutanixbible.com/imagesv2/data_protection.png
          :target: https://nutanixbible.com/#anchor-book-of-acropolis-data-protection
          :alt: Nutanix Bible - Data Protection
 
-#. Click **Save** to create the storage and mount it to all available hosts within the cluster.
+#. **Save**をクリックしてストレージを作成し、クラスター内の使用可能なすべてのホストにマウントします。
 
-   In vSphere or Hyper-V environments, creating the Storage Container will also automate the process of mounting the storage to the hypervisor.
+   vSphereまたはHyper-V環境では、ストレージコンテナーを作成すると、ハイパーバイザーにストレージをマウントするプロセスも自動化されます。
 
-#. Select an existing Storage Container, and review the individual savings from different data reduction/avoidance features, as well as the **Effective Capacity**, which is a projection of available storage based on the overall efficiency. These values are found in the **Storage Container Details** table.
+#. 既存のストレージコンテナーを選択し、さまざまなデータ削減/回避機能による個々の節約と、全体的な効率に基づいて利用可能なストレージの予測である**Effective Capacity**を確認します。これらの値は、**Storage Container Details**テーブルにあります。
 
-   Unfortunately it is not possible to easily test data resiliency capabilities of the cluster in a shared environment, but the short video below will walk you through the experience from Prism when a node in the cluster is unexpectedly lost.
+   残念ながら、共有環境でクラスターのデータ復元機能を簡単にテストすることはできませんが、以下の短いビデオでは、クラスター内のノードが予期せず失われた場合のPrismのエクスペリエンスについて説明します。
+
 
    .. raw:: html
 
      <center><iframe width="640" height="360" src="https://www.youtube.com/embed/hA4l1UHZO2w?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
-Provisioning a New Network
+新しいネットワークのプロビジョニング
 ++++++++++++++++++++++++++
 
-In this exercise Carol will use Prism to configure a new VM Network for the cluster.
+この演習では、新谷さんはPrismを使用して、クラスターの新しいVMネットワークを構成します。
 
-AHV leverages Open vSwitch (OVS) for all VM networking. OVS is an open source software switch implemented in the Linux kernel and designed to work in a multiserver virtualization environment. Each AHV server maintains an OVS instance, and all OVS instances combine to form a single logical switch. Each node is typically uplinked to a physical switch port trunked/tagged to multiple VLANs, which will be exposed as virtual networks.
+AHVは、すべてのVMネットワーキングにOpen vSwitch（OVS）を活用します。OVSは、Linuxカーネルに実装され、マルチサーバー仮想化環境で動作するように設計されたオープンソースソフトウェアスイッチです。各AHVサーバーはOVSインスタンスを維持し、すべてのOVSインスタンスが結合して単一の論理スイッチを形成します。各ノードは通常、仮想ネットワークとして公開される複数のVLANにトランク/タグ付けされた物理スイッチポートにアップリンクされます。
 
-#. Select **VM** from the **Prism Element** drop down menu.
+#. **Prism Element**ドロップダウンメニューから**VM**を選択します。
 
-#. Select **Network Config**.
+#. **Network Config**を選択します。
 
    .. figure:: images/9.png
 
-#. Click **+ Create Network** and fill out the following fields, using the **User** specific network details in :ref:`clusterassignments`:
+#. **+ Create Network**をクリックし、:ref:`clusterassignments`:にある**User**固有のネットワークの詳細を使用して、次のフィールドに入力します。
 
    - **Name** - *Initials*-Network_IPAM
    - **VLAN ID** - A value (< 4096) other than your **Primary** or **Secondary** network VLANs
@@ -116,28 +117,28 @@ AHV leverages Open vSwitch (OVS) for all VM networking. OVS is an open source so
 
    .. figure:: images/network_config_03.png
 
-   Note that AHV is capable of providing integrated DHCP services (IPAM), allowing virtualization administrators to allocate IPs to VMs from a configured pool, or easily specifying IPs as DHCP reservations when adding virtual NICs to VMs.
+   AHVは統合DHCPサービス（IPAM）を提供できるため、仮想化管理者は構成済みプールからIPをVMに割り当てることができます。また、仮想NICをVMに追加するときに、IPをDHCP予約として簡単に指定できます。
 
-#. Click **Save**.
+#. **Save**をクリックします。
 
-   The configured virtual network will now be available across all nodes within the cluster. Virtual networks in AHV behave like Distributed Virtual Switches in ESXi, meaning you do not need to configure the same settings on each individual host within the cluster.
+   これで、構成された仮想ネットワークがクラ​​スター内のすべてのノードで利用できるようになります。AHVの仮想ネットワークはESXiの分散仮想スイッチのように動作します。つまり、クラスター内の個々のホストごとに同じ設定を構成する必要はありません。
 
-#. Close the **Network Configuration** window.
+#. **Network Configuration**ウィンドウを閉じます。
 
-   You're done - simple stuff!
+   これで完了です、簡単なものです！
 
-Responding to VM Creation Requests
+VM作成リクエストへの応答
 ++++++++++++++++++++++++++++++++++
 
-Virtualization administrators are commonly tasked with deployment of new VMs. In this exercise, Carol walks through deployment of an AHV VM in Prism as a Nutanix administrator.
+仮想化管理者は通常、新しいVMの展開を担当します。この演習では、新谷さんがNutanix管理者としてPrismにAHV VMをデプロイする手順を説明します。
 
-#. Return to the **VM** page in **Prism Element** from the drop down menu.
+#. **Prism Element**のドロップダウンメニューから**VM**ページに移動します。
 
-#. Click **+ Create VM**.
+#. **+ Create VM**をクリックします。
 
    .. figure:: images/10.png
 
-#. Fill out the following fields to complete the user VM request:
+#. 次のフィールドに入力して、ユーザーVMリクエストを完了します。
 
    - **Name** - *Initials*\ -WinToolsVM
    - **Description** - Manually deployed Tools VM
@@ -155,113 +156,113 @@ Virtualization administrators are commonly tasked with deployment of new VMs. In
       - **VLAN Name** - Secondary
       - Select **Add**
 
-   Similar to public cloud providers, Nutanix AHV provides an Image Service feature allows you to build a store of imported files that you can use to mount a CD-ROM device from an ISO image or an operating system Disk from a disk image when creating a VM. The Image Service supports raw, vhd, vhdx, vmdk, vdi, iso, and qcow2 disk formats.
+パブリッククラウドプロバイダーと同様に、Nutanix AHVはイメージサービス機能を提供し、インポートしたファイルのストアを構築して、VMの作成時にISOイメージまたはオペレーティングシステムからCD-ROMデバイスをマウントしたり、ディスクイメージからオペレーティングシステムをマウントしたりできます。Image Serviceは、raw、vhd、vhdx、vmdk、vdi、iso、およびqcow2ディスク形式をサポートしています。
 
-   Note that the VM creation wizard also provides the ability to specify a Unattend.xml file for Windows Sysprep automation, or Cloud-Init file for Linux OS configuration.
+VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファイル、またはLinux OS構成用のCloud-Initファイルを指定する機能もあります。
 
-#. Click **Save** to create the VM.
+#. **Save**をクリックしてVMを作成します。
 
-   .. note::
+   .. 注意::
 
-      Many VM operations, including VM creation can be scripted using the AHV CLI, ``acli``. Certain features, such as Secure Boot and vNUMA can currently only be enabled for a VM through the command line. The ACLI Reference Guide can be found `here <https://portal.nutanix.com/#/page/docs/details?targetId=Command-Ref-AOS-v5_16:acl-acli-vm-auto-r.html>`_.
+      VMの作成を含む多くのVM操作は、AHV CLI、``acli``を使用してスクリプト化できます。現在、セキュアブートやvNUMAなどの特定の機能は、コマンドラインを介してVMに対してのみ有効にできます。ACLIリファレンスガイドは `こちら <https://portal.nutanix.com/#/page/docs/details?targetId=Command-Ref-AOS-v5_16:acl-acli-vm-auto-r.html>`_です。
 
-      You can SSH into any of your Nutanix CVMs and attempt creating an additional VM using ``acli``.
+      Nutanix CVMのいずれかにSSH接続し、acliを使用して追加のVMの作成を試みることができます。
 
-#. Using the search field at the top of the table, filter for the requested VM. Select the VM and click **Power On** from the list of actions below the table.
+#. テーブルの上部にある検索フィールドを使用して、リクエストされたVMをフィルタリングします。VMを選択し、表の下のアクションのリストから**Power On**をクリックします。
 
    .. figure:: images/12.png
 
-#. Once the VM has completed booting, note the **IP Address**.
+#. VMの起動が完了したら、**IP Address**をメモします。
 
    .. figure:: images/11.png
 
-   With previous infrastructure, Carol has had issues with newly created VM networks not working as expected, and has had to engage in lengthy troubleshooting sessions with her network admin counterpart to identify the source of the issue. With AHV, Carol is easily able to visualize the complete network path of the virtual machine she has provisioned.
+以前のインフラストラクチャでは、新谷さんは新しく作成されたVMネットワークが期待どおりに機能しないという問題があり、問題の原因を特定するためにネットワーク管理者と長いトラブルシューティングセッションに従事する必要がありました。AHVを使用すると、新谷さんはプロビジョニングした仮想マシンの完全なネットワークパスを簡単に視覚化できます。
 
-#. Try it yourself by selecting the **Network** page from the **Prism Element** drop down menu and filtering by VLAN or VM name.
+#. **Prism Element**の**Network**ページを選択し、VLANまたはVM名でフィルタリングして、自分で試してみてください。
 
    .. figure:: images/13.png
 
-Enabling User Self Service
+ユーザーセルフサービスを有効にする
 ++++++++++++++++++++++++++
 
-While Prism and ``acli`` provide simple workflows for creating VMs, Carol is regularly inundated with these requests and would love to focus more of her time on modernizing other parts of her organization's aging infrastructure, and attending her son's soccer games.
+PrismやacliはVMを作成するための簡単なワークフローを提供しますが、新谷さんは定期的にこれらのリクエストが殺到しており、老朽化したインフラストラクチャの近代化と息子のサッカーの試合観戦にもっと時間を費やしたいと思っています。
 
-In the following exercises, Carol is going to up her Private Cloud game and bring IaaS self-service to her users leveraging native capabilities in **Prism Central**.
+次の演習では、キャロルはプライベートクラウドゲームをアップし、**Prism Central**のネイティブ機能を利用してIaaSセルフサービスをユーザーに提供します。
 
-#. Return to the **Home** page of **Prism Element**.
+#. **Prism Element**の**Home**ページに移動します。
 
-#. Access **Prism Central** by clicking the **Launch** button and logging in with the following credentials:
+#. **Launch**ボタンをクリックし、**Prism Central**に次の資格情報でログインします。
 
    - **User Name** - admin
    - **Password** - *HPOC Password*
 
    .. figure:: images/6.png
 
-Exploring Categories
+カテゴリの探索
 ====================
 
-A **Category** is a key value pair. Categories are assigned to entities (such as VMs, Networks, or Images) based on some criteria (Location, Production-level, App Name, etc.). Policies can then be mapped to those entities that are assigned a specific category value.
+**Category**はキーと値のペアです。カテゴリは、いくつかの基準（場所、製品レベル、アプリ名など）に基づいてエンティティ（VM、ネットワーク、イメージなど）に割り当てられます。次に、ポリシーを、特定のカテゴリ値が割り当てられているエンティティにマッピングできます。
 
-For example, you might have a Department category that includes values such as Engineering, Finance, and HR. In this case you could create one backup policy that applies to Engineering and HR and a separate (more stringent) backup policy that applies to just Finance. Categories allow you to implement a variety of policies across entity groups, and Prism Central allows you to quickly view any established relationships.
+たとえば、開発、財務、人事などの値を含む部門カテゴリがあるとします。この場合、開発と人事に適用される1つのバックアップポリシーと、財務のみに適用される別の（より厳格な）バックアップポリシーを作成できます。カテゴリを使用すると、エンティティグループ全体にさまざまなポリシーを実装でき、Prism Centralを使用すると、確立された関係をすばやく表示できます。
 
-In this exercise you'll create a custom category for Carol to help align access to the proper resources for the Fiesta app team.
+この演習では、新谷さんのカスタムカテゴリを作成して、Fiestaアプリチームの適切なリソースへのアクセスを調整します。
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > Categories**.
+#. **Prism Central**にて:fa:`bars` **> Virtual Infrastructure > Categories**を選択します。
 
    .. figure:: images/14.png
 
-#. Click **New Category** and fill out the following fields:
+#. **New Category**をクリックし、次のフィールドに入力します。
 
    - **Name** - *Initials*\ -Team
    - **Purpose** - Allowing resource access based on Application Team
    - **Values** - Fiesta
 
-#. Click **Save**.
+#. **Save**をクリックします。
 
-#. Click on the existing **Environment** category and note the available values. **Environment** is a **SYSTEM** category, and while you can add additional values, you cannot modify or delete the Category or any of its out of the box values.
+#. 既存の**Environment**カテゴリをクリックして、次のフィールドに入力します。**Environment**は**SYSTEM**カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
 
    .. figure:: images/16.png
 
-#. Select :fa:`bars` **> Virtual Infrastructure > VMs**.
+#. :fa:`bars` **> Virtual Infrastructure > VMs**を選択します。
 
-#. Using the checkboxes, select the **AutoAD**, and **NTNX-BootcampFS-1** VMs and click **Actions > Manage Categories**.
+#. **AutoAD**と**NTNX-BootcampFS-1**のVMsのチェックボックスにチェックした状態で**Actions > Manage Categories**をクリックします。
 
    .. figure:: images/17.png
 
-   .. note::
+   .. 注意::
 
-      Depending on the number of participants, some of the VMs you need to select could be on another page. You may either search for the VM in question, click to view additional pages and select the VM, or choose to show additional rows. Any of these techniques can be accomplished at the upper right hand portion of the interface.
+      参加者の数によっては、選択する必要があるVMの一部が別のページにある場合があります。対象のVMを検索するか、クリックして追加のページを表示してVMを選択するか、追加の行を表示することを選択します。これらの手法はいずれも、インターフェースの右上部分で実行できます。
 
-#. In the search bar, begin typing **Environment** and select the **Production** value, then click on the plus sign.
+#. 検索バーで**Environment**と入力し、**Production**の値を選択してから、プラス記号をクリックします。
 
    .. figure:: images/18.png
 
-   .. note::
+   .. 注意::
 
-      For categories tied to Security, Protection, or Recovery policies, related policies will appear in this window to show the impact of applying a Category to an entity.
+      セキュリティ、保護、またはリカバリポリシーに関連付けられているカテゴリの場合、関連するポリシーがこのウィンドウに表示され、カテゴリをエンティティに適用した場合の影響が示されます。
 
-#. Click **Save**.
+#. **Save**をクリックします。
 
-#. Select the *Initials*\ **-WinToolsVM** provisioned by Carol in the previous exercise, and click **Actions > Manage Categories**. Assign the *Initials*\ **-Team: Fiesta** category, click the plus sign and then **Save**.
+#. 前の演習で新谷さんによってプロビジョニングされた**Initials-WinToolsVM**を選択し、**Actions > Manage Categories**をクリックします。 **Initials-Team: Fiesta**カテゴリを割り当て、 **Save**をクリックします。
 
-Exploring Roles
+ロールの探索
 ===============
 
-By default, Prism Central ships with several Roles that map to common user personas. Roles define what actions a user can perform, and are mapped to categories or other entities.
+デフォルトでは、Prism Centralには、一般的なユーザーペルソナにマップするいくつかのロールが付属しています。ロールは、ユーザーが実行できるアクションを定義し、カテゴリまたは他のエンティティにマップされます。
 
-Carol needs to support two types of users working on the Fiesta team, developers who need to provision VMs for test environments, and operators who monitor multiple environments within the organization, but who have very limited capabilities to modify each environment.
+新谷さんは、Fiestaチームで作業する2種類のユーザー、テスト環境用にVMをプロビジョニングする必要があるDeveloper、および組織内の複数の環境を監視するが、各環境を変更する機能が非常に制限されているOperatorをサポートする必要があります。
 
-#. In **Prism Central**, select :fa:`bars` **> Administration > Roles**.
+#. **Prism Central**で:fa:`bars` **> Administration > Roles**を選択する。
 
-   The built-in Developer role allows users to create and modify VMs, create, provision, and manage Calm Blueprints, and more.
+   組み込みの開発者ロールにより、ユーザーはVMの作成と変更、Calmブループリントの作成、プロビジョニング、管理などを行うことができます。
 
-#. Click on the built-in **Developer** role and optionally review the approved actions for the role. Click **Manage Assignment**.
+#. 組み込みの**Developer**ロールをクリックし、必要に応じてロールの承認されたアクションを確認します。**Manage Assignment**をクリックします。
 
    .. figure:: images/19.png
 
-#. Under **Users and Groups**, specify the **SSP Developers** User Group which should be automatically discovered from the NTNXLAB.local domain.
+#. **Users and Groups**で、ntnxlab.localドメインから自動的に検出される**SSP Developers**のユーザーグループを指定します。
 
-#. Under **Entities**, use the drop down menu to specify the following resources:
+#. **Entities**で、ドロップダウンメニューを使用して次のリソースを指定します。
 
    - **AHV Cluster** - *Your Assigned Cluster*
    - **AHV Subnet** - Secondary
@@ -269,13 +270,13 @@ Carol needs to support two types of users working on the Fiesta team, developers
 
    .. figure:: images/20.png
 
-#. Click **Save** and then close this screen by clicking on the X at the top right.
+#. **Save**をクリックし、右上のXをクリックしてこの画面を閉じます。
 
-   The default Operator roll includes the ability to delete VMs and applications deployed from Blueprints, which isn't desired in our environment. Rather than building a new role from scratch, we can clone to existing role and modify to suit our needs. The desired operator role should be able to view VM metrics, perform power operations, and update VM configurations such as vCPU or memory to address application performance issues.
+   デフォルトのOperatorロールには、ブループリントからデプロイされたVMとアプリケーションを削除する機能が含まれていますが、これは私たちの環境では望ましくありません。新しいロールを最初から構築するのではなく、既存のロールにクローンを作成し、ニーズに合わせて変更できます。必要なOperatorのロールは、VMメトリックを表示し、電源操作を実行し、vCPUやメモリなどのVM構成を更新して、アプリケーションのパフォーマンスの問題に対処できる必要があります。
 
-#. Click the built-in **Operator** role and click **Duplicate**.
+#. 組み込み**Operator**ロールをクリックし、**Duplicate**をクリックします。
 
-#. Fill out the following fields and click **Save** to create your custom role:
+#. 次のフィールドに入力し、**Save**をクリックしてカスタムのロールを作成します。
 
    - **Role Name** - *Initials*\ -SmoothOperator
    - **Description** - Limited operator accounts
@@ -285,50 +286,50 @@ Carol needs to support two types of users working on the Fiesta team, developers
 
    .. figure:: images/21.png
 
-#. Refresh **Prism** and click on your **SmoothOperator** role. Click **Manage Assignment**.
+#. **Prism**を更新し、**SmoothOperator**ロールをクリックします。**Manage Assignment**をクリックします。
 
-#. Create the following assignment:
+#. 次の割り当てを作成します。
 
    - **Users and Groups** - operator01
    - **Entity Categories** - Environment:Production, Environment:Testing, Environment:Staging, Environment:Dev
 
-   Operator01 is a user who has access to all VMs tagged with any of the Environment categories, but lacks generic access to specific clusters.
+   Operator01は、環境カテゴリのいずれかでタグ付けされたすべてのVMにアクセスできるユーザーですが、特定のクラスターへの一般的なアクセス権はありません。
 
-   Click **New Users** to add an additional assignment to the same role:
+   **New Users**をクリックして、同じロールに割り当てを追加します。
 
    - **Users and Groups** - operator02
    - **Entity Categories** - Environment:Dev, *Initials*\ -Team:Fiesta
 
-   Operator02 is a user who sees all VMs tagged with either the Dev or Fiesta category values.
+   Operator02は、DevまたはFiestaカテゴリー値のいずれかでタグ付けされたすべてのVMを表示するユーザーです。
 
    .. figure:: images/22.png
 
-   Click **Save**.
+   **Save**をクリックします。
 
-#. For infrastructure administrators such as Carol, you can map AD users to the **Prism Admin** or **Super Admin** roles through selecting :fa:`bars` **> Prism Central Settings > Role Mapping** and adding a new **Cluster Admin** or **User Admin** mapping to AD accounts.
+#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを**Prism Admin**、または**Super Admin**ロールにマップ出来ます。:fa:`bars` **> Prism Central Settings > Role Mapping**に移動し、**Cluster Admin**、もしくは**User Admin**のロールをADアカウントに追加します。
 
    .. figure:: images/28.png
 
-Exploring Projects
+プロジェクトの探索
 ==================
 
-The previous exercises are sufficient to provide basic VM creation self-service to Carol's users, but much of their work involves applications that consist of multiple VMs. Manual deployment of multiple VMs for a single development, testing, or staging environment is slow and subject to inconsistency and user error. To provide a better experience for her users, Carol will introduce Nutanix Calm into the environment.
+前の演習は、新谷さんのユーザーに基本的なVM作成のセルフサービスを提供するのに十分ですが、彼らの作業の多くは、複数のVMで構成されるアプリケーションにより構成されています。開発、テスト、またはステージング環境で複数のVMを手動で展開すると時間がかかり、不整合や人為的ミスが発生しやすくなります。ユーザーに優れたエクスペリエンスを提供するために、新谷さんはNutanix Calmを導入します。
 
-Nutanix Calm allows you to build, provision, and manage your applications across both private (AHV, ESXi) and public cloud (AWS, Azure, GCP) infrastructure.
+Nutanix Calmを使用すると、プライベート（AHV、ESXi）とパブリッククラウド（AWS、Azure、GCP）の両方のインフラストラクチャでアプリケーションを構築、プロビジョニング、管理できます。
 
-In order for non-infrastructure administrators to access Calm, allowing them to create or manage applications, users or groups must first be assigned to a **Project**, which acts as a logical container to define user roles, infrastructure resources, and resource quotas. Projects define a set users with a common set of requirements or a common structure and function, such as a team of engineers collaborating on the Fiesta project.
+インフラストラクチャ以外の管理者がCalmにアクセスしてアプリケーションを作成または管理できるようにするには、まずユーザーまたはグループをプロジェクトに割り当てる必要があります。プロジェクトは、ユーザーのロール、インフラストラクチャリソース、およびリソースクォータを定義する論理単位として機能します。プロジェクトは、一連の共通の要件または共通の構造と機能を持つユーザーを定義します。たとえば、Fiestaプロジェクトで協力するエンジニアのチームなどです。
 
-#. In **Prism Central**, select :fa:`bars` **> Services > Calm**.
+#. **Prism Central**において、:fa:`bars` **> Services > Calm**を選択します。
 
-#. Select **Projects** from the lefthand menu and click **+ Create Project**.
+#. 左手のメニューで**Projects**を選択し、**+ Create Project**をクリックします。
 
    .. figure:: images/23.png
 
-#. Fill out the following fields:
+#. 次のフィールドに入力します。
 
-   .. note::
+   .. 注意::
 
-      Adding the User/Group mappings before adding the Infrastructure can cause adding the Infrastructure to fail. To avoid this, add the Infrastructure before the User/Group mappings.
+      インフラストラクチャを追加する前にユーザー/グループマッピングを追加すると、インフラストラクチャの追加が失敗する可能性があります。これを回避するには、ユーザー/グループマッピングの前にインフラストラクチャを追加します。
 
    - **Project Name** - *Initials*\ -FiestaProject
 
@@ -362,48 +363,48 @@ In order for non-infrastructure administrators to access Calm, allowing them to 
 
    .. figure:: images/24.png
 
-#. Click **Save & Configure Environment**.
+#. **Save & Configure Environment**をクリックします。
 
-``This will redirect you to the Envrionments page, but there is nothing needed to configure here. Move onto the next step.``
+``Environmentページに遷移しますが、ここでは何も設定する必要はありません。次のステップに移動して下さい。``
 
-Note that only **Operator02** was given access to the **Calm** project, rather than all Operator accounts.
+すべてのオペレーターアカウントではなく、**Operator02**のみが**Calm**プロジェクトへのアクセス権を与えられたことに注意してください。
 
-Staging Blueprints
+ブループリントの構築
 ==================
 
-A Blueprint is the framework for every application that you model by using Nutanix Calm. Blueprints are templates that describe all the steps that are required to provision, configure, and execute tasks on the services and applications that are created. A Blueprint also defines the lifecycle of an application and its underlying infrastructure, starting from the creation of the application to the actions that are carried out on a application (updating software, scaling out, etc.) until the termination of the application.
+Nutanix Calmのブループリントは、アプリケーションをモデル化するためのフレームワークです。ブループリントは、作成されるサービスおよびアプリケーションでタスクをプロビジョニング、構成、および実行するために必要なすべてのステップを記述するテンプレートです。ブループリントは、アプリケーションとその基盤となるインフラストラクチャのライフサイクルも定義します。これは、アプリケーションの作成から、アプリケーションで実行されるアクション（ソフトウェアの更新、スケールアウトなど）、そしてアプリケーションの終了までです。
 
-You can use Blueprints to model applications of various complexities; from simply provisioning a single virtual machine to provisioning and managing a multi-node, multi-tier application.
+ブループリントを使用して、さまざまなアプリケーションをモデル化できます。単一の仮想マシンのプロビジョニングから、複数の仮想マシン、複数レイヤからなるWebアプリケーションのプロビジョニングと管理までのライフサイクル管理が可能です。
 
-While developer users will have the ability to create and publish their own Blueprints, Carol wants to provide a common Fiesta Blueprint used by the team.
+開発者ユーザーは独自のブループリントを作成および公開することができますが、新谷さんはチームが使用する共通のFiestaブループリントを提供したいと考えています。
 
-#. `Download the Fiesta-Multi Blueprint by right-clicking here <https://raw.githubusercontent.com/nutanixworkshops/ts2020/master/pc/dayinlife/Fiesta-Multi.json>`_.
+#. `ここを右クリックして、フィエスタマルチブループリントをダウンロードします。 <https://raw.githubusercontent.com/nutanixworkshops/ts2020/master/pc/dayinlife/Fiesta-Multi.json>`_.
 
-#. From **Prism Central > Calm**, select **Blueprints** from the lefthand menu and click **Upload Blueprint**.
+#. **Prism Central > Calm**に移動し、左手のメニューから**Blueprints**を選択、**Upload Blueprint**をクリックします。
 
    .. figure:: images/25.png
 
-#. Select **Fiesta-Multi.json**.
+#. **Fiesta-Multi.json**を選択します。
 
-#. Update the **Blueprint Name** to include your initials. Even across different projects, Calm Blueprint names must be unique.
+#. **Blueprint Name**にイニシャルが入るように名前を変更します。異なるプロジェクト感であっても、ブループリント名は一意でなければなりません。
 
-#. Select your Calm project and click **Upload**.
+#. ご自身のプロジェクトを選択し、**Upload**をクリックします。
 
    .. figure:: images/26.png
 
-#. In order to launch the Blueprint you must first assign a network to the VM. Select the **NodeReact** Service, and in the **VM** Configuration menu on the right, select **Primary** as the **NIC 1** network.
+#. ブループリントを起動するには、最初にネットワークをVMに割り当てる必要があります。**NodeReact**サービスを選択し、右手の**VM**メニューで、 **NIC 1**ネットワークとして**Primary**を選択します。
 
-#. Specify the *Initials*\ **-Team: Fiesta** and **Environment: Dev** categories for the **NodeReact** Service.
+#. Categoryメニューにおいて*Initials*\ **-Team: Fiesta**と**Environment: Dev**を選択します。
 
    .. figure:: images/27.png
 
-#. Repeat the **NIC 1** and **Category** assignment for the **MySQL** Service.
+#. **NIC 1**と**Category**の割当を**MySQL**サービスに対しても行います。
 
-#. Click **Credentials** to define a private key used to authenticate to the CentOS VM that will be provisioned by the Blueprint.
+#. **Credentials**をクリックし、ブループリントによってプロビジョニングされるCentOS VMへの認証に使用される秘密鍵を定義します。
 
    .. figure:: images/27b.png
 
-#. Expand the **CENTOS** credential and use your preferred SSH key, or paste in the following value as the **SSH Private Key**:
+#. **CENTOS**の認証情報を展開してお好みの秘密鍵を記入するか、以下の値を**SSH Private Key**に入力します。
 
    ::
 
@@ -435,39 +436,39 @@ While developer users will have the ability to create and publish their own Blue
       gmznERCNf9Kaxl/hlyV5dZBe/2LIK+/jLGNu9EJLoraaCBFshJKF
       -----END RSA PRIVATE KEY-----
 
-#. Click **Save** and click **Back** once the Blueprint has completed saving.
+#. **Save**をクリックし、終了後**Back**をクリックします。 
 
-   Within minutes, Carol has laid the groundwork to provide virtual infrastructure and application self-service directly to her end users.
+   数分以内に、新谷さんは仮想インフラストラクチャとアプリケーションのセルフサービスをエンドユーザーに直接提供するための基礎を築きました。
 
-Developer Workflow
+開発者のワークフロー
 ++++++++++++++++++
 
-Meet Dan. Dan is a member of the Fiesta Engineering team. He's behind on testing a new feature, as his request to IT to deploy the virtual infrastructure he requires to perform the testing are several days overdue.
+楠田さんについて紹介しましょう。楠田さんはFiesta開発チームのメンバーです。彼は、テストを実行するために必要な仮想インフラストラクチャを展開するITへの要求が数日遅れているため、新機能のテストに遅れをとっています。
 
-Dan has resorted to deploying VMs outside of the corporate network on his favorite public cloud service, with no security oversight, and putting company IP at risk.
+楠田さんは、お気に入りのパブリッククラウドサービスで企業ネットワークの外部にVMを展開し、セキュリティの監視を行わず、会社のIPアドレスを危険にさらしていました。
 
-Carol to the rescue - she encourages Dan to follow the exercise below to allow him to easily deploy resources within the Fiesta project through Prism.
+ここで新谷さんが助け舟を出します。彼女はダンがPrismを通してFiestaプロジェクト内のリソースを簡単に展開できるようにするために以下の演習に従うことを勧めます。
 
-#. Log out of the local **admin** account and log back into **Prism Central** with Dan's credentials:
+#. **admin**アカウントからログアウトし、以下の楠田さんのアカウントで**Prism Central**にログインします。
 
    - **User Name** - devuser01@ntnxlab.local
    - **Password** - nutanix/4u
 
-   .. note::
+   .. 注意::
 
-      If you experience a slow login, try logging in using an Incognito/Private browsing session.
+      ログインに時間がかかる場合は、シークレット/プライベートブラウジングセッションを使用してログインしてみてください。
 
-#. Select the :fa:`bars` menu and note that you now have significantly restricted access to the environment.
+#. :fa:`bars`メニューにアクセスして、環境へのアクセスが大幅に制限されていることを確認して下さい。
 
-#. On the **VMs** page, you should already see your *Initials*\ **-WinToolsVM** as available to be managed by Dan.
+#. **VMs**ページに*Initials*\ **-WinToolsVM**が楠田さんが管理可能なVMとして表示されます。
 
-#. Click on the VM and note Dan can get basic metrics associated with his VM, as well as control the VM configuration, power operations, and even delete the VM.
+#. VMをクリックして、楠田さんが彼のVMに関連付けられた基本的なメトリックを取得し、VMの構成、電源操作を制御し、さらにはVMを削除できることに注意してください。
 
    .. figure:: images/29.png
 
-   There are two workflows that could be followed for self-service creation of VMs: Traditional VM creation wizard and Calm. One of Dan's requirements is a Linux virtual machine that runs multiple tools required as part of his development workflow.
+   VMのセルフサービスによる作成には、2つのワークフローがあります。従来のVM作成ウィザードとCalmです。楠田さんの要件の1つは、彼の開発ワークフローの一部として必要な複数のツールを実行するLinux仮想マシンです。
 
-#. Click **Create VM** and fill out the following fields to provision a traditional virtual machine, similar to the manual VM deployment process Carol followed earlier in the lab:
+#. **Create VM**をクリックし、次のフィールドに入力して、ラボの前半で新谷さんが実行した手動のVM導入プロセスと同様に、従来の仮想マシンをプロビジョニングします。
 
    - **Create VM from** - Disk Images
    - **Select Disk Images** - Linux_ToolsVM.qcow2
@@ -480,147 +481,147 @@ Carol to the rescue - she encourages Dan to follow the exercise below to allow h
    - **Cores Per CPU** - 1
    - **Memory** - 4 GiB
 
-#. Click **Save** and note the VM is immediately powered on following creation.
+#. **Save**をクリックし、作成後すぐにVMの電源がオンになることに注意してください。
 
-   In addition to the tools VM, Dan also desires to deploy infrastructure that can be used to test new builds of the Fiesta application. Having end users deploy multi-tier applications through single-VM provisioning and manual integration is slow, inconsistent, and doesn't result in high user satisfaction - luckily we can leverage the pre-created Blueprint for Fiesta staged to our project by Carol.
+   楠田さんは、ツールVMに加えて、Fiestaアプリケーションの新しいビルドのテストに使用できるインフラストラクチャを展開したいと考えています。エンドユーザーが単一のVMプロビジョニングと手動による構築作業によって複雑なアプリケーションを展開するのは遅く、一貫性がなく、ユーザー満足度は高くありません。幸運なことに、新谷さんによってプロジェクトに公開された、事前に作成されたFiestaアプリケーションのブループリントを活用できます。
 
-#. Select :fa:`bars` **> Services > Calm**.
+#. :fa:`bars` **> Services > Calm**を選択します。
 
-#. Select **Blueprints** from the left hand menu and open the **Fiesta-Multi** Blueprint.
+#. 左手のメニューから**Blueprints**を選択し、**Fiesta-Multi**ブループリントを開きます。
 
    .. figure:: images/30.png
 
-   .. note::
+   .. 注意::
 
-      If you're unfamiliar with Calm Blueprints, take a moment to explore the following key components of the **Fiesta-Multi** Blueprint:
+      ブループリントに慣れていない場合は、時間をかけてFiesta-Multiブループリントの以下の主要コンポーネントを調べてみてください。
 
-      - Select either the **NodeReact** or **MySQL** service and review the **VM** configuration in the configuration pane on the right hand of the screen.
+      - **NodeReact**または**MySQL**サービスを選択し、画面の右側の構成ペインでVM構成を確認します。
 
          .. figure:: images/31.png
 
-      - Select the **Package** tab and click **Configure Install** to view the installation tasks for the selected service. These are the scripts and actions associated with the configuration of each Service or VM.
+      - **Package**タブに移動し**Configure Install**をクリックして、選択したサービスのインストールタスクを表示します。これらは、各サービスまたはVMの構成に関連付けられたスクリプトとアクションです。
 
          .. figure:: images/32.png
 
-      - Under **Application Profile**, select **AHV** and view the variables defined for the Blueprint. Variables allow for runtime customization and can also be used on a per application profile basis to build a single application Blueprint that allows you to provision an application to multiple environments, including AHV, ESXi, AWS, GCP, and Azure.
+      - **Application Profile**の下で**AHV**を選択し、ブループリントのために定義された変数を表示します。変数はランタイムでのカスタマイズが可能であり、アプリケーションプロファイルごとに使用して、AHV、ESXi、AWS、GCP、Azureなどの複数の環境に同一アプリケーションをプロビジョニングできる単一のブループリントを構築することもできます。
 
          .. figure:: images/33.png
 
-      - Select the **Create** Action under **Application Profile** to visualize dependencies between services. Dependencies can be defined explicitly, but depending on assignment of variables Calm will also identify implicit dependencies. In this Blueprint, you see the web tier installation process will not begin until the MySQL database is running.
+      - **Application Profile**配下の**Create**をクリックし、サービス間の依存関係を視覚化します。依存関係は明示的に定義できますが、変数の割り当てに応じて、Calmは暗黙的な依存関係も識別します。このブループリントでは、MySQLデータベースが実行されるまでWeb層のインストールプロセスが開始されないことがわかります。
 
          .. figure:: images/34.png
 
-      - Click **Credentials** in the toolbar at the top of the Blueprint Editor and expand the existing **CENTOS** credential. Blueprints can contain multiple credentials which can be used to authenticate to VMs to execute scripts, or securely pass credentials directly into scripts.
+      - ブループリントエディタの上部にあるツールバーの**Credentials**をクリックし、**CENTOS**の認証情報を展開します。ブループリントには複数の資格情報を含めることができ、これらを使用してVMを認証し、スクリプトを実行したり、資格情報を安全に直接スクリプトに渡したりできます。
 
          .. figure:: images/35.png
 
-      - Click **Back**.
+      - **Back**をクリックします。
 
-#. Click **Launch** to provision an instance of the Blueprint.
+#. **Launch**をクリックして、ブループリントのインスタンスをプロビジョニングします。
 
    .. figure:: images/36.png
 
-#. Fill out the following fields and click **Create**:
+#. 次のフィールドに入力して、**Create**をクリックします。
 
    - **Name of of the Application** - *Initials* -FiestaMySQL
    - **db_password** - nutanix/4u
 
    .. figure:: images/37.png
 
-#. Select the **Audit** tab to monitor the deployment of the Fiesta development environment. Complete provisioning of the app should take approximately 5 minutes.
+#. **Audit**タブを選択して、Fiesta開発環境のデプロイメントを監視します。アプリの完全なプロビジョニングには約5分かかります。
 
    .. figure:: images/38.png
 
-#. While the application is provisioning, open :fa:`bars` **> Administration > Projects** and select your project.
+#. アプリケーションのプロビジョニング中、:fa:`bars` **> Administration > Projects**を選択し、プロジェクトをクリックします。
 
-#. Review the **Summary**, **Usage**, **VMs**, and **Users** tabs to see what type of data is made available to users. These breakouts make it easy to understand on a per project, vm, or user level, what resources are being consumed.
+#. **Summary**、**Usage**、**VMs**、**Users**のタブを確認します。これらの情報により、プロジェクト、VM、またはユーザーレベルで、どれだけリソースが消費されているかを簡単に把握できます。
 
    .. figure:: images/39.png
 
-#. Return to **Calm > Applications >** *Initials*\ **-FiestaMySQL** and wait for the application to move from **Provisioning** to **Running**. Select the **Services** tab and select the **NodeReact** Service to obtain the IP of the web tier.
+#. **Calm > Applications >** *Initials*\ **-FiestaMySQL**に戻り、アプリケーションが **Provisioning**状態から**Running**状態になるのを待ちます。**Services**タブから**NodeReact**サービスを選択して、Web層のIPを取得します。
 
    .. figure:: images/40.png
 
-#. Open \http://<*NodeReact-VM-IP*> in a new browser tab and validate the app is running.
+#. 新しいブラウザータブで\http://<*NodeReact-VM-IP*>を開き、アプリが実行されていることを確認します。
 
    .. figure:: images/41.png
 
-   Instead of filing tickets and waiting days, Dan was able to get his test environment up and running before lunch. Instead of drowning his sorrows in Ben & Jerry's tonight, Dan is going to go to the gym, and eat vegetables with his dinner. Go, Dan!
+   チケットを提出してひたすら待つ代わりに、楠田さんは昼食前にテスト環境を稼働させることができました。今日は早く帰れそうです。
 
-Operator Workflows
+オペレーターのワークフロー
 ++++++++++++++++++
 
-Meet Ronald and Elise. Ronald works as a Level 3 engineering with the corporate IT helpdesk, and Elise works as a QA intern on the Fiesta team. In the brief exercise below you will explore and contrast their levels of access based on the roles defined and categories assigned by Carol.
+倉さんと宇土（うど）さんをご紹介します。 倉さんは、ITヘルプデスクでレベル3の運用エンジニアとして働いており、宇土さんはFiestaチームの品質保証としてインターンとして働いています。以下の簡単な演習では、新谷さんによって定義されたロールと割り当てられたカテゴリに基づいて、それらのアクセスレベルを調べて比較します。
 
-#. Log out of the **devuser01** account and log back into **Prism Central** with Ronald's credentials:
+#. **devuser01**アカウントからログアウトし、倉さんの認証情報を使って**Prism Central**にログインします。
 
    - **User Name** - operator01@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. As expected, all VMs with **Environment** category values assigned are available. Note that you have no ability to **Create** or **Delete** VMs, but the abilities to power manage and change VM configurations are present.
+#. 予想どおり、**Environment**カテゴリ値が割り当てられたすべてのVMが使用可能です。VM を**Create**または**Delete**する機能はありませんが、VM構成を電源管理および変更する機能はあります。
 
-   What else can be accessed by this user? Is Calm available?
+   このユーザーは他に何にアクセスできますか？Calmにはアクセスできますか？
 
    .. figure:: images/42.png
 
-#. Log out of the **operator01** account and log back into **Prism Central** with Elise's credentials:
+#. **operator01**アカウントからログアウトし、宇土さんの資格情報を使用して**Prism Central**にログインします。
 
    - **User Name** - operator02@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. Note that only resources tagged with the *Initials*\ **-Team: Fiesta** category are available to be managed.
+#. *Initials*\ **-Team: Fiesta**カテゴリでタグ付けされたリソースのみを管理できます。
 
    .. figure:: images/43.png
 
-#. Elise receives an alert that memory utilization is high on the **nodereact** VM. Update the configuration to increase memory and power cycle the VM.
+#. 宇土さんは**nodereact** VMのメモリ使用率が高いというアラートを受け取ります。構成を更新して、メモリを増やし、VMの電源を再投入します。
 
-Using Entity Browser, Search, and Analysis
+エンティティブラウザ、検索、分析の使用
 ++++++++++++++++++++++++++++++++++++++++++
 
-Now that Carol has freed up time to focus on replacing additional legacy infrastructure, it is important for her to understand how a large, diverse environment can all be managed and monitored via Prism Central. In the exercise below you will explore common workflows for working with entities across multiple clusters in a Nutanix environment.
+新谷さんは、レガシーインフラストラクチャを近代的なアーキテクチャへと刷新するにあたり、大規模で多様な環境をすべてPrism Centralで管理および監視することを検討しています。以下の演習では、Nutanix環境で複数のクラスターにまたがるエンティティを操作するための一般的なワークフローを探ります。
 
-#. Log out of the **operator02** account and log back into **Prism Central** with Carol's AD credentials:
+#. **operator02**アカウントからログアウトし、CarolのAD認証情報を使用して account and log back into **Prism Central** with Carol's AD credentials:
 
    - **User Name** - adminuser01@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. Open :fa:`bars` **> Virtual Infrastructure > VMs**. Prism Central's **Entity Browser** provides a robust UI for sorting, searching, and viewing entities such as VMs, Images, Clusters, Hosts, Alerts, and more!
+#. :fa:`bars` **> Virtual Infrastructure > VMs**を開きます。Prism Centralの**Entity Browser**は、VM、イメージ、クラスター、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
 
-#. Select **Filters** and explore the available options. Specify the following example filters, and verify the corresponding box is checked:
+#. **Filters**を選択して、使用可能なオプションを確認します。次のサンプルフィルターを指定し、対応するボックスがオンになっていることを確認します。
 
    - **Name** - Contains *Initials*
    - **Categories** - *Initials*\ -Team: Fiesta
    - **Hypervisor** - AHV
    - **Power State** - On
 
-   Take notice of other helpful filters available such as VM efficiency, memory usage, and storage latency.
+   VM効率、メモリ使用量、ストレージレイテンシなど、利用可能な他の有用なフィルターに注意してください。
 
-#. Select all of the filtered VMs and click the **Label** icon to apply a custom label to your group of filtered VMs (e.g. *Initials* AHV Fiesta VMs).
+#. フィルターされたVMをすべて選択し、**Label**アイコンをクリックして、フィルターされたVMのグループにカスタムラベルを適用します。 (例: *Initials* AHV Fiesta VMs).
 
    .. figure:: images/44.png
 
-#. Clear all filters and select your new label to quickly return to your previously identified VMs. Labels provide an additional means of taxonomy for entities, without tying them to specific policies as is with categories.
+#. すべてのフィルターをクリアし、新しく作成したラベルを選択して、以前にフィルターしたVMにすばやくアクセスできることを確認します。ラベルは、エンティティをカテゴリのように特定のポリシーに関連付けることなく、エンティティの分類法の追加手段を提供します。
 
    .. figure:: images/45.png
 
-#. Select the **Focus** dropdown to access different out of box views. Which view should be used to understand if your VMs are included as part of a DR plan?
+#. **Focus**ドロップダウンを選択して、ボックス外のさまざまなビューにアクセスします。VMがDR計画の一部として含まれているかどうかを理解するには、どのビューを使用する必要がありますか？
 
-#. Click **Focus > + Add Custom** to create a VM view (e.g. *XYZ-VM-View*) that displays **CPU Usage**, **CPU Ready Time**, **IO Latency**, **Working Set Size Read**, and **Working Set Size Write**. Such a view could be used to helping to spot VM performance problems.
+#. **Focus > + Add Custom**をクリックして、**CPU Usage**、**CPU Ready Time**、**IO Latency**、**Working Set Size Read**、**Working Set Size Write**を表示するVMビュー（XYZ-VM-Viewなど）を作成します。このようなビューは、VMパフォーマンスの問題を特定するのに役立ちます。
 
    .. figure:: images/46.png
 
-#. To fully appreciate the power of Prism Central for searching, sorting, and analyzing entities, view the following brief video:
+#. Prism Centralのエンティティの検索、並べ替え、および分析の機能を十分に理解するには、次の短いビデオをご覧ください。
 
    .. raw:: html
 
      <center><iframe width="640" height="360" src="https://www.youtube.com/embed/HXWCExTlXm4?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
-Improved Life Cycle Management
+改善されたライフサイクル管理
 ++++++++++++++++++++++++++++++
 
-While not a daily activity, Carol previously dedicated as much as 40% of her time planning and executing software and firmware updates to legacy infrastructure, leaving little time for innovation. In her Nutanix environments, Carol is leveraging the rules engine and rich automation in Lifecycle Manager (LCM) to take the hassle out of planning and applying her infrastructure software updates.
+新谷さんは日常の活動ではありませんが、以前は時間の40％をレガシーインフラストラクチャのソフトウェアとファームウェアの更新の計画と実行に費やしており、イノベーションに費やす時間はほとんどありませんでした。彼女のNutanix環境では、新谷さんはライフサイクルマネージャー（LCM）のルールエンジンと豊富な自動化を活用して、インフラストラクチャソフトウェアの更新を計画および適用する手間を省いています。
 
-Unfortunately in a shared cluster environment, you're not able to test LCM directly. To become more familiar with LCM's capabilities and ease of use, click through each of the interactive demos available below.
+残念ながら、共有クラスター環境では、LCMを直接テストすることはできません。LCMの機能と使いやすさについて理解を深めるには、下記のインタラクティブなデモをクリックしてください。
 
 5.11 Prism Element LCM Interactive Demo
 =======================================
@@ -636,9 +637,9 @@ Unfortunately in a shared cluster environment, you're not able to test LCM direc
    :target: https://demo-captures.s3-us-west-1.amazonaws.com/pc-5.11-lcm/story.html
    :alt: Prism Central 5.11 LCM Interactive Demo
 
-Next Steps
+次のステップ
 ++++++++++
 
-In under 2 hours, we've shown you how Prism delivers a frictionless experience for virtual infrastructure administrators when it comes to deploying storage, networks, and workloads, monitoring the environment, and updating software. You've seen how native Prism Central capabilities, combined with Active Directory, can be used to control access and enable self-service for non-administrator personas. Additionally you enabled rich application automation capabilities for your Private Cloud through Nutanix Calm.
+2時間以内の時間で、ストレージ、ネットワーク、ワークロードの導入、環境の監視、ソフトウェアの更新に関して、Prismが仮想インフラストラクチャ管理者にスムーズな体験を提供する方法を示しました。ネイティブのPrism Central機能をActive Directoryと組み合わせて使用​​して、アクセスを制御し、管理者以外のユーザのセルフサービスを有効にする方法を見てきました。さらに、Nutanix Calmを介してプライベートクラウドの豊富なアプリケーション自動化機能を有効にしました。
 
-Private Clouds aren't built on IaaS, self-service, and application automation alone, however. In the upcoming labs, you will see how Nutanix has built on its foundation to provide advanced monitoring and operations capabilities through its additional **Prism Pro** features, consolidate storage technologies with **Files**, native microsegmentation with **Flow**, and more!
+ただし、プライベートクラウドは、IaaS、セルフサービス、およびアプリケーションの自動化だけで構築されているわけではありません。今後のラボでは、Nutanixがその基盤をどのように構築して、**Prism Pro**機能による高度な監視および運用機能を提供するか、ストレージテクノロジーを**Files**に統合するか、ネイティブマイクロセグメンテーションを**Flow**に統合する方法を確認します。
