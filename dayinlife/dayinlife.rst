@@ -69,6 +69,7 @@
    冗長係数は、データコピーの数を制御します。このクラスターには冗長係数を構成できないことに注意してください。これは、RF3をサポートするために必要なノードの最小数が5であるためです。
 
    .. note::
+   .. note
 
       注意: Nutanixがデータを保護する方法またはデータ削減を実装する方法の詳細については、下の図をクリックしてNutanixバイブルの関連セクションを確認してください。
 
@@ -628,13 +629,6 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 .. figure:: https://demo-captures.s3-us-west-1.amazonaws.com/pe-5.11-lcm/story_content/thumbnail.jpg
    :target: https://demo-captures.s3-us-west-1.amazonaws.com/pe-5.11-lcm/story.html
    :alt: Prism Element 5.11 LCM Interactive Demo
-
-5.11 Prism Central LCM Interactive Demo
-=======================================
-
-.. figure:: https://demo-captures.s3-us-west-1.amazonaws.com/pc-5.11-lcm/story_content/thumbnail.jpg
-   :target: https://demo-captures.s3-us-west-1.amazonaws.com/pc-5.11-lcm/story.html
-   :alt: Prism Central 5.11 LCM Interactive Demo
 
 次のステップ
 ++++++++++
