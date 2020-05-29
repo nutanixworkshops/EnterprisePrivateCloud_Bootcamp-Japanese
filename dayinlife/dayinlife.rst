@@ -84,7 +84,6 @@
 
    残念ながら、共有環境でクラスターのデータ復元機能を簡単にテストすることはできませんが、以下の短いビデオでは、クラスター内のノードが予期せず失われた場合のPrismのエクスペリエンスについて説明します。
 
-
    .. raw:: html
 
      <center><iframe width="640" height="360" src="https://www.youtube.com/embed/hA4l1UHZO2w?rel=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
@@ -207,7 +206,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 この演習では、新谷さんのカスタムカテゴリを作成して、Fiestaアプリチームの適切なリソースへのアクセスを調整します。
 
-#. **Prism Central**　にて:fa:`bars` **> Virtual Infrastructure > Categories**　を選択します。
+#. **Prism Central**　に :fa:`bars` **> Virtual Infrastructure > Categories**　を選択します。
 
    .. figure:: images/14.png
 
@@ -252,7 +251,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 新谷さんは、Fiestaチームで作業する2種類のユーザー、テスト環境用にVMをプロビジョニングする必要があるDeveloper、および組織内の複数の環境を監視するが、各環境を変更する機能が非常に制限されているOperatorをサポートする必要があります。
 
-#. **Prism Central**　で:fa:`bars` **> Administration > Roles**　を選択する。
+#. **Prism Central**　で :fa:`bars` **> Administration > Roles**　を選択する。
 
    組み込みの開発者ロールにより、ユーザーはVMの作成と変更、Calmブループリントの作成、プロビジョニング、管理などを行うことができます。
 
@@ -458,7 +457,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
       ログインに時間がかかる場合は、シークレット/プライベートブラウジングセッションを使用してログインしてみてください。
 
-#. :fa:`bars`メニューにアクセスして、環境へのアクセスが大幅に制限されていることを確認して下さい。
+#. :fa:`bars` メニューにアクセスして、環境へのアクセスが大幅に制限されていることを確認して下さい。
 
 #. **VMs**　ページに *Initials*\ **-WinToolsVM**　が楠田さんが管理可能なVMとして表示されます。
 
@@ -493,29 +492,29 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    .. note::
 
-          注意: ブループリントに慣れていない場合は、時間をかけてFiesta-Multiブループリントの以下の主要コンポーネントを調べてみてください。
+      注意: ブループリントに慣れていない場合は、時間をかけてFiesta-Multiブループリントの以下の主要コンポーネントを調べてみてください。
 
-          - **NodeReact**　または　**MySQL**　サービスを選択し、画面の右側の構成ペインでVM構成を確認します。
+      - **NodeReact**　または　**MySQL**　サービスを選択し、画面の右側の構成ペインでVM構成を確認します。
 
-             .. figure:: images/31.png
+        .. figure:: images/31.png
 
-          - **Package**　タブに移動し　**Configure Install**　をクリックして、選択したサービスのインストールタスクを表示します。これらは、各サービスまたはVMの構成に関連付けられたスクリプトとアクションです。
+      - **Package**　タブに移動し　**Configure Install**　をクリックして、選択したサービスのインストールタスクを表示します。これらは、各サービスまたはVMの構成に関連付けられたスクリプトとアクションです。
 
-             .. figure:: images/32.png
+        .. figure:: images/32.png
 
-          - **Application Profile**　の下で　**AHV**　を選択し、ブループリントのために定義された変数を表示します。変数はランタイムでのカスタマイズが可能であり、アプリケーションプロファイルごとに使用して、AHV、ESXi、AWS、GCP、Azureなどの複数の環境に同一アプリケーションをプロビジョニングできる単一のブループリントを構築することもできます。
+      - **Application Profile**　の下で　**AHV**　を選択し、ブループリントのために定義された変数を表示します。変数はランタイムでのカスタマイズが可能であり、アプリケーションプロファイルごとに使用して、AHV、ESXi、AWS、GCP、Azureなどの複数の環境に同一アプリケーションをプロビジョニングできる単一のブループリントを構築することもできます。
 
-             .. figure:: images/33.png
+        .. figure:: images/33.png
 
-          - **Application Profile**　配下の　**Create**　をクリックし、サービス間の依存関係を視覚化します。依存関係は明示的に定義できますが、変数の割り当てに応じて、Calmは暗黙的な依存関係も識別します。このブループリントでは、MySQLデータベースが実行されるまでWeb層のインストールプロセスが開始されないことがわかります。
+      - **Application Profile**　配下の　**Create**　をクリックし、サービス間の依存関係を視覚化します。依存関係は明示的に定義できますが、変数の割り当てに応じて、Calmは暗黙的な依存関係も識別します。このブループリントでは、MySQLデータベースが実行されるまでWeb層のインストールプロセスが開始されないことがわかります。
 
-             .. figure:: images/34.png
+        .. figure:: images/34.png
 
-          - ブループリントエディタの上部にあるツールバーの　**Credentials**　をクリックし、**CENTOS**　の認証情報を展開します。ブループリントには複数の資格情報を含めることができ、これらを使用してVMを認証し、スクリプトを実行したり、資格情報を安全に直接スクリプトに渡したりできます。
+      - ブループリントエディタの上部にあるツールバーの　**Credentials**　をクリックし、**CENTOS**　の認証情報を展開します。ブループリントには複数の資格情報を含めることができ、これらを使用してVMを認証し、スクリプトを実行したり、資格情報を安全に直接スクリプトに渡したりできます。
 
-             .. figure:: images/35.png
+        .. figure:: images/35.png
 
-          - **Back**　をクリックします。
+      - **Back**　をクリックします。
 
 #. **Launch**　をクリックして、ブループリントのインスタンスをプロビジョニングします。
 
