@@ -306,7 +306,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
    **Save** をクリックします。
 
-#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを **Prism Admin** 、または **Super Admin** ロールにマップ出来ます。 :fa:`bars` ** > Prism Central Settings > Role Mapping** に移動し、 **Cluster Admin** 、もしくは **User Admin** のロールをADアカウントに追加します。
+#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを **Prism Admin** 、または **Super Admin** ロールにマップ出来ます。 :fa:`bars`  ** > Prism Central Settings > Role Mapping** に移動し、 **Cluster Admin** 、もしくは **User Admin** のロールをADアカウントに追加します。
 
    .. figure:: images/28.png
 
