@@ -39,7 +39,7 @@
 はじめに
 ---------------
 
-Nutanix Enterprise Private Cloud Bootcampへようこそ！この演習では、Nutanix Enterprise Cloud OSを利用して一般的な管理タスクが以下に簡略化されるかを、実運用を想定したシナリオに沿ってご体験頂きます。
+Nutanix Enterprise Private Cloud Bootcampへようこそ！この演習では、Nutanix Enterprise Cloud OSを利用して一般的な管理タスクがいかに簡略化されるかを、実運用を想定したシナリオに沿ってご体験頂きます。
 
 アジェンダ
 ++++++
