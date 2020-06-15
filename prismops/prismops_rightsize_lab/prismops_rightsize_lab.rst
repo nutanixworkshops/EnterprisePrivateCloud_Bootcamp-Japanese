@@ -1,21 +1,21 @@
 -------------------------------
-Prism Opsを利用した適切なサイジング
+Prism Proを利用した適切なサイジング
 -------------------------------
 
 .. figure:: images/operationstriangle.png
 
-このラボでは、IT管理者がPrism Opsを使用して、VMのメモリリソースが制限されている場合に、監視、分析、および自動的に対処する方法を学習します。
+このラボでは、IT管理者がPrism Proを使用して、VMのメモリリソースが制限されている場合に、監視、分析、および自動的に対処する方法を学習します。
 
 ラボの準備
 +++++++++
 
-※PrismOpsのキャパシティランウェイ演習と同様の事前準備です。
+※PrismProのキャパシティランウェイ演習と同様の事前準備です。
 
-#. **Prism Central** にて **VMs** ページに移動し、 **GTSPrismOpsLabUtilityServer** のIPアドレスを控える。※この後の演習にてこのIPアドレスにアクセスします。
+#. **Prism Central** にて **VMs** ページに移動し、 **GTSPrismProLabUtilityServer** のIPアドレスを控える。※この後の演習にてこのIPアドレスにアクセスします。
 
    .. figure:: images/init1.png
 
-#. ブラウザを起動し、 http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
+#. ブラウザを起動し、 http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
 
    .. figure:: images/init2.png
 
@@ -23,40 +23,40 @@ Prism Opsを利用した適切なサイジング
 
    .. figure:: images/init2b.png
 
-#. また別のタブで、 http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
+#. また別のタブで、 http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
 
    .. figure:: images/init3.png
 
-Prism Ops X-FITによる非効率検出
+Prism Pro X-FITによる非効率状態の検出
 +++++++++++++++++++++++++++++++++++++++++++
 
-Prism Opsは、X-FIT機械学習を使用して、管理対象クラスター内で実行されているVMの動作を検出および監視します。
+Prism Proは、X-FIT機械学習を使用して、管理対象クラスタ内で実行されているVMの動作を検出および監視します。
 
-Prism Opsは、機械学習を使用してデータを分析し、非効率であると学習されたVMに分類を適用します。以下は分類の簡単な説明です。:
+Prism Proは、機械学習を使用してデータを分析し、非効率であると学習されたVMに分類を適用します。以下は分類の簡単な説明です。:
 
 * **Overprovisioned（オーバープロビジョニング）:** 割り当てられたリソースの最小量を使用していると特定されたVM。（余剰リソースが多い）
-* **Inactive（保護無効）:** 一定期間電源がオフになっているVM、またはCPU、メモリ、またはI / Oリソースを消費しないVMを実行しているVM。
+* **Inactive（保護無効）:** 一定期間電源がオフになっているVM、またはCPU、メモリ、またはI / Oリソースを消費していないVM。
 * **Constrained（制約あり）:** 追加のリソースでパフォーマンスが向上するVM。（リソース不足）
 * **Bully:** 多くのリソースを使用し、その結果他のVMに影響を与えると特定されたVM。
 
 #. **Prism Central** にてダッシュボードに移動する。 :fa:`bars` **> Dashboard**
 
-#. ダッシュボードから、仮想マシン効率（VM Efficiency）ウィジェットを確認する。※このウィジェットは、Prism OpsのX-FIT機械学習が検出した非効率的なVMの概要を提供します。ウィジェットの下部にある ‘非効率な仮想マシンをすべて表示（View All Inefficeint VMs）’ リンクをクリックして、詳細を確認します。
+#. ダッシュボードから、仮想マシン効率（VM Efficiency）ウィジェットを確認する。※このウィジェットは、Prism ProのX-FIT機械学習が検出した非効率的なVMの概要を提供します。ウィジェットの下部にある ‘非効率な仮想マシンをすべて表示（View All Inefficeint VMs）’ リンクをクリックして、詳細を確認します。
 
    .. figure:: images/ppro_58.png
 
-#. VMリストビューで、Prism OpsがこれらのVMにフラグを立てた理由の詳細を含む効率性の詳細を表示している。　※[効率の詳細]列のテキストにカーソルを合わせると、詳細な説明を表示できます。
+#. VMリストビューで、Prism ProがこれらのVMにフラグを立てた理由の詳細を含む効率性の詳細を表示している。　※効率の詳細(Efficiency Detail)列のテキストにカーソルを合わせると、詳細な説明を表示できます。
 
    .. figure:: images/ppro_59.png
 
 #. 管理者は、効率リストでVMのリストを確認し、アクションを実行する対象を決定できる。※リソースが多すぎる、または少なすぎるVMでは、個々のVMのサイズを変更する必要があります。これは、以下にリストするいくつかの例を使用して、さまざまな方法で実行できます。:
 
-   * **Manually:** 管理者は、ESXi VMのPrismまたはvCenterを介してVM構成を編集し、割り当てられたリソースを変更する。
+   * **Manually:** 管理者は、Prism（またはESXiの場合はvCenter）を介してVM構成を編集し、割り当てられたリソースを変更する。
    * **X-Play:** X-Plays自動プレイブックを使用して、トリガーまたは管理者の指示によりVMのサイズを自動的に変更する。この演習の後半で、実習する項目があります。
    * **Automation:** powershellやREST-APIなどの他の自動化方法を使用して、VMのサイズを変更する。
 
 
-   この機械学習データを使用して、Prism OpsはVM、ホスト、およびクラスターメトリックデータのベースライン（予想される範囲）を生成することもできます。X-FITアルゴリズムは、これらのエンティティの通常の動作を学習し、さまざまなチャートのベースライン範囲としてそれを表します。メトリック値がこの予想範囲から逸脱するたびに、Prism Opsは異常として検知します。
+   この機械学習データを使用して、Prism ProはVM、ホスト、およびクラスタメトリックデータのベースライン（予想される範囲）を生成することもできます。X-FITアルゴリズムは、これらのエンティティの通常の動作を学習し、さまざまなチャートのベースライン範囲としてそれを表します。メトリック値がこの予想範囲から逸脱するたびに、Prism Proは異常として検知します。
 
 #. PrismCentralにて ‘bootcamp_good’ を検索し、 ‘bootcamp_good_1’ を確認する。
 
@@ -95,11 +95,11 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs4.png
 
-#. 以下を入力し **コピー（Copy）** をクリックする。　※作成しているアクションは、後でPlaybookからチケット発行させるためのものです。※<GTSPrismOpsLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
+#. 以下を入力し **コピー（Copy）** をクリックする。　※作成しているアクションは、後でPlaybookからチケット発行させるためのものです。※<GTSPrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
 
    - **氏名（Name）:** *Initials* - Service Ticketの作成
    - **Method:** POST
-   - **URL:** http://<GTSPrismOpsLabUtilityServer_IP_ADDRESS>/generate_ticket/
+   - **URL:** http://<GTSPrismProLabUtilityServer_IP_ADDRESS>/generate_ticket/
    - **Request Body:** ``{"vm_name":"{{trigger[0].source_entity_info.name}}","vm_id":"{{trigger[0].source_entity_info.uuid}}","alert_name":"{{trigger[0].alert_entity_info.name}}","alert_id":"{{trigger[0].alert_entity_info.uuid}}"}``
    - **Request Header:** Content-Type:application/json;charset=utf-8
 
@@ -133,11 +133,11 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs12.png
 
-#. X-Playによってチケットが作成されたことをメールで通知する。 **アクションの追加（Add Action）** をクリックし、Emailを選択し、以下を入力する。　※<GTSPrismOpsLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
+#. X-Playによってチケットが作成されたことをメールで通知する。 **アクションの追加（Add Action）** をクリックし、Emailを選択し、以下を入力する。　※<GTSPrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
 
    - **Recipient:** - メールアドレスを入力
    - **Subject :** - ``Service Ticket Pending Approval: {{trigger[0].alert_entity_info.name}}``
-   - **Message:** - ``The alert {{trigger[0].alert_entity_info.name}} triggered Playbook {{playbook.playbook_name}} and has generated a Service ticket for the VM: {{trigger[0].source_entity_info.name}} which is now pending your approval. A ticket has been generated for you to take action on at http://<GTSPrismOpsLabUtilityServer_IP_ADDRESS>/ticketsystem``
+   - **Message:** - ``The alert {{trigger[0].alert_entity_info.name}} triggered Playbook {{playbook.playbook_name}} and has generated a Service ticket for the VM: {{trigger[0].source_entity_info.name}} which is now pending your approval. A ticket has been generated for you to take action on at http://<GTSPrismProLabUtilityServer_IP_ADDRESS>/ticketsystem``
 
    .. figure:: images/rs13.png
 
@@ -149,7 +149,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs15.png
 
-#. トリガーとして **Manual** を選択し、 Note: このラボ用に構築したチケットシステムは、手動トリガーによって提供されるトリガーAPIを呼び出しますが、このAPIは現バージョンでは公開されていません。Version 5.17では、これと同じ動作を実現するパブリックAPIを公開する「Webhookトリガー」を導入しています。Service Nowなどのツールは、このWebhookを使用してPrism Centralにコールバックし、プレイブックをトリガーできます。
+#. トリガーとして **Manual** を選択する。 Note: このラボ用に構築したチケットシステムは、手動トリガーによって提供されるトリガーAPIを呼び出しますが、このAPIは現バージョンでは公開されていません。Version 5.17では、これと同じ動作を実現するパブリックAPIを公開する「Webhookトリガー」を導入しています。Service Nowなどのツールは、このWebhookを使用してPrism Centralにコールバックし、プレイブックをトリガーできます。
 
    .. figure:: images/rs16.png
 
@@ -177,10 +177,10 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs20.png
 
-#. 最後に、チケットサービスにコールバックして、チケットサービスのチケットを解決する。 **アクションの追加（Add Action）** をクリックして、 **REST API** アクションを追加する。※<GTSPrismOpsLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
+#. 最後に、チケットサービスにコールバックして、チケットサービスのチケットを解決する。 **アクションの追加（Add Action）** をクリックして、 **REST API** アクションを追加する。※<GTSPrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
 
    - **Method:** PUT
-   - **URL:** http://<GTSPrismOpsLabUtilityServer_IP_ADDRESS>/resolve_ticket
+   - **URL:** http://<GTSPrismProLabUtilityServer_IP_ADDRESS>/resolve_ticket
    - **Request Body:** ``{"vm_id":"{{trigger[0].source_entity_info.uuid}}"}``
    - **Request Header:** Content-Type:application/json;charset=utf-8
 
@@ -198,7 +198,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs24.png
 
-#. メール内のリンクをクリックして、チケットシステムにアクセスする。または、ブラウザの新しいタブから http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem にアクセスする。
+#. メール内のリンクをクリックして、チケットシステムにアクセスする。または、ブラウザの新しいタブから http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/ticketsystem にアクセスする。
 
    .. figure:: images/rs25.png
 
@@ -226,12 +226,12 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs32.png
 
-お持ち帰り
+まとめ
 .........
 
-- Prism Opsは、IT OPSをよりスマートかつ自動化するためのソリューションです。インテリジェントな検出から自動修復まで、IT OPSプロセスを対象としています。
+- Prism Proは、IT Proをよりスマートかつ自動化するためのソリューションです。インテリジェントな検出から自動修復まで、IT Proプロセスを対象としています。
 
-- X-FITは、異常検出や非効率検出を含むスマートIT OPSをサポートする機械学習エンジンです。
+- X-FITは、異常検出や非効率検出を含むスマートIT Proをサポートする機械学習エンジンです。
 
 - 企業向けのIFTTTであるX-Playは、日々の運用タスクの自動化を可能にするエンジンです。
 

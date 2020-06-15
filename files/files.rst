@@ -4,19 +4,19 @@
 ファイルとストレージの統合
 --------------------------------
 
-*このラボの所要想定時間は45分です。*
+ *このラボの所要想定時間は45分です。*
 
 従来のファイルストレージはサイロ化した伝統的構造をしています。 例えばSANストレージのように技術的な進歩を欠いたり、拡張性に難があったりと、我々を悩ませてきました。
-Nutanixではエンタープライズクラウドにこのようなサイロの居場所はないと考えています。
+Nutanixではエンタープライズクラウドにはこのようなサイロ状態はあってはならないと考えています。
 仮想基盤として実績のあるHCI上のソフトウェアで実行可能なアプリケーションの様にファイルストレージを実装することで、
 Nutanix Filesは高性能で、スケーラビリティのある迅速なイノベーションをワンクリックで管理可能にします。
 
-**このラボでは、Filesを使ってSMB共有とNFSサーバの管理を体験していただき、File Analyticsを用いたFilesの新たなる機能性を探りましょう。**
+ **このラボでは、Filesを使ってSMB共有とNFSサーバの管理を体験していただき、File Analyticsを用いたFilesの新たなる機能性を探りましょう。**
 
 今回は時間短縮のためのため、共有リソースの各クラスタ上にFilesクラスタが構築済みです。
-**BootcampFS** はシングルノードで展開されていますが、通常 **Flies** の展開は3台のFile Server VMで開始し、パフォーマンスの必要に応じてスケールアップやスケールアウトすることが出来ます。
+ **BootcampFS** はシングルノードで展開されていますが、通常 **Flies** の展開は3台のFile Server VMで開始し、パフォーマンスの必要に応じてスケールアップやスケールアウトすることが出来ます。
 
-**BootcampFS** は、プライマリネットワークを使用してバックエンドストレージと通信し、CVM からボリュームグループへの iSCSI 接続を行い、セカンダリネットワークを使用してクライアント、Active Directory、アンチウィルスサービスなどと通信するように設定されています。
+ **BootcampFS** は、プライマリネットワークを使用してバックエンドストレージと通信し、CVM からボリュームグループへの iSCSI 接続を行い、セカンダリネットワークを使用してクライアント、Active Directory、アンチウィルスサービスなどと通信するように設定されています。
 
 
 .. figure:: images/1.png
@@ -25,20 +25,20 @@ Nutanix Filesは高性能で、スケーラビリティのある迅速なイノ�
 
   本番環境では、一般的にクライアントとストレージ トラフィックのために専用の仮想ネットワークを使用して Files を配置することが望ましいとされています。2つのネットワークを使用する場合、Filesは設計上、クライアントトラフィックがストレージネットワークにアクセスできないようにします。
 
-FilesはデータストレージにNutanixボリュームグループを利用しているため、圧縮、消去コーディング、スナップショット、レプリケーションなど、同じ基本的なストレージの利点を利用することができます。
+FilesはデータストレージにNutanixボリュームグループを利用しているため、圧縮、イレイジャーコーディング、スナップショット、レプリケーションなど、同じ基本的なストレージの利点を利用することができます。
 
 #. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
 
    .. figure:: images/10.png
 
-   デフォルトのSelf Service RestoreスケジュールがWindowsの前バージョンのスナップショットスケジュールを機能的に制御します。
+   デフォルトのSelf Service RestoreスケジュールがWindowsの以前のバージョンのスナップショットスケジュールを機能的に制御します。
    Windowsの以前のバージョン機能をサポートすることで、エンドユーザーはストレージ管理者やバックアップ管理者を介さずにファイルへの変更をロールバックすることができます。
    これらのローカルスナップショットは、ファイルサーバクラスタをローカルの障害から保護するものではなく、ファイルサーバクラスタ全体のレプリケーションをリモートのNutanixクラスタに実行することができることに注意してください。
 
 SMB共有の管理
 +++++++++++++++++++
 
-このエクササイズではSMB共有の構築と管理を行います。SMB共有は、非構造化ファイルデータを共有する混成チームなどによるFiestaアプリケーションの開発をサポートするために使用されます。
+この演習ではSMB共有の構築と管理を行います。SMB共有は、非構造化ファイルデータを共有する混成チームなどによるFiestaアプリケーションの開発をサポートするために使用されます。
 
 共有の作成
 ..................
@@ -50,7 +50,7 @@ SMB共有の管理
    - **Name** - *Initials*\ **-FiestaShare**
    - **Description (Optional)** - Fiesta app team share, used by PM, ENG, and MKT
    - **File Server** - **BootcampFS**
-   - **Share Path (Optional)** - Leave blank. This field allows you to specify an existing path in which to create the nested share.
+   - **Share Path (Optional)** - 空白
    - **Max Size (Optional)** - 200GiB
    - **Select Protocol** - SMB
 
@@ -74,7 +74,7 @@ SMB共有の管理
       特定のユーザーが読み取りアクセス権を持つファイルとフォルダーのみがそのユーザーに表示する機能です。 これは通常、Windowsファイル共有で有効です。
 
     **Self Service Restore**
-      Windowsの以前のバージョン機能をから、Nutanixスナップショットに基づいて個々のファイルを以前のリビジョンに簡単に復元可能な機能です。
+      Windowsの以前のバージョン機能を利用することで、Nutanixスナップショットに基づいて個々のファイルを以前のリビジョンに簡単に復元可能な機能です。
 
     **Blocked File Types**
       特定のタイプのファイル（大容量の個人用メディアファイルなど）を企業の共有に書き込まないように制限する機能です。
@@ -82,7 +82,7 @@ SMB共有の管理
 
 #. **Next** をクリックします。
 
-#. **Summary** を確認し **Create* をクリックします。
+#. **Summary** を確認し **Create** をクリックします。
 
    .. figure:: images/4.png
 
@@ -132,7 +132,7 @@ SMB共有の管理
 
    .. figure:: images/5.png
 
-   - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスターの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与しました。
+   - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスタの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与しました。
    - 他のユーザーのアクセス管理は、他のSMB共有と同じです。
 
 ..   #.  ``\\BootcampFS.ntnxlab.local\``, の *Initials*\ **-FiestaShare を右クリックし、プロパティを開きます **
@@ -153,10 +153,10 @@ SMB共有の管理
 
       - **Type** - Allow
       - **Applies to** - This folder only
-      - Select **Read & execute**
-      - Select **List folder contents**
-      - Select **Read**
-      - Select **Write**
+      - **Read & execute** を選択
+      - **List folder contents** を選択
+      - **Read** を選択
+      - **Write** を選択
 
       .. figure:: images/8.png
 
@@ -198,7 +198,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
       .. figure:: images/old13.png
 
-#. これは共有環境であるため、ダッシュボードには他のユーザーが作成した共有のデータがすでに表示されている可能性があります。 新しく作成した共有をスキャンするには、:fa:`gear` **> Scan File System** をクリックします。
+#. これは共有環境であるため、ダッシュボードには他のユーザーが作成した共有のデータがすでに表示されている可能性があります。 新しく作成した共有をスキャンするには、 :fa:`gear` **> Scan File System** をクリックします。
    作成した共有を選択し、[スキャン]をクリックします
 
    .. figure:: images/14.png
@@ -213,16 +213,16 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. figure:: images/15.png
 
-#. *Initials*\ **-WinTools** VMから**SampleData** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
+#. *Initials*\ **-WinTools** VMから **SampleData** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
 
    .. note::
 　ファイルを開く際に、OpenOfficeのウィザードが表示された場合は、次へを押して完了させます。
 
-#. **Dashboard** ページを更新し、**Top 5 Active Users** , **Top 5 Accessed Files** そして **File Operations** パネルを確認します。
+#. **Dashboard** ページを更新し、 **Top 5 Active Users** , **Top 5 Accessed Files** そして **File Operations** パネルを確認します。
 
    .. figure:: images/17.png
 
-#. ユーザーアカウントの監査証跡にアクセスするには、**Top 5 Active Users** でユーザーをクリックします。
+#. ユーザーアカウントの監査証跡にアクセスするには、 **Top 5 Active Users** でユーザーをクリックします。
 
 #. または、ツールバーから **Audit Trails** を選択して、ユーザーまたは特定のファイルを検索することもできます。
 
@@ -232,7 +232,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. note::
 
-      例えば、**.doc** など、ワイルドカードを使った検索も可能です。
+      例えば、 **.doc** など、ワイルドカードを使った検索も可能です。
 
 ..
 NFSを使ったエクスポート
@@ -266,8 +266,8 @@ NFSプロトコルの有効化
    - **Name** - logs
    - **Description (Optional)** - File share for system logs
    - **File Server** - *Initials*\ **-Files**
-   - **Share Path (Optional)** - Leave blank
-   - **Max Size (Optional)** - Leave blank
+   - **Share Path (Optional)** - 空白
+   - **Max Size (Optional)** - 空白
    - **Select Protocol** - NFS
 
    .. figure:: images/24.png
@@ -280,7 +280,7 @@ NFSプロトコルの有効化
       - These snapshots appear as a .snapshot directory for NFS clients.
    - **Authentication** - System
    - **Default Access (For All Clients)** - No Access
-   - Select **+ Add exceptions**
+   - **+ Add exceptions** を選択
    - **Clients with Read-Write Access** - *The first 3 octets of your cluster network*\ .* (e.g. 10.38.1.\*)
 
    .. figure:: images/25.png
@@ -307,11 +307,11 @@ NFSプロトコルの有効化
    - **vCPU(s)** - 2
    - **Number of Cores per vCPU** - 1
    - **Memory** - 2 GiB
-   - Select **+ Add New Disk**
+   - **+ Add New Disk** を選択
       - **Operation** - Clone from Image Service
       - **Image** - CentOS
-      - Select **Add**
-   - Select **Add New NIC**
+      - **Add** を選択
+   - **Add New NIC** を選択
       - **VLAN Name** - Secondary
       - Select **Add**
 
@@ -345,7 +345,7 @@ NFSプロトコルの有効化
        total 1
        drwxrwxrwx. 2 root root 2 Mar  9 18:53 logs
 
-#. 実行結果から ``/filesmnt/logs``のように、 logsディレクトリがマウントされたことを確認します。
+#. 実行結果から ``/filesmnt/logs`` のように、 logsディレクトリがマウントされたことを確認します。
 
 #. VMを再起動するとマウントが外れるため、起動時にマウントするように以下のコマンドを実行し ``/etc/fstab`` に追記します。
 
@@ -353,7 +353,7 @@ NFSプロトコルの有効化
 
        echo 'Intials-Files.ntnxlab.local:/ /filesmnt nfs4' >> /etc/fstab
 
-#. 以下のコマンドを実行し、``/filesmnt/logs`` ディレクトリに2MBのランダムデータを100個作成します。
+#. 以下のコマンドを実行し、 ``/filesmnt/logs`` ディレクトリに2MBのランダムデータを100個作成します。
 
      .. code-block:: bash
 
