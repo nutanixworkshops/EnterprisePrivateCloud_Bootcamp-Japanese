@@ -11,11 +11,11 @@ Prism Proを利用した適切なサイジング
 
 ※PrismProのキャパシティランウェイ演習と同様の事前準備です。
 
-#. **Prism Central** にて **VMs** ページに移動し、 **GTSPrismProLabUtilityServer** のIPアドレスを控える。※この後の演習にてこのIPアドレスにアクセスします。
+#. **Prism Central** にて **VMs** ページに移動し、 **PrismProLabUtilityServer** のIPアドレスを控える。※この後の演習にてこのIPアドレスにアクセスします。
 
    .. figure:: images/init1.png
 
-#. ブラウザを起動し、 http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
+#. ブラウザを起動し、 http://`<PrismProLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
 
    .. figure:: images/init2.png
 
@@ -23,7 +23,7 @@ Prism Proを利用した適切なサイジング
 
    .. figure:: images/init2b.png
 
-#. また別のタブで、 http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
+#. また別のタブで、 http://`<PrismProLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
 
    .. figure:: images/init3.png
 
@@ -79,7 +79,7 @@ X-Playを利用したメモリの自動追加
 
 非効率性の一部を解決するために自動化されたアクションを実行する方法を見てみましょう。このラボでは、このVMのメモリが制限されていると想定し、このVMの適切なサイズ設定を自動的に修正する方法を示します。また、カスタムチケットシステムを使用して、この典型的なワークフローがService Nowなどのチケットシステムとどのように統合できるかを考えます。
 
-#. VMリストから **_Initials_-LinuxToolsVM**を確認する。 以降の画面例では、 **ABC - VM** を利用します。
+#. VMリストから **_Initials_-LinuxToolsVM** を確認する。 以降の画面例では、 **ABC - VM** を利用します。
 
    .. figure:: images/rs1.png
 
@@ -95,11 +95,11 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs4.png
 
-#. 以下を入力し **コピー（Copy）** をクリックする。　※作成しているアクションは、後でPlaybookからチケット発行させるためのものです。※<GTSPrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
+#. 以下を入力し **コピー（Copy）** をクリックする。　※作成しているアクションは、後でPlaybookからチケット発行させるためのものです。※<PrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
 
    - **氏名（Name）:** *Initials* - Service Ticketの作成
    - **Method:** POST
-   - **URL:** http://<GTSPrismProLabUtilityServer_IP_ADDRESS>/generate_ticket/
+   - **URL:** http://<PrismProLabUtilityServer_IP_ADDRESS>/generate_ticket/
    - **Request Body:** ``{"vm_name":"{{trigger[0].source_entity_info.name}}","vm_id":"{{trigger[0].source_entity_info.uuid}}","alert_name":"{{trigger[0].alert_entity_info.name}}","alert_id":"{{trigger[0].alert_entity_info.uuid}}"}``
    - **Request Header:** Content-Type:application/json;charset=utf-8
 
@@ -125,7 +125,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs10.png
 
-#. 左側の **アクションの追加（Add Action）** をクリックし、作成した **Generate Service Ticket** アクションを選択する。注：ラボでは、独自に作成したチケットシステムを設定しましたが、Service Nowにはすぐに使用できるService Nowアクションのテンプレートもあります。
+#. 左側の **アクションの追加（Add Action）** をクリックし、作成した ** *Initials* - Service Ticketの作成アクションを選択する。注：ラボでは、独自に作成したチケットシステムを設定しましたが、Service Nowにはすぐに使用できるService Nowアクションのテンプレートもあります。
 
    .. figure:: images/rs11.png
 
@@ -133,15 +133,15 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs12.png
 
-#. X-Playによってチケットが作成されたことをメールで通知する。 **アクションの追加（Add Action）** をクリックし、Emailを選択し、以下を入力する。　※<GTSPrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
+#. X-Playによってチケットが作成されたことをメールで通知する。 **アクションの追加（Add Action）** をクリックし、Emailを選択し、以下を入力する。　※<PrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
 
    - **Recipient:** - メールアドレスを入力
    - **Subject :** - ``Service Ticket Pending Approval: {{trigger[0].alert_entity_info.name}}``
-   - **Message:** - ``The alert {{trigger[0].alert_entity_info.name}} triggered Playbook {{playbook.playbook_name}} and has generated a Service ticket for the VM: {{trigger[0].source_entity_info.name}} which is now pending your approval. A ticket has been generated for you to take action on at http://<GTSPrismProLabUtilityServer_IP_ADDRESS>/ticketsystem``
+   - **Message:** - ``The alert {{trigger[0].alert_entity_info.name}} triggered Playbook {{playbook.playbook_name}} and has generated a Service ticket for the VM: {{trigger[0].source_entity_info.name}} which is now pending your approval. A ticket has been generated for you to take action on at http://<PrismProLabUtilityServer_IP_ADDRESS>/ticketsystem``
 
    .. figure:: images/rs13.png
 
-#. **保存して閉じる（Save & Close）** を選択し、名前を “*Initials* - Generate Service Ticket for Constrained VM” と設定する。 **‘Enabled’ トグルで有効にすることを忘れないでください。**
+#. **保存して閉じる（Save & Close）** を選択し、名前を “*Initials* - Generate Service Ticket for Constrained VM” と設定する。 **‘Enabled’ トグルで有効にすることを忘れないでください。** 
 
    .. figure:: images/rs14.png
 
@@ -161,7 +161,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs18.png
 
-#. 以下の画面に従って空のフィールドを設定する。また次に、自動化されたアクションが行われたことを誰かに通知する。 **アクションの追加（Add Action）** をクリックして、メールアクションを追加する。
+#. 以下の画面に従って空のフィールドを設定する。また次に、自動化されたアクションが行われたことを誰かに通知する。 **アクションの追加（Add Action）** をクリックして、Emailを追加する。
 
    .. figure:: images/rs19.png
 
@@ -177,10 +177,10 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs20.png
 
-#. 最後に、チケットサービスにコールバックして、チケットサービスのチケットを解決する。 **アクションの追加（Add Action）** をクリックして、 **REST API** アクションを追加する。※<GTSPrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
+#. 最後に、チケットサービスにコールバックして、チケットサービスのチケットを解決する。 **アクションの追加（Add Action）** をクリックして、 **REST API** アクションを追加する。※<PrismProLabUtilityServer_IP_ADDRESS>は変数なので、IPアドレスを代入してください。
 
    - **Method:** PUT
-   - **URL:** http://<GTSPrismProLabUtilityServer_IP_ADDRESS>/resolve_ticket
+   - **URL:** http://<PrismProLabUtilityServer_IP_ADDRESS>/resolve_ticket
    - **Request Body:** ``{"vm_id":"{{trigger[0].source_entity_info.uuid}}"}``
    - **Request Header:** Content-Type:application/json;charset=utf-8
 
@@ -198,7 +198,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs24.png
 
-#. メール内のリンクをクリックして、チケットシステムにアクセスする。または、ブラウザの新しいタブから http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/ticketsystem にアクセスする。
+#. メール内のリンクをクリックして、チケットシステムにアクセスする。または、ブラウザの新しいタブから http://`<PrismProLabUtilityServer_IP_ADDRESS>`/ticketsystem にアクセスする。
 
    .. figure:: images/rs25.png
 
