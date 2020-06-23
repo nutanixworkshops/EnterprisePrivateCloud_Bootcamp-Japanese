@@ -243,7 +243,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 #. **Save** をクリックします。
 
-#. 前の演習で新谷さんによってプロビジョニングされた ** *Initials*\ -WinToolsVM** を選択し、 **Actions（アクション） > Manage Categories（カテゴリの管理）** をクリックします。 ** *Initials*\ -Team: Fiesta** カテゴリを割り当て、 **Save（保存）** をクリックします。
+#. 前の演習で新谷さんによってプロビジョニングされた ***Initials*\ -WinToolsVM** を選択し、 **Actions（アクション） > Manage Categories（カテゴリの管理）** をクリックします。 ***Initials*\ -Team: Fiesta** カテゴリを割り当て、 **Save（保存）** をクリックします。
 
 ロールの探索
 ===============
