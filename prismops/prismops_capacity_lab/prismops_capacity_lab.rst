@@ -131,7 +131,7 @@ X-Playによる容量予測レポートの自動生成
 
    .. figure:: images/cap8.png
 
-#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 ** ‘Enabled’ のトグルで有効にしてください。** 
+#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 **‘Enabled’ のトグルで有効にしてください。** 
 
    .. figure:: images/cap9.png
 
