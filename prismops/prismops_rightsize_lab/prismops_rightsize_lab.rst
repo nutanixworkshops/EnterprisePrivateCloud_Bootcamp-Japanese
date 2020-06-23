@@ -125,7 +125,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs10.png
 
-#. 左側の **アクションの追加（Add Action）** をクリックし、作成した ** *Initials* - Service Ticketの作成アクションを選択する。注：ラボでは、独自に作成したチケットシステムを設定しましたが、Service Nowにはすぐに使用できるService Nowアクションのテンプレートもあります。
+#. 左側の **アクションの追加（Add Action）** をクリックし、作成した *Initials* - **Service Ticket** の作成アクションを選択する。注：ラボでは、独自に作成したチケットシステムを設定しましたが、Service Nowにはすぐに使用できるService Nowアクションのテンプレートもあります。
 
    .. figure:: images/rs11.png
 
@@ -141,7 +141,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs13.png
 
-#. **保存して閉じる（Save & Close）** を選択し、名前を “*Initials* - Generate Service Ticket for Constrained VM” と設定する。 **‘Enabled’ トグルで有効にすることを忘れないでください。** 
+#. **保存して閉じる（Save & Close）** を選択し、名前を “*Initials* - Generate Service Ticket for Constrained VM” と設定する。 **‘Enabled’ トグルで有効にすることを忘れないでください。**
 
    .. figure:: images/rs14.png
 
@@ -186,7 +186,7 @@ X-Playを利用したメモリの自動追加
 
    .. figure:: images/rs21.png
 
-#. **保存して閉じる（Save & Close）** をクリックし、名前は “*Initials* - Resolve Service Ticket” とする。 ** ‘Enabled’ トグルで有効化することを忘れないでください。**
+#. **保存して閉じる（Save & Close）** をクリックし、名前は “*Initials* - Resolve Service Ticket” とする。 ** ‘Enabled’ トグルで有効化することを忘れないでください。** 
 
    .. figure:: images/rs22.png
 
