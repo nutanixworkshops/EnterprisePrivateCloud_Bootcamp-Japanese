@@ -64,7 +64,7 @@
 
    フルクローン、P2V移行、永続デスクトップには重複排除が推奨されます。
 
-   **リダンダンシーファクター**
+   **リダンダンシーファクター（冗長度）**
 
    リダンダンシーファクターは、データコピーの数を制御します。このクラスタにはリダンダンシーファクターを構成できないことに注意してください。これは、RF3をサポートするために必要なノードの最小数が5であるためです。
 
@@ -96,34 +96,34 @@
 
 AHVは、すべてのVMネットワーキングにOpen vSwitch（OVS）を活用します。OVSは、Linuxカーネルに実装され、マルチサーバー仮想化環境で動作するように設計されたオープンソースソフトウェアスイッチです。各AHVサーバーはOVSインスタンスを維持し、すべてのOVSインスタンスが結合して単一の論理スイッチを形成します。各ノードは通常、仮想ネットワークとして公開される複数のVLANにトランク/タグ付けされた物理スイッチポートにアップリンクされます。
 
-#. **Prism Element** ドロップダウンメニューから **VM** を選択します。
+#. **Prism Element** ドロップダウンメニューから **VM（仮想マシン）** を選択します。
 
-#. **Network Config** を選択します。
+#. **Network Config（ネットワーク設定）** を選択します。
 
    .. figure:: images/9.png
 
-#. **+ Create Network** をクリックし、以下の情報を入力します。
+#. **+ Create Network（ネットワークを作成）** をクリックし、以下の情報を入力します。
 
-   - **Name** - *Initials* -Network_IPAM
-   - **VLAN ID** - 4096未満で、かつ **Primary** **Secondary** 以外の任意の数字
-   - **Enable IP Address Management** を選択
-   - **Network IP Address / Prefix Length** - 10.0.0.0/24
-   - **Gateway** - 10.0.0.1
-   - **Configure Domain Settings** を選択しない
-   - **+ Create Pool** を選択
-   - **Start Address** - 10.0.0.100
-   - **End Address** - 10.0.0.150
-   - **Submit** をクリック
+   - **Name（名前）** - *Initials* -Network_IPAM
+   - **VLAN ID** - パラメータシート **VLAN ID** を参照
+   - **Enable IP Address Management（IPアドレス管理を可能にする）** を選択
+   - **Network IP Address / Prefix Length（ネットワーク IP アドレス/プリフィックスの長さ）** - 10.0.0.0/24
+   - **Gateway（ゲートウェイIPアドレス）** - 10.0.0.1
+   - **Configure Domain Settings（ドメイン設定の構成）** を選択しない
+   - **+ Create Pool（プールを作成）** を選択
+   - **Start Address（開始アドレス）** - 10.0.0.100
+   - **End Address（終了アドレス）** - 10.0.0.150
+   - **Submit（送信）** をクリック
 
    .. figure:: images/network_config_03.png
 
    AHVは統合DHCPサービス（IPAM）を提供できるため、仮想化管理者は構成済みプールからIPをVMに割り当てることができます。また、仮想NICをVMに追加するときに、IPをDHCP予約として簡単に指定できます。
 
-#. **Save** をクリックします。
+#. **Save（保存）** をクリックします。
 
    これで、構成された仮想ネットワークがクラ​​スター内のすべてのノードで利用できるようになります。AHVの仮想ネットワークはESXiの分散仮想スイッチのように動作します。つまり、クラスタ内の個々のホストごとに同じ設定を構成する必要はありません。
 
-#. **Network Configuration** ウィンドウを閉じます。
+#. **Network Configuration（ネットワーク設定）** ウィンドウを閉じます。
 
    これで完了です！
 
@@ -132,9 +132,9 @@ VM作成リクエストへの応答
 
 仮想化管理者は通常、新しいVMの展開を担当します。この演習では、新谷さんがNutanix管理者としてPrismにAHV VMをデプロイする手順を説明します。
 
-#. **Prism Element** のドロップダウンメニューから **VM** ページに移動します。
+#. **Prism Element** のドロップダウンメニューから **VM（仮想マシン）** ページに移動します。
 
-#. **+ Create VM** をクリックします。
+#. **+ Create VM（仮想マシンを作成）** をクリックします。
 
    .. figure:: images/10.png
 
@@ -178,7 +178,7 @@ VM作成ウィザードには、Windows Sysprep自動化用のUnattend.xmlファ
 
 以前のインフラストラクチャでは、新谷さんは新しく作成されたVMネットワークが期待どおりに機能しないという問題があり、問題の原因を特定するためにネットワーク管理者と長いトラブルシューティングセッションに従事する必要がありました。AHVを使用すると、新谷さんはプロビジョニングした仮想マシンの完全なネットワークパスを簡単に視覚化できます。
 
-#. **Prism Element** の **Network** ページを選択し、VLANまたはVM名でフィルタリングして、自分で試してみてください。
+#. **Prism Element** の左上プルダウンから **Network（ネットワーク）** ページを選択し、VLANまたはVM名でフィルタリングして、試してみてください。
 
    .. figure:: images/13.png
 
@@ -189,9 +189,9 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 次の演習では、 **Prism Central** のネイティブ機能を利用してIaaSセルフサービスをユーザーに提供することで自身の負荷を軽減します。
 
-#. **Prism Element** の **Home** ページに移動します。
+#. **Prism Element** の **Home（ホーム）** ページに移動します。
 
-#. **Launch** ボタンをクリックし、**Prism Central** に次の資格情報でログインします。
+#. PrismCentral OKとなっている項目の、 **Launch（起動）** ボタンをクリックし、**Prism Central** に次の資格情報でログインします。
 
    - **User Name** - admin
    - **Password** - *HPOC Password*
@@ -207,7 +207,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 この演習では、新谷さんのカスタムカテゴリを作成して、Fiestaアプリチームの適切なリソースへのアクセスを調整します。
 
-#. **Prism Central** にて :fa:`bars` **> Virtual Infrastructure > Categories** を選択します。
+#. **Prism Central** にて :fa:`bars` **> Virtual Infrastructure（仮想インフラ） > Categories（カテゴリ）** を選択します。
 
    .. figure:: images/14.png
 
@@ -217,15 +217,15 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
    - **Purpose** - アプリケーションチームへのアクセス許可
    - **Values** - Fiesta
 
-#. **Save** をクリックします。
+#. **Save（保存）** をクリックします。
 
 #. 既存の **Environment** カテゴリをクリックして、次のフィールドに入力します。 **Environment** は **SYSTEM** カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
 
    .. figure:: images/16.png
 
-#. :fa:`bars` **> Virtual Infrastructure > VMs** を選択します。
+#. :fa:`bars` **> Virtual Infrastructure（仮想インフラ） > VMs（仮想マシン）** を選択します。
 
-#. **AutoAD** と **NTNX-BootcampFS-1** のVMsのチェックボックスにチェックした状態で **Actions > Manage Categories** をクリックします。
+#. **AutoAD** と **NTNX-BootcampFS-1** のVMsのチェックボックスにチェックした状態で **Actions（アクション） > Manage Categories（カテゴリの管理）** をクリックします。
 
    .. figure:: images/17.png
 
@@ -233,7 +233,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
       参加者の数によっては、選択する必要があるVMの一部が別のページにある場合があります。対象のVMを検索するか、クリックして追加のページを表示してVMを選択するか、追加の行を表示することを選択します。これらの手法はいずれも、インターフェースの右上部分で実行できます。
 
-#. 検索バーで **Environment** と入力し、 **Production** の値を選択してから、プラス記号をクリックします。
+#. 検索バーで **Environment** と入力し、 **Production** の値を選択してから、プラス記号をクリックします。※既にProductionカテゴリが割り当てられている場合は、キャンセルをクリックし、手順8をスキップする。
 
    .. figure:: images/18.png
 
@@ -243,7 +243,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 #. **Save** をクリックします。
 
-#. 前の演習で新谷さんによってプロビジョニングされた **Initials-WinToolsVM** を選択し、 **Actions > Manage Categories** をクリックします。 **Initials-Team: Fiesta** カテゴリを割り当て、 **Save** をクリックします。
+#. 前の演習で新谷さんによってプロビジョニングされた ** *Initials*\ -WinToolsVM** を選択し、 **Actions（アクション） > Manage Categories（カテゴリの管理）** をクリックします。 ** *Initials*\ -Team: Fiesta** カテゴリを割り当て、 **Save（保存）** をクリックします。
 
 ロールの探索
 ===============
@@ -252,61 +252,61 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 新谷さんは、Fiestaチームで作業する2種類のユーザー、テスト環境用にVMをプロビジョニングする必要があるDeveloper、および組織内の複数の環境を監視するが、各環境を変更する機能が非常に制限されているOperatorをサポートする必要があります。
 
-#. **Prism Central** で :fa:`bars` **> Administration > Roles** を選択する。
+#. **Prism Central** で :fa:`bars` **> Administration（管理） > Roles（ロール）** を選択する。
 
    組み込みの開発者ロールにより、ユーザーはVMの作成と変更、Calmブループリントの作成、プロビジョニング、管理などを行うことができます。
 
-#. 組み込みの **Developer** ロールをクリックし、必要に応じてロールの承認されたアクションを確認します。 **Manage Assignment** をクリックします。
+#. 組み込みの **Developer** ロールをクリックし、必要に応じてロールの承認されたアクションを確認します。 画面右上の**Manage Assignment** をクリックします。
 
    .. figure:: images/19.png
 
-#. **Users and Groups** で、ntnxlab.localドメインから自動的に検出される **SSP Developers** のユーザーグループを指定します。
+#. **Users and Groups（ユーザーとグループ）** で、ntnxlab.localドメインから自動的に検出される **SSP Developers** のユーザーグループを指定します。
 
-#. **Entities** で、ドロップダウンメニューを使用して次のリソースを指定します。
+#. **Entities（エンティティ）** で、新エンティティをクリックし、ドロップダウンメニューを使用して次のリソースを指定します。※既に割り当てられている場合は、キャンセルをクリックし手順5をスキップする。
 
-   - **AHV Cluster** - *割り当てられたCluster*
+   - **AHV Cluster** - *割り当てられたCluster（xxx-POCxx）*
    - **AHV Subnet** - Secondary
    - **Category** - Environment:Testing, Environment:Staging, Environment:Dev, *Initials*\ -Team:Fiesta
 
    .. figure:: images/20.png
 
-#. **Save** をクリックし、右上のXをクリックしてこの画面を閉じます。
+#. **Save（保存）** をクリックし、右上のXをクリックしてこの画面を閉じます。
 
    デフォルトのOperatorロールには、ブループリントからデプロイされたVMとアプリケーションを削除する機能が含まれていますが、これは私たちの環境では望ましくありません。新しいロールを最初から構築するのではなく、既存のロールにクローンを作成し、ニーズに合わせて変更できます。必要なOperatorのロールは、VMメトリックを表示し、電源操作を実行し、vCPUやメモリなどのVM構成を更新して、アプリケーションのパフォーマンスの問題に対処できる必要があります。
 
-#. 組み込み **Operator** ロールをクリックし、 **Duplicate** をクリックします。
+#. **Operator** ロールをクリックし、 **Duplicate** をクリックします。
 
 #. 次のフィールドに入力し、 **Save** をクリックしてカスタムのロールを作成します。
 
-   - **Role Name** - *Initials*\ -SmoothOperator
-   - **Description** - Limited operator accounts
-   - **App** - No Access
-   - **VM** - Edit Access
-   - **Allow VM Creation** は選択 **しない** 。
+   - **Role Name（ロール名）** - *Initials*\ -SmoothOperator
+   - **Description（説明）** - Limited operator accounts
+   - **App（アプリ）** - No Access
+   - **VM（仮想マシン）** - Edit Access
+   - **Allow VM（仮想マシン） Creation** は選択 **しない** 。
 
    .. figure:: images/21.png
 
-#. **Prism** を更新し 、**SmoothOperator** ロールをクリックします。 **Manage Assignment** をクリックします。
+#. **Prism** を更新し、前手順で作成した **SmoothOperator** ロールをクリックします。 **Manage Assignment** をクリックします。
 
 #. 次の割り当てを作成します。
 
-   - **Users and Groups** - operator01
-   - **Entity Categories** - Environment:Production, Environment:Testing, Environment:Staging, Environment:Dev
+   - **Users and Groups（ユーザーとグループ）** - operator01
+   - **Entity Categories（エンティティ）** - Environment:Production, Environment:Testing, Environment:Staging, Environment:Dev
 
    Operator01は、Environment カテゴリのいずれかでタグ付けされたすべてのVMにアクセスできるユーザーですが、特定のクラスタへの一般的なアクセス権はありません。
 
-   **New Users** をクリックして、同じロールに割り当てを追加します。
+   **New Users（新ユーザー）** をクリックして、同じロールに割り当てを追加します。
 
-   - **Users and Groups** - operator02
-   - **Entity Categories** - Environment:Dev, *Initials*\ -Team:Fiesta
+   - **Users and Groups（ユーザーとグループ）** - operator02
+   - **Entity Categories（エンティティ）** - Environment:Dev, *Initials*\ -Team:Fiesta
 
    Operator02は、DevまたはFiestaカテゴリー値のいずれかでタグ付けされたすべてのVMを表示するユーザーです。
 
    .. figure:: images/22.png
 
-   **Save** をクリックします。
+   **Save（保存）** をクリックします。
 
-#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを **Prism Admin** 、または **Super Admin** ロールにマップ出来ます。 :fa:`bars`  ** > Prism Central Settings > Role Mapping** に移動し、 **Cluster Admin** 、もしくは **User Admin** のロールをADアカウントに追加します。
+#. 新谷さんなどのインフラストラクチャ管理者は、次を選択して、ADユーザーを **Prism Admin** 、または **Super Admin** ロールにマップ出来ます。 :fa:`bars` **> Prism Central Settings（PrismCentral設定） > Role Mapping（役割管理）** に移動し、 **Cluster Admin** と **User Admin** のロールをADアカウントである **adminuser01** に追加します。※既に追加されている場合は本手順をスキップする。
 
    .. figure:: images/28.png
 
@@ -319,7 +319,7 @@ Nutanix Calmを使用すると、プライベート（AHV、ESXi）とパブリ�
 
 インフラストラクチャ以外の管理者がCalmにアクセスしてアプリケーションを作成または管理できるようにするには、まずユーザーまたはグループをプロジェクトに割り当てる必要があります。プロジェクトは、ユーザーのロール、インフラストラクチャリソース、およびリソースクォータを定義する論理単位として機能します。プロジェクトは、一連の共通の要件または共通の構造と機能を持つユーザーを定義します。たとえば、Fiestaプロジェクトで協力するエンジニアのチームなどです。
 
-#. **Prism Central** において、 :fa:`bars`  ** > Services > Calm** を選択します。
+#. **Prism Central** において、 :fa:`bars` ** > Services > Calm** を選択します。
 
 #. 左手のメニューで **Projects** を選択し、 **+ Create Project** をクリックします。
 
@@ -349,16 +349,16 @@ Nutanix Calmを使用すると、プライベート（AHV、ESXi）とパブリ�
       - **Role** - Developer
       - **Action** - Save
 
-   - Select **+ User**
+   - **+ User** を選択
 
       - **Name** - Operator02
       - **Role** - *Initials*\ -SmoothOperator
       - **Action** - Save
 
-   - Under **Quotas**, specify
+   - **Quotas**, にて以下を指定
 
       - **vCPUs** - 100
-      - **Storage** - <Leave Blank>
+      - **Storage** - 空白
       - **Memory** - 100
 
    .. figure:: images/24.png
@@ -378,7 +378,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 開発者ユーザーは独自のブループリントを作成および公開することができますが、新谷さんはチームが使用する共通のFiestaブループリントを提供したいと考えています。
 
-#. `こちら <https://raw.githubusercontent.com/nutanixworkshops/ts2020/master/pc/dayinlife/Fiesta-Multi.json>`_.　を右クリックして、Fiestaマルチブループリントをダウンロードします。
+#. `こちら <https://raw.githubusercontent.com/nutanixworkshops/EnterprisePrivateCloud_Bootcamp-Japanese/master/dayinlife/Fiesta-Multi.json>`_.　を右クリックして、Fiestaマルチブループリントをダウンロードします。
 
 #. **Prism Central > Calm** に移動し、左手のメニューから **Blueprints** を選択、 **Upload Blueprint** をクリックします。
 
@@ -460,7 +460,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
 #. :fa:`bars` メニューにアクセスして、環境へのアクセスが大幅に制限されていることを確認して下さい。
 
-#. **VMs** ページに *Initials*\ **-WinToolsVM** が楠田さんが管理可能なVMとして表示されます。
+#. **VMs（仮想マシン）** ページに *Initials*\ **-WinToolsVM** が楠田さんが管理可能なVMとして表示されます。
 
 #. VMをクリックして、楠田さんが彼のVMに関連付けられた基本的なメトリックを取得し、VMの構成、電源操作を制御し、さらにはVMを削除できることに注意してください。
 
@@ -468,7 +468,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    VMのセルフサービスによる作成には、2つのワークフローがあります。従来のVM作成ウィザードとCalmです。楠田さんの要件の1つは、彼の開発ワークフローの一部として必要な複数のツールを実行するLinux仮想マシンです。
 
-#. **Create VM** をクリックし、次のフィールドに入力して、ラボの前半で新谷さんが実行した手動のVM導入プロセスと同様に、従来の仮想マシンをプロビジョニングします。
+#. **Create VM（仮想マシンを作成）** をクリックし、次のフィールドに入力して、ラボの前半で新谷さんが実行した手動のVM導入プロセスと同様に、従来の仮想マシンをプロビジョニングします。
 
    - **Create VM from** - Disk Images
    - **Select Disk Images** - Linux_ToolsVM.qcow2
@@ -485,7 +485,7 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    楠田さんは、ツールVMに加えて、Fiestaアプリケーションの新しいビルドのテストに使用できるインフラストラクチャを展開したいと考えています。エンドユーザーが単一のVMプロビジョニングと手動による構築作業によって複雑なアプリケーションを展開するのは遅く、一貫性がなく、ユーザー満足度は高くありません。幸運なことに、新谷さんによってプロジェクトに公開された、事前に作成されたFiestaアプリケーションのブループリントを活用できます。
 
-#. :fa:`bars` **> Services > Calm** を選択します。
+#. :fa:`bars` **> Services（サービス） > Calm** を選択します。
 
 #. 左のメニューから **Blueprints** を選択し、 **Fiesta-Multi** ブループリントを開きます。
 
@@ -585,18 +585,18 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
    - **User Name** - adminuser01@ntnxlab.local
    - **Password** - nutanix/4u
 
-#. :fa:`bars` **> Virtual Infrastructure > VMs** を開きます。Prism Centralの **Entity Browser** は、VM、イメージ、クラスタ、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
+#. :fa:`bars` **> Virtual Infrastructure（仮想インフラ） > VMs（仮想マシン）** を開きます。Prism Centralの **Entity Browser** は、VM、イメージ、クラスタ、ホスト、アラートなどのエンティティをソート、検索、表示するための堅牢なUIを提供します。
 
-#. **Filters** を選択して、使用可能なオプションを確認します。次のサンプルフィルターを指定し、対応するボックスがオンになっていることを確認します。
+#. **Filters（フィルタ）** を選択して、使用可能なオプションを確認します。次のサンプルフィルターを指定し、対応するボックスがオンになっていることを確認します。
 
-   - **Name** - *Initials* を含む一意の名前
+   - **Name（名前）** - *Initials*
    - **Categories** - *Initials*\ -Team: Fiesta
    - **Hypervisor** - AHV
    - **Power State** - On
 
    VM効率、メモリ使用量、ストレージレイテンシなど、利用可能な他の有用なフィルターに注意してください。
 
-#. フィルターされたVMをすべて選択し、**Label** アイコンをクリックして、フィルターされたVMのグループにカスタムラベルを適用します。 (例: *Initials* AHV Fiesta VMs).
+#. フィルターされたVMをすべて選択し、**Label（ラベル）** アイコンをクリックして、フィルターされたVMのグループにカスタムラベルを適用します。 (例: *Initials* AHV Fiesta VMs).
 
    .. figure:: images/44.png
 
@@ -604,9 +604,9 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 
    .. figure:: images/45.png
 
-#. **Focus** ドロップダウンを選択して、ボックス外のさまざまなビューにアクセスします。VMがDR計画の一部として含まれているかどうかを理解するには、どのビューを使用する必要がありますか？
+#. **Focus（フォーカス）** ドロップダウンを選択して、ボックス外のさまざまなビューにアクセスします。例えばVMがDR計画の一部として含まれているかどうかを理解するには、どのビューを使用する必要がありますか？
 
-#. **Focus > + Add Custom** をクリックして、 **CPU Usage** 、 **CPU Ready Time** 、 **IO Latency** 、 **Working Set Size Read** 、 **Working Set Size Write** を表示するVMビュー（XYZ-VM-Viewなど）を作成します。このようなビューは、VMパフォーマンスの問題を特定するのに役立ちます。
+#. **Focus（フォーカス） > + Add Custom（カスタムを追加）** をクリックして、 **CPU Usage** 、 **CPU Ready Time** 、 **IO Latency** 、 **Working Set Size Read** 、 **Working Set Size Write** を表示するVMビュー（XYZ-VM-Viewなど）を作成します。このようなビューは、VMパフォーマンスの問題を特定するのに役立ちます。
 
    .. figure:: images/46.png
 

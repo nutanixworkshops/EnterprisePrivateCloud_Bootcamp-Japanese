@@ -11,11 +11,11 @@ Prism Proは、お客様のIT運用にスマートな自動化をもたらしま
 ラボの準備
 +++++++++
 
-#. **Prism Central** にて **仮想マシン（VMs）** ページに移動し、 **GTSPrismProLabUtilityServer** のIPアドレスをメモします。※この後の演習にてこのIPアドレスにアクセスします。
+#. **Prism Central** にて **仮想マシン（VMs）** ページに移動し、 **PrismProLabUtilityServer** のIPアドレスをメモします。※この後の演習にてこのIPアドレスにアクセスします。
 
    .. figure:: images/init1.png
 
-#. ブラウザを起動し、http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
+#. ブラウザを起動し、http://`<PrismProLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
 
    .. figure:: images/init2.png
 
@@ -23,7 +23,7 @@ Prism Proは、お客様のIT運用にスマートな自動化をもたらしま
 
    .. figure:: images/init2b.png
 
-#. また別のタブで、 http://`<GTSPrismProLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
+#. また別のタブで、 http://`<PrismProLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
 
    .. figure:: images/init3.png
 
@@ -131,7 +131,7 @@ X-Playによる容量予測レポートの自動生成
 
    .. figure:: images/cap8.png
 
-#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 ** ‘Enabled’ のトグルで有効にしてください。**
+#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 ** ‘Enabled’ のトグルで有効にしてください。** 
 
    .. figure:: images/cap9.png
 
