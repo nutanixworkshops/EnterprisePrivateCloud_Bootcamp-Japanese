@@ -188,7 +188,7 @@ File Analytics
 File Analyticsは、Prism Elementの自動化されたワンクリック操作により、スタンドアロンVMとして数分でデプロイされます。
 このVMは、あなたの環境に既にデプロイされ、有効化されています。
 
-#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン) ** と進み、 **BootcampFS** を選択した状態で、画面中段の ** ファイル分析(File Analytics) ** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)** と進み、 **BootcampFS** を選択した状態で、画面中段の **ファイル分析(File Analytics)** をクリックします。
 
    .. figure:: images/12.png
 
@@ -217,7 +217,7 @@ File Analyticsは、Prism Elementの自動化されたワンクリック操作�
 
    .. figure:: images/15.png
 
-#. *Initials*\ **-WinTools** VMから**SampleData** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
+#. *Initials*\ **-WinTools** VMから **SampleData** の下にあるいくつかのファイルを開いて、監査証跡アクティビティを作成します。
 
    .. note::
 　ファイルを開く際に、OpenOfficeのウィザードが表示された場合は、次へを押して完了させます。
@@ -253,11 +253,11 @@ NFSプロトコルの有効化
    本環境ではFilesサーバーを共有で使用しているため、既に有効になっている場合があります。
    NFSが既に有効になっている場合は、`ユーザマッピングの設定` に進みます。
 
-#. **Prism Element > ファイルサーバー(File Server) ** と進み、**BootcampFS** を選択、画面中段右の **プロトコル管理(Protocol Management)** をクリックし、 **ディレクトリサービス(Directory Services)** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server)** と進み、**BootcampFS** を選択、画面中段右の **プロトコル管理(Protocol Management)** をクリックし、 **ディレクトリサービス(Directory Services)** をクリックします。
 
    .. figure:: images/29.png
 
-#. ** NFSプロトコルの使用(Use NFS Protocol) ** にチェックを入れ、** ユーザー管理と認証(User Management and Authentication)** で、デデフォルトの ** 未管理(Unmanaged) ** であることを確認し ** 更新(Update) ** をクリックします。
+#. **NFSプロトコルの使用(Use NFS Protocol)** にチェックを入れ、**ユーザー管理と認証(User Management and Authentication)** で、デデフォルトの **未管理(Unmanaged)** であることを確認し **更新(Update)** をクリックします。
 
    .. figure:: images/30.png
 
@@ -295,12 +295,12 @@ NFSプロトコルの有効化
 
 #. **Next** をクリックします。
 
-#. **Summary** を確認し ** 作成(Create) ** をクリックします。
+#. **Summary** を確認し **作成(Create)** をクリックします。
 
 エクスポートのテスト
 ..................
 
-#. **Prism Element > 仮想マシン(VM) ** と進み、画面右側にある、**search in table** に *Initials*\ を入力し表示をフィルターします。
+#. **Prism Element > 仮想マシン(VM)** と進み、画面右側にある、**search in table** に *Initials*\ を入力し表示をフィルターします。
 
 #. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。既に電源オンの場合次の手順に進みます。
 
@@ -368,7 +368,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
 
 #. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping)** をクリックします。
 
-#. デフォルト設定のまま **Next** を2回クリックし ** デフォルトのマッピング(Default Mapping) ** ページに進みます。
+#. デフォルト設定のまま **Next** を2回クリックし **デフォルトのマッピング(Default Mapping)** ページに進みます。
 
 #. **デフォルトのマッピング(Default Mapping)** ページにて **NFSエクスポートへのアクセス拒否(Deny access to NFS export)** と **SMB共有へのアクセスを拒否する(Deny access to SMB share)** を指定します。既に設定されている場合は次の項目へ進みます。
 
@@ -422,7 +422,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
        uid=0(root) gid=0(root) groups=0(root)
        [root@CentOS ~]#
 
-#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)  **  と進み、 **BootcampFS** を選択し、 ** プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping) ** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management)** を選択、 **ユーザーマッピング(User Mapping) ** をクリックします。
 
 #. **Next** をクリックし **明示的なマッピング(Explicit Mapping)** まで進みます。
 
