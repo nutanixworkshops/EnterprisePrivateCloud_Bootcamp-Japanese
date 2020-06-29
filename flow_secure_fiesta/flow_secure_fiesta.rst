@@ -155,7 +155,7 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
 #. 次のフィールドに入力します。
 
-   - **ディスティネーションの追加(Add destination by:) ** - **サブネット/IP(Subnet/IP)** を選択
+   - **ディスティネーションの追加(Add destination by:)** - **サブネット/IP(Subnet/IP)** を選択
    - *ドメインコントローラのIP*\ /32
 
    .. figure:: images/25.png
