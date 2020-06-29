@@ -47,7 +47,7 @@ SMB共有の管理
 
 #. 以下のフィールドに入力します。
 
-   - **名前(Name)** - **Initials\ **-FiestaShare**
+   - **名前(Name)** - *Initials\ **-FiestaShare**
    - **詳細(オプション)(Description (Optional))** - Fiesta app team share, used by PM, ENG, and MKT
    - **ファイルサーバー(File Server)** - **BootcampFS**
    - **共有パス(オプション) Share Path (Optional)** - Leave blank. This field allows you to specify an existing path in which to create the nested share.
@@ -383,7 +383,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
 
    .. figure:: images/32.png
 
-#.  **設定ページの下部、マルチプロトコルアクセス(Multiprotocol Access)** にて、 **両方のプロトコルから同じファイルへの同時アクセス(Simultaneous access to the same files from both protocols)  ** にチェックを入れます。
+#.  **設定ページの下部、マルチプロトコルアクセス(Multiprotocol Access)** にて、 **両方のプロトコルから同じファイルへの同時アクセス(Simultaneous access to the same files from both protocols)** にチェックを入れます。
 
    .. figure:: images/33.png
 
@@ -422,7 +422,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
        uid=0(root) gid=0(root) groups=0(root)
        [root@CentOS ~]#
 
-#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management)** を選択、 **ユーザーマッピング(User Mapping) ** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management)** を選択、 **ユーザーマッピング(User Mapping)** をクリックします。
 
 #. **Next** をクリックし **明示的なマッピング(Explicit Mapping)** まで進みます。
 
