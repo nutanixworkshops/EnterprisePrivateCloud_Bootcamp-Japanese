@@ -122,7 +122,7 @@ SMB共有の管理
 
 #. **エクスプローラー** で ``\\BootcampFS.ntnxlab.local\`` を開きます.
 
-#.  *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードします。
+#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードします。
 Indexページが有効になっているため、http://<IPアドレス>/ まで入力してリンクを辿ることも可能です。
 
    - **If using a PHX cluster** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
@@ -134,35 +134,6 @@ Indexページが有効になっているため、http://<IPアドレス>/ ま�
 
    - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスターの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与されています。
    - 他のユーザーのアクセス管理は、他のSMB共有と同じ手法で管理することが出来ます。
-
-..   #.  ``\\BootcampFS.ntnxlab.local\``, の *Initials*\ **-FiestaShare を右クリックし、プロパティを開きます **
-
-#. **セキュリティ** タブの **詳細** を選択します.
-
-      .. figure:: images/6.png
-
-#. **Users (BootcampFS\\Users)** を選択し、**Remove** をクリックします。
-
-#. **Add** をクリックします。
-
-#. **プリンシパルを選択** を選択し、**オブジェクト名** のフィールドに **Everyone** を入力し、**OK** をクリックします。
-
-      .. figure:: images/7.png
-
-#. 下記フィールドを入力し **OK** をクリックします。:
-
-      - **Type** - Allow
-      - **Applies to** - This folder only
-      - Select **Read & execute**
-      - Select **List folder contents**
-      - Select **Read**
-      - Select **Write**
-
-      .. figure:: images/8.png
-
-#. **OK > OK > OK** とクリックし、変更を保存します。
-
-   これで、すべてのユーザーが *Initials*\ **-FiestaShare** 共有内にフォルダーとファイルを作成できるようになります。
 
 #. **PowerShell** を開き、以下のコマンドを使ってブロックされたファイルタイプのファイルを作成を試みます。
 
