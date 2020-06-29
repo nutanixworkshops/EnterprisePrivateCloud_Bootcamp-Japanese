@@ -27,7 +27,7 @@ Nutanix Filesは高性能で、スケーラビリティのある迅速なイノ�
 
 FilesはデータストレージにNutanixボリュームグループを利用しているため、圧縮、消去コーディング、スナップショット、レプリケーションなど、同じ基本的なストレージの利点を利用することができます。
 
-#. **Prism Element > ファイルサーバー(File Server) ** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server)** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
 
    .. figure:: images/10.png
 
@@ -47,7 +47,7 @@ SMB共有の管理
 
 #. 以下のフィールドに入力します。
 
-   - **名前(Name)** - **\ **-FiestaShare**
+   - **名前(Name)** - **Initials\ **-FiestaShare**
    - **詳細(オプション)(Description (Optional))** - Fiesta app team share, used by PM, ENG, and MKT
    - **ファイルサーバー(File Server)** - **BootcampFS**
    - **共有パス(オプション) Share Path (Optional)** - Leave blank. This field allows you to specify an existing path in which to create the nested share.
@@ -65,7 +65,7 @@ SMB共有の管理
 
 #. **Next** をクリックします。
 
-#. ** アクセスベース列挙法(ABE)を有効化(Enable Access Based Enumeration) ** と ** セルフサービスリストアを有効にする(Self Service Restore) ** そして **Blocked File Types** に チェックを入れ、.flv,.mov を入力します。
+#. **アクセスベース列挙法(ABE)を有効化(Enable Access Based Enumeration)** と **セルフサービスリストアを有効にする(Self Service Restore)** そして **Blocked File Types** に チェックを入れ、.flv,.mov を入力します。
 
    .. figure:: images/3.png
 
@@ -82,7 +82,7 @@ SMB共有の管理
 
 #. **Next** をクリックします。
 
-#. ** サマリー(Summary) ** を確認し ** 作成(Create) ** をクリックします。
+#. **サマリー(Summary)** を確認し **作成(Create)** をクリックします。
 
    .. figure:: images/4.png
 
@@ -90,14 +90,14 @@ SMB共有の管理
    Filesは、Active Directory内の個々のユーザー、または特定のActive Directoryセキュリティグループのいずれかに対して
    共有ごとにソフトクォータまたはハードクォータを設定する機能を提供します。
 
-#. **Prism Element > ファイルサーバー(File Server) > Share/Export(画面左側のボタン) ** と進み、 あなたが作成した共有を選択し **+ Add Quota Policy** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > Share/Export(画面左側のボタン)** と進み、 あなたが作成した共有を選択し **+ Add Quota Policy** をクリックします。
 
 #. 以下のフィールドに入力し、**Save** をクリックします。
 
-  - Select ** グループ(Group)**
-  - ** ユーザーまたはグループ(User or Group) ** - SSP Developers
-  - ** 割当(Quota) ** - 10 GiB
-  - ** 実施タイプ(Enforcement Type) ** - ハードリミット(Hard Limit)
+  - Select **グループ(Group)**
+  - **ユーザーまたはグループ(User or Group)** - SSP Developers
+  - **割当(Quota)** - 10 GiB
+  - **実施タイプ(Enforcement Type)** - ハードリミット(Hard Limit)
 
    .. figure:: images/9.png
 
@@ -105,7 +105,7 @@ SMB共有の管理
 共有のテスト
 .................
 
-#.  **Prism Element > 仮想マシン(VM) ** と進み、*Initials*\ **-WinTools** を選択、画面下部の **Launch Console** をクリックし、コンソールを開きます。
+#.  **Prism Element > 仮想マシン(VM)** と進み、*Initials*\ **-WinTools** を選択、画面下部の **Launch Console** をクリックし、コンソールを開きます。
 
 以下のユーザを使用し、ログインします。既にログインされている場合はAdministratorであるため、一度サインアウトし再度サインインします。
    - **user** user *Initials*
@@ -122,7 +122,7 @@ SMB共有の管理
 
 #. **エクスプローラー** で ``\\BootcampFS.ntnxlab.local\`` を開きます.
 
-#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードします。
+#.  *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードします。
 Indexページが有効になっているため、http://<IPアドレス>/ まで入力してリンクを辿ることも可能です。
 
    - **If using a PHX cluster** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
@@ -281,13 +281,13 @@ NFSプロトコルの有効化
 
 #. 次のフィールドを選択、入力します。
 
-   -  **セルフサービスリストアを有効にする(Enable Self Service Restore) ** にチェックを入れます。
+   - **セルフサービスリストアを有効にする(Enable Self Service Restore)** にチェックを入れます。
       - .snapshot ディレクトリが作成されます。
    - **Authentication(認証)** - システムSystem) デフォルト値のまま
-   - **デフォルトアクセス(全クライアント対象) (Default Access (For All Clients)) ** - アクセス権なし(No Access)
-   - **+ Add例外()+ Add exceptions)**をクリックし、
-   - **読み書きアクセス権があるクライアント(Clients with Read-Write Access) ** - *本演習環境クラスターの第三億テッドまでと\*入力します*\ .*
-    (例えば、Prism ElementのIPアドレスが、10.38.1.37の場合は** 10.38.1.\* ** と入力)
+   - **デフォルトアクセス(全クライアント対象) (Default Access (For All Clients))** - アクセス権なし(No Access)
+   - **+ Add例外()+ Add exceptions)** をクリックし、
+   - **読み書きアクセス権があるクライアント(Clients with Read-Write Access)** - 本演習環境クラスターの第三億テッドまでと\* を入力します
+   例えば、Prism ElementのIPアドレスが、10.38.1.37の場合は10.38.1.\*  と入力
 
    .. figure:: images/fileslog02.png
 
@@ -366,28 +366,28 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
 
 最初にデフォルトのマッピングを設定します。
 
-#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン) **  と進み、 **BootcampFS** を選択し、 ** プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping) ** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping)** をクリックします。
 
 #. デフォルト設定のまま **Next** を2回クリックし ** デフォルトのマッピング(Default Mapping) ** ページに進みます。
 
-#. **デフォルトのマッピング(Default Mapping)** ページにて ** NFSエクスポートへのアクセス拒否(Deny access to NFS export) ** と **SMB共有へのアクセスを拒否する(Deny access to SMB share)** を指定します。既に設定されている場合は次の項目へ進みます。
+#. **デフォルトのマッピング(Default Mapping)** ページにて **NFSエクスポートへのアクセス拒否(Deny access to NFS export)** と **SMB共有へのアクセスを拒否する(Deny access to SMB share)** を指定します。既に設定されている場合は次の項目へ進みます。
 
    .. figure:: images/31.png
 
-#.  サマリー画面で **Save** をクリックし、デフォルトマッピングの設定を完了します。完了後、** 閉じる(close) ** をクリックしします。
+#.  サマリー画面で **Save** をクリックし、デフォルトマッピングの設定を完了します。完了後、**閉じる(close)** をクリックしします。
 
 
-#. **Prism Element > ファイルサーバー(File Server) > Share/Export(画面左側のボタン) ** と進み、 *Initials*\ **-FiestaShare** を選択し、画面中段右の **Update** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > Share/Export(画面左側のボタン)** と進み、 *Initials*\ **-FiestaShare** を選択し、画面中段右の **Update** をクリックします。
 
-#. ** ベーシック(Basics) ** ページ下部の ** ネイティブではないNFSアクセスも有効化します ** にチェックを入れ **Next** をクリックします。
+#. **ベーシック(Basics)** ページ下部の **ネイティブではないNFSアクセスも有効化します** にチェックを入れ **Next** をクリックします。
 
    .. figure:: images/32.png
 
-#.  ** 設定ページの下部、マルチプロトコルアクセス(Multiprotocol Access) ** にて、 **両方のプロトコルから同じファイルへの同時アクセス(Simultaneous access to the same files from both protocols) ** にチェックを入れます。
+#.  **設定ページの下部、マルチプロトコルアクセス(Multiprotocol Access)** にて、 **両方のプロトコルから同じファイルへの同時アクセス(Simultaneous access to the same files from both protocols)  ** にチェックを入れます。
 
    .. figure:: images/33.png
 
-#. ** Next > 保存(Save) ** とクリックし、共有設定の更新を完了します。
+#. **Next > 保存(Save)** とクリックし、共有設定の更新を完了します。
 
 エクスポートのテスト
 .......................
@@ -422,7 +422,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
        uid=0(root) gid=0(root) groups=0(root)
        [root@CentOS ~]#
 
-#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン) **  と進み、 **BootcampFS** を選択し、 ** プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping) ** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)  **  と進み、 **BootcampFS** を選択し、 ** プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping) ** をクリックします。
 
 #. **Next** をクリックし **明示的なマッピング(Explicit Mapping)** まで進みます。
 
@@ -436,7 +436,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
 
    .. figure:: images/34.png
 
-#. ** アクション(Actions) ** の ** 保存(Save) ** をクリックします。
+#. **アクション(Actions)** の **保存(Save)** をクリックします。
 
 #. **Next > Next > Save** とクリックし、ユーザーマッピングを更新します。
 
