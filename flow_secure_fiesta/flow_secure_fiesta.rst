@@ -25,9 +25,9 @@ Flowは、仮想マシンを迅速にグループ化するために使用され�
 
 Prism Centralを使用して、カテゴリをメタデータとしてVMにタグ付けやポリシーがどのように適応されるべきか決定します。
 
-#. **Prism Central** の :fa:`bars` **> Virtual Infrastructure > Categories** と進みます。
+#. **Prism Central** の :fa:`bars` **> 仮想インフラ(Virtual Infrastructure) > カテゴリ(Categories)** と進みます。
 
-#. **AppType** にチェックを入れ **Actions > Update** をクリックします。
+#. **AppType** にチェックを入れ **(画面上部の)アクション(Actions) > Update** をクリックします。
 
    .. figure:: images/12.png
 
@@ -37,9 +37,9 @@ Prism Centralを使用して、カテゴリをメタデータとしてVMにタ�
 
    .. figure:: images/13.png
 
-#. **Save** をクリックします。
+#. **保存(Save)** をクリックします。
 
-#. 続いて、**AppTier** にチェックを入れ **Actions > Update** をクリックします。
+#. 続いて、**AppTier** にチェックを入れ **(画面上部の)アクション(Actions) > Update**  をクリックします。
 
 #. :fa:`plus-circle` アイコンをクリックして、カテゴリに値を入力します。
 
@@ -50,7 +50,7 @@ Prism Centralを使用して、カテゴリをメタデータとしてVMにタ�
 
    .. figure:: images/14.png
 
-#. **Save** をクリックします。
+#. **保存(Save)** をクリックします。
 
 セキュリティポリシーの作成
 ..........................
@@ -64,28 +64,28 @@ Nutanix Flowには、ネットワーク中心のアプローチではなく、�
 
 Fiestaアプリケーションを保護するセキュリティポリシーを作成します。
 
-#.  **Prism Central** の :fa:`bars` **> Policies > Security Policies** をクリックします。
+#.  **Prism Central** の :fa:`bars` **> ポリシー(Policies) > セキュリティポリシー(Security Policies)** をクリックします。
 
-#. **Create Security Policy > Secure Applications (App Policy) > Create** をクリックします。
+#. **セキュリティポリシーの作成(Create Security Policy) > セキュアアプリケーション(セキュリティポリシー) (Secure Applications (App Policy)) > 作成(Create)** をクリックします。
 
 #. 次のフィールドに入力します。
 
-   - **Name** - *Initials*-Fiesta
-   - **Purpose** - Restrict unnecessary access to Fiesta
-   - **Secure this app** - AppType: *Initials*-Fiesta
-   - Do **NOT** select **Filter the app type by category**.
+   - **名前(Name)** - *Initials*-Fiesta
+   - **目的(Purpose)** - Restrict unnecessary access to Fiesta
+   - **このアプリを保護(Secure this app)** - AppType: *Initials*-Fiesta
+   - **カテゴリ別にアプリタイプにフィルターをかけます** に **チェックを入れない** Do **NOT** select **Filter the app type by category**.
 
    .. figure:: images/18.png
 
-#. **Next** をクリックします。
+#. **次へ(Next)** をクリックします。
 
-#. もしチュートリアルのプロンプトが表示されたら、**OK, Got it!** をクリックします。
+#. もしチュートリアルのプロンプトが表示されたら、**分かりました！(OK, Got it!)** をクリックします。
 
-#. セキュリティポリシーをより詳細に設定するには、アプリケーションのすべてのコンポーネントに同じルールを適用するのではなく、**Set rules on App Tiers, instead** から行います。
+#. セキュリティポリシーをより詳細に設定するには、アプリケーションのすべてのコンポーネントに同じルールを適用するのではなく、**代わりにアプリ階層にルールを設定します(Set rules on App Tiers, instead)** から行います。
 
    .. figure:: images/19.png
 
-#. **+ Add Tier** をクリックします。
+#. **+移行元を追加(+ Add Tier)** をクリックします。
 
 #. **AppTier:**\ *Initials*-**Web** をドロップダウンから追加します。
 
@@ -98,19 +98,18 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
    このシナリオでは、すべてのクライアントからTCPポート80 Web層への インバウンドトラフィックを許可します。
 
-#. **Inbound** の **+ Add Source** をクリックします。
+#. **インバウンド Traffic(Inbound Traffic)** の **移行元を追加(+ Add Source)** をクリックします。
 
 #. 次のフィールドを入力し、全ての受信IPアドレスを許可します。
 
-   - **Add source by:** - Select **Subnet/IP**
-   - Specify **0.0.0.0/0**
+   - **～で移行元追加:(Add source by:)** - Select **サブネット/IP(Subnet/IP)**
+   - **0.0.0.0/0**
 
    .. note::
 
      ソースはカテゴリで指定することもでき、この値はネットワークの場所変更に関係なくVMを追跡できるため、より柔軟性が高くなります
 
-#. To create an inbound rule, select the **+** icon that appears to the left of **AppTier:**\ *Initials*-**Web**.
-#. インバウンドルールを作成するために、 **AppTier:**\ *Initials*-**Web** の左側の左側に表示される **+** アイコンをクリックします。
+#. インバウンドルールを作成するために、 **AppTier:**\ *Initials*-**Web** 左側に表示される **+** アイコンをクリックします。
 
    .. figure:: images/21.png
 
@@ -130,21 +129,21 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
    Calm は、スケールアウト、スケールイン、アップグレードなどのワークフローのために VM へのアクセスすることもあります。
    Calm は、TCP ポート 22 を使用して SSH 経由でこれらの VM と通信します。
 
-#. **Inbound** 下の **+ Add Source** をクリックします。
+#. **インバウンド Traffic(Inbound Traffic)** 下の **+移行元を追加(+ Add Source)** をクリックします。
 
 #. 次のフィールドに入力します。
 
-   - **Add source by:** - Select **Subnet/IP**
-   - Specify *Your Prism Central IP*\ /32
+   - **～で移行元追加:(Add source by:)** - Select **サブネット/IP(Subnet/IP)**
+   - *Prism Central IP*\ /32
 
    .. note::
      **/32** は範囲ではなく、単一のIPを示します。
 
    .. figure:: images/23.png
 
-#. **Add** をクリックします。
+#. **追加(Add)** をクリックします。
 
-#. **AppTier:**\ *Initials*-**Web** の左側に表示される **+** アイコンをクリックし、 **TCP** , ポート番号 **22** を指定して、**Save** をクリックします。
+#. **AppTier:**\ *Initials*-**Web** の左側に表示される **+** アイコンをクリックし、 **TCP** , ポート番号 **22** を指定して、**保存(Save)** をクリックします。
 
 #. **AppTier:**\ *Initials*-**DB** に対してもステップ18と同様の操作を繰り返し、CalmがデータベースVMと通信出来る様にします。
 
@@ -152,16 +151,16 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
    デフォルトでは、セキュリティポリシーにより、アプリケーションはすべての送信トラフィックを任意の宛先に送信できます。アプリケーションに必要な唯一のアウトバウンド通信は、DNSサーバーとの通信です。
 
-#. **Outbound** 下の **Whitelist Only** を選択し、 ドロップダウンメニューから **+ Add Destination** を選択します。
+#. **アウトバウンド Traffic(Outbound Traffic)** 下の **ホワイトリストのみ(Whitelist Only)** を選択し、 ドロップダウンメニューから **+デスティネーションを追加(+ Add Destination)** を選択します。
 
 #. 次のフィールドに入力します。
 
-   - **Add source by:** - Select **Subnet/IP**
-   - Specify *Your Domain Controller IP*\ /32
+   - **ディスティネーションの追加(Add destination by:)** - **サブネット/IP(Subnet/IP)** を選択
+   - *ドメインコントローラのIP*\ /32
 
    .. figure:: images/25.png
 
-#. **Add** をクリックします。
+#. **追加(Add)** をクリックします。
 
 #. **AppTier:**\ *Initials*-**Web** の右側に表示される **+** を選択して **UDP** ポート **53** を指定して、 **Save** をクリック することで
    DNSのトラフィックを許可します。同様に **AppTier:**\ *Initials*-**DB** に対しても行います。
@@ -187,11 +186,12 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
    .. figure:: images/28.png
 
-#. **Save** をクリックします。
+#. **保存(Save)** をクリックします。
 
-#. **Next** をクリックして、ここまで設定してきたセキュリティポリシーを確認します。
+#. **次へ(Next)** をクリックして、ここまで設定してきたセキュリティポリシーを確認します。
 
-#. **Save and Monitor** をクリックしてポリシーを保存します。
+#. **保存とモニター(Save and Monitor)** をクリックしてポリシーを保存します。
+
 
 カテゴリ値の割り当て
 .........................
@@ -199,13 +199,13 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 ここで、以前に作成したカテゴリをFiestaブループリントからプロビジョニングされたVMに適用します。
 フローカテゴリはCalmのブループリントの一部として割り当てることができますが、この演習の目的は、既存の仮想マシンへのカテゴリ割り当てを理解することです。
 
-#. **Prism Central** の :fa:`bars` **> Virtual Infrastructure > VMs** と進みます。
+#. **Prism Central** の :fa:`bars` **> 仮想インフラ(Virtual Infrastructure) > 仮想マシン(VMs)** と進みます。
 
-#. **Filters** をクリックし、 *Initials AHV Fiesta VMs* ラベルを選択して、仮想マシンを表示します。
+#. **フィルター(Filters)** をクリックし、 *Initials AHV Fiesta VMs* ラベルを選択して、仮想マシンを表示します。
 
    .. figure:: images/15.png
 
-#. チェックボックスを使用して、アプリケーション(WebおよびDB)に関連付けれらた2つのVMを選択して、 **Actions > Manage Categories** をクリックします。
+#. チェックボックスを使用して、アプリケーション(WebおよびDB)に関連付けれらた2つのVMを選択して、 **アクション(Actions) > カテゴリを管理(Manage Categories)** をクリックします。
 
    .. figure:: images/16.png
 
@@ -213,7 +213,7 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
    .. figure:: images/16a.png
 
-#. 続いて、*nodereact* VMのみを選択して **Actions > Manage Categories** から **AppTier:**\ *Initials*-**Web** カテゴリーを指定し、 **Save** をクリックします。
+#. 続いて、*nodereact* VMのみを選択して **アクション(Actions) > カテゴリを管理(Manage Categories)** から **AppTier:**\ *Initials*-**Web** カテゴリーを指定し、 **Save** をクリックします。
 
    .. figure:: images/17.png
 
@@ -229,7 +229,7 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 アプリケーションのテスト
 .......................
 
-#. **Prism Central > Virtual Infrastructure > VMs** と進み、**-nodereact...** と **-MYSQL-...** 仮想マシンのIPアドレスをメモします。
+#. **Prism Central** の :fa:`bars` **> 仮想インフラ(Virtual Infrastructure) > 仮想マシン(VMs)** と進み、**-nodereact...** と **-MYSQL-...** 仮想マシンのIPアドレスをメモします。
 
 #. *Initials*\ **-WinToolsVM** を起動します。
 
@@ -250,19 +250,20 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 Flowによる可視化
 ........................
 
-#. **Prism Central** へ戻り、 :fa:`bars` **> Virtual Infrastructure > Policies > Security Policies >** と進み、  *Initials*-**Fiesta** をクリックします。
+#. **Prism Central** の :fa:`bars` **> 仮想インフラ(Virtual Infrastructure) > Policies > Security Policies >** と進み、 *Initials*-**Fiesta** をクリックします。
 
 #. **Environment: Dev** がインバウンドソースとして表示されていることを確認します。ソースとラインは黄色で表示され、クライアントVMからのトラフィックが検出されたことを示します。
 
    .. figure:: images/32.png
 
    他に検出されたトラフィックフローがあった場合は、それらの線にマウスカーソルを合わせて使用中のポート情報を確認してみます。
+   もし、表示されない場合は、スキップして次の項へ進みます。
 
 #. **Update** をクリックして、ポリシーを編集します。
 
    .. figure:: images/34.png
 
-#. **Next** をクリックして、検出されたトラフィックフローが入力されるまで待ちます。
+#. **次へ(Next)** をクリックして、検出されたトラフィックフローが入力されるまで待ちます。
 
 #.  **AppTier:**\ *Initials*-**Web** に接続する **Environment: Dev** 上にマウスオーバーし、 :fa:`check` アイコンをクリックします。
 
@@ -272,32 +273,31 @@ Flowによる可視化
 
    **Environment: Dev**  が青く表示されていれば、それがこのポリシーに含まれていることを示します。フローラインにマウスオーバーして、ICMP (ping トラフィック) と TCP ポート 80 の両方が表示されていることを確認してください。
 
-#. **Next > Save and Monitor** とクリックし、ポリシーを更新します。
+#. **保存とモニター(Save and Monitor)** とクリックし、ポリシーを更新します。
 
 Flowポリシーの適用
 ......................
 
-定義したポリシーを適用するためには、ポリシーを **Apply** する必要があります。
+定義したポリシーを適用するためには、ポリシーを **適当(Apply)** する必要があります。
 
-#. *Initials*-**Fiesta** を選択し **Actions > Apply** をクリックします。
+#. *Initials*-**Fiesta** を選択し **アクション(Actions) > 適用(Apply)** をクリックします。
 
    .. figure:: images/36.png
 
 #. 確認ダイアログに **APPLY** と入力し **OK** をクリックすることでポリシーが適用されます。
 
-#. *Initials*\ **-WinToolsVm** コンソールに戻ります。
+#. *Initials*\ **-WinToolsVM** コンソールに戻ります。
 
   クライアントからデータベースサーバーへの継続的なpingトラフィックはどうなりますか？このトラフィックはブロックされていますか？
 
 #. クライアントVMがWebブラウザとWebサーバーのIPアドレスを使用してFiestaアプリケーションに引き続きアクセスできることを確認します。
 
 
-
 まとめ
 +++++++++
 
 - マイクロセグメンテーションは、データセンター内から発生し、1台のマシンから別のマシンへと横方向に拡散する悪意のある脅威に対する追加の保護を提供します
-- Prism Centralで作成されたカテゴリは、Calmのブループリント内で利用できます
-- セキュリティポリシーは、Prism Centralのテキストベースのカテゴリを活用します
-- フローは、AHV上で動作するVMの特定のポートやプロトコルのトラフィックを制限することができます
+- Prism Centralで作成されたカテゴリは、Calmのブループリント内で利用できます。
+- セキュリティポリシーは、Prism Centralのテキストベースのカテゴリを活用します。
+- フローは、AHV上で動作するVMの特定のポートやプロトコルのトラフィックを制限することができます。
 - ポリシーはMonitorモードで作成され、ポリシーが適用されるまでトラフィックはブロックされません。これは、接続を学習し、意図せずにトラフィックがブロックされないようにするのに役立ちます。

@@ -4,10 +4,11 @@
 ファイルとストレージの統合
 --------------------------------
 
- *このラボの所要想定時間は45分です。*
+*このラボの所要想定時間は90分です。*
 
 従来のファイルストレージはサイロ化した伝統的構造をしています。 例えばSANストレージのように技術的な進歩を欠いたり、拡張性に難があったりと、我々を悩ませてきました。
-Nutanixではエンタープライズクラウドにはこのようなサイロ状態はあってはならないと考えています。
+Nutanixではエンタープライズクラウドにこのようなサイロ状態はあってはならないと考えています。
+
 仮想基盤として実績のあるHCI上のソフトウェアで実行可能なアプリケーションの様にファイルストレージを実装することで、
 Nutanix Filesは高性能で、スケーラビリティのある迅速なイノベーションをワンクリックで管理可能にします。
 
@@ -27,7 +28,7 @@ Nutanix Filesは高性能で、スケーラビリティのある迅速なイノ�
 
 FilesはデータストレージにNutanixボリュームグループを利用しているため、圧縮、イレイジャーコーディング、スナップショット、レプリケーションなど、同じ基本的なストレージの利点を利用することができます。
 
-#. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server)** と進み、 **BootcampFS** を選択し **Protect** をクリックします。
 
    .. figure:: images/10.png
 
@@ -43,16 +44,16 @@ SMB共有の管理
 共有の作成
 ..................
 
-#. **Prism Element > File Server** と進み、  **+ Share/Export** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server)** と進み（先の手順で開いている場合は継続します）、  **+ Share/Export** をクリックします。
 
 #. 以下のフィールドに入力します。
 
-   - **Name** - *Initials*\ **-FiestaShare**
-   - **Description (Optional)** - Fiesta app team share, used by PM, ENG, and MKT
-   - **File Server** - **BootcampFS**
-   - **Share Path (Optional)** - 空白
-   - **Max Size (Optional)** - 200GiB
-   - **Select Protocol** - SMB
+   - **名前(Name)** - *Initials*\ **-FiestaShare**
+   - **詳細(オプション)(Description (Optional))** - Fiesta app team share, used by PM, ENG, and MKT
+   - **ファイルサーバー(File Server)** - **BootcampFS**
+   - **共有パス(オプション) Share Path (Optional)** - Leave blank. This field allows you to specify an existing path in which to create the nested share.
+   - **最大サイズ(オプション) Max Size (Optional)** - 200GiB
+   - **選択プロトコル (Select Protocol)** - SMB
 
    .. figure:: images/2.png
 
@@ -63,9 +64,9 @@ SMB共有の管理
    分散共有は、ホームディレクトリやユーザープロファイル、アプリケーションフォルダを共有するのに適しています。
    このタイプの共有では、ルートディレクトリ及びファイルへの要求をすべてのFSVMから行うことが可能で、接続に対してロードバランシングが可能です。
 
-#. **次へ** をクリックします。
+#. **Next** をクリックします。
 
-#. **Enable Access Based Enumeration** と **Self Service Restore** にチェックを入れ、 **Blocked File Types** に .flv,.mov を入力します。
+#. **アクセスベース列挙法(ABE)を有効化(Enable Access Based Enumeration)** と **セルフサービスリストアを有効にする(Self Service Restore)** そして **Blocked File Types** に チェックを入れ、.flv,.mov を入力します。
 
    .. figure:: images/3.png
 
@@ -82,7 +83,7 @@ SMB共有の管理
 
 #. **Next** をクリックします。
 
-#. **Summary** を確認し **Create** をクリックします。
+#. **サマリー(Summary)** を確認し **作成(Create)** をクリックします。
 
    .. figure:: images/4.png
 
@@ -90,79 +91,50 @@ SMB共有の管理
    Filesは、Active Directory内の個々のユーザー、または特定のActive Directoryセキュリティグループのいずれかに対して
    共有ごとにソフトクォータまたはハードクォータを設定する機能を提供します。
 
-#. **Prism Element > File Server > Share/Export** と進み、 あなたが作成した共有を選択し **+ Add Quota Policy** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > Share/Export(画面左側のボタン)** と進み、 あなたが作成した共有を選択し **+ Add Quota Policy** をクリックします。
 
 #. 以下のフィールドに入力し、**Save** をクリックします。
 
-  - Select **Group**
-  - **User or Group** - SSP Developers
-  - **Quota** - 10 GiB
-  - **Enforcement Type** - Hard Limit
+  - Select **グループ(Group)**
+  - **ユーザーまたはグループ(User or Group)** - SSP Developers
+  - **割当(Quota)** - 10 GiB
+  - **実施タイプ(Enforcement Type)** - ハードリミット(Hard Limit)
 
    .. figure:: images/9.png
 
-#. **保存** をクリックします。
 
 共有のテスト
 .................
 
-#.  *Initials*\ **-WinTools** のコンソールから  **NTNXLABのadministratorアカウント以外** でログインします
+#.  **Prism Element > 仮想マシン(VM)** と進み、*Initials*\ **-WinTools** を選択、画面下部の **Launch Console** をクリックし、コンソールを開きます。
 
-   .. note::
-
-      これらのアカウントを使用してはRDP経由で接続することはできません。
-
-   - **user01** - user25
-   - **devuser01** - devuser25
-   - **operator01** - operator25
+以下のユーザを使用し、ログインします。既にログインされている場合はAdministratorであるため、一度サインアウトし再度サインインします。
+   - **user** user *Initials*
    - **Password** nutanix/4u
 
    .. figure:: images/16.png
 
-     Windows Tools VMは既に **NTNXLAB.local** ドメインに参加しています。 ドメインに参加しているVMを使用して、次の手順を実行します。
+     Windows Tools VMは既に **NTNXLAB.local** ドメインに参加しています。
+
+     .. note::
+        **NTNXLABのadministratorアカウント以外** を使用します。
+        これらのアカウントを使用してはRDP経由で接続することはできません。
+
 
 #. **エクスプローラー** で ``\\BootcampFS.ntnxlab.local\`` を開きます.
 
-#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードし、共有に置きます。
+#. *Initials*\ **-WinTools** のブラウザーで以下にアクセスサンプルファイルをダウンロードします。
+Indexページが有効になっているため、http://<IPアドレス>/ まで入力してリンクを辿ることも可能です。
 
    - **If using a PHX cluster** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
    - **If using a RTP cluster** - http://10.55.251.38/workshop_staging/peer/SampleData_Small.zip
 
-#. zipファイルを展開します。
+#. ダウンロードしたzipファイルを展開しエクスプローラーで `\\BootcampFS.ntnxlab.local\*Initials*\ -FiestaShare`` にコピーします。
 
    .. figure:: images/5.png
 
-   - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスタの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与しました。
-   - 他のユーザーのアクセス管理は、他のSMB共有と同じです。
-
-..   #.  ``\\BootcampFS.ntnxlab.local\``, の *Initials*\ **-FiestaShare を右クリックし、プロパティを開きます **
-
-   #. **セキュリティ** タブの **詳細** を選択します.
-
-      .. figure:: images/6.png
-
-   #. **Users (BootcampFS\\Users)** を選択し、**Remove** をクリックします。
-
-   #. **Add** をクリックします。
-
-   #. **プリンシパルを選択** を選択し、**オブジェクト名** のフィールドに **Everyone** を入力し、**OK** をクリックします。
-
-      .. figure:: images/7.png
-
-   #. 下記フィールドを入力し **OK** をクリックします。:
-
-      - **Type** - Allow
-      - **Applies to** - This folder only
-      - **Read & execute** を選択
-      - **List folder contents** を選択
-      - **Read** を選択
-      - **Write** を選択
-
-      .. figure:: images/8.png
-
-   #. **OK > OK > OK** とクリックし、変更を保存します。
-
-   これで、すべてのユーザーが *Initials*\ **-FiestaShare** 共有内にフォルダーとファイルを作成できるようになります。
+   - **NTNXLAB\\Administrator** ユーザーは、ファイルクラスターの展開中にファイル管理者として指定され、デフォルトですべての共有への読み取り/書き込みアクセス権を付与されています。
+   - 他のユーザーのアクセス管理は、他のSMB共有と同じ手法で管理することが出来ます。
 
 #. **PowerShell** を開き、以下のコマンドを使ってブロックされたファイルタイプのファイルを作成を試みます。
 
@@ -172,7 +144,10 @@ SMB共有の管理
 
    新しいファイルの作成が拒否されたことを確認します。
 
-#. **Prism Element > File Server > Share/Export** に戻り、共有を選択します。 使用状況やパフォーマンスタブを見て共有毎の詳細情報を確認します(ファイル数や接続数、ストレージ使用率、レイテンシ、スループット、IOPSなど)。
+   .. figure:: images/25.png
+
+#. **Prism Element > ファイルサーバー(File Server) > Share/Export** を開き、作成した共有を選択します。
+画面下部で使用状況(Usage)やパフォーマンス(Performanceタブを見て共有毎の詳細情報を確認します(ファイル数や接続数、ストレージ使用率、レイテンシ、スループット、IOPSなど)。
 
    .. figure:: images/11.png
 
@@ -185,31 +160,32 @@ File Analytics
 File Analyticsは、Prism Elementの自動化されたワンクリック操作により、スタンドアロンVMとして数分でデプロイされます。
 このVMは、あなたの環境に既にデプロイされ、有効化されています。
 
-#. **Prism Element > File Server > File Server** と進み、 **BootcampFS** を選択し、 **File Analytics** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)** と進み、 **BootcampFS** を選択した状態で、画面中段の **ファイル分析(File Analytics)** をクリックします。
 
    .. figure:: images/12.png
 
    .. note ::
 
-      File Analyticsはすでに有効になっているはずですが、プロンプトが表示された場合はすべての共有をスキャンするためにFiles管理者権限が必要となります。
+      File Analyticsはすでに有効になっております。Enable File Analytics画面が表示された場合は
+      すべての共有をスキャンするため以下認証情報を入力します。
 
       - **Username**: NTNXLAB\\administrator
       - **Password**: nutanix/4u
 
       .. figure:: images/old13.png
 
-#. これは共有環境であるため、ダッシュボードには他のユーザーが作成した共有のデータがすでに表示されている可能性があります。 新しく作成した共有をスキャンするには、 :fa:`gear` **> Scan File System** をクリックします。
-   作成した共有を選択し、[スキャン]をクリックします
+#. これは共有環境であるため、ダッシュボードには他のユーザーが作成した共有のデータがすでに表示されている可能性があります。 新しく作成した共有をスキャンするには、:fa:`gear` **> Scan File System** をクリックします。
+   作成した共有を選択し、**Scan** をクリックします
 
    .. figure:: images/14.png
 
    .. note ::
 
-      共有が表示されない場合は、入力されるまでしばらくお待ちください...
+      共有が表示されない場合は、1，2分お待ち頂き **Scan Files System** をクリックししてください。
 
-#. **Scan File System** ウィンドウを閉じて、のブラウザーを更新します。
+#. **Scan File System** ウィンドウの右上の **×** をクリックし閉じて、File Analyticsを開いているブラウザーを更新します。
 
-#. **Data Age**, **File Distribution by Size** と **File Distribution by Type** のダッシュボードパネルが更新されます。
+#. Scan結果を基にダッシュボードパネルが更新されます。
 
    .. figure:: images/15.png
 
@@ -245,81 +221,62 @@ NFSプロトコルの有効化
 
 .. note ::
 
-   NFSプロトコルの有効化は、Filesサーバごとに一度だけ行います。あなたの環境ではすでに有効になっているかもしれません。
-   NFSが既に有効になっている場合は、`ユーザマッピングの設定`に進みます。
+   NFSプロトコルの有効化は、Filesサーバごとに一度だけ行います。
+   本環境ではFilesサーバーを共有で使用しているため、既に有効になっている場合があります。
+   NFSが既に有効になっている場合は、`ユーザマッピングの設定` に進みます。
 
-#. **Prism Element > File Server** と進み、あなたのファイルサーバーを選択し **Protocol Management > Directory Services** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server)** と進み、**BootcampFS** を選択、画面中段右の **プロトコル管理(Protocol Management)** をクリックし、 **ディレクトリサービス(Directory Services)** をクリックします。
 
    .. figure:: images/29.png
 
-#. **Use NFS Protocol** にチェックを入れ、**User Management and Authentication** に Unmanaged と入力し **Update** をクリックします。
+#. **NFSプロトコルの使用(Use NFS Protocol)** にチェックを入れ、**ユーザー管理と認証(User Management and Authentication)** で、デデフォルトの **未管理(Unmanaged)** であることを確認し **更新(Update)** をクリックします。
 
    .. figure:: images/30.png
 
 エクスポートの作成
 ...................
 
-#. **Prism > File Server** と進み、 **+ Share/Export** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server)** と進み、 **+ Share/Export** をクリックします。
 
 #. 次のフィールドに入力します。
 
-   - **Name** - logs
-   - **Description (Optional)** - File share for system logs
-   - **File Server** - *Initials*\ **-Files**
-   - **Share Path (Optional)** - 空白
-   - **Max Size (Optional)** - 空白
-   - **Select Protocol** - NFS
+   - **名前(Name)** - *Initials*\ **-logs**
+   - **説明(オプション) (Description (Optional))** - File share for system logs
+   - **ファイルサーバー (File Server)** - **BootcampFS**
+   - **共有パス(オプション) (Share Path (Optional))** - 空白(Leave blank)
+   - **最大サイズ(オプション) (Max Size (Optional))** - 空白(Leave blank)
+   - **選択プロトコル (Select Protocol)** - NFS
 
-   .. figure:: images/24.png
+.. figure:: images/fileslog01.png
 
 #. **Next** をクリックします。
 
 #. 次のフィールドを選択、入力します。
 
-   - Select **Enable Self Service Restore**
-      - These snapshots appear as a .snapshot directory for NFS clients.
-   - **Authentication** - System
-   - **Default Access (For All Clients)** - No Access
-   - **+ Add exceptions** を選択
-   - **Clients with Read-Write Access** - *The first 3 octets of your cluster network*\ .* (e.g. 10.38.1.\*)
+   - **セルフサービスリストアを有効にする(Enable Self Service Restore)** にチェックを入れます。
+      - .snapshot ディレクトリが作成されます。
+   - **Authentication(認証)** - システムSystem) デフォルト値のまま
+   - **デフォルトアクセス(全クライアント対象) (Default Access (For All Clients))** - アクセス権なし(No Access)
+   - **+ Add例外()+ Add exceptions)** をクリックし、
+   - **読み書きアクセス権があるクライアント(Clients with Read-Write Access)** - 本演習環境クラスターの第三億テッドまでと\* を入力します
+   例えば、Prism ElementのIPアドレスが、10.38.1.37の場合は10.38.1.\*  と入力
 
-   .. figure:: images/25.png
+   .. figure:: images/fileslog02.png
 
-デフォルトでは、NFSエクスポートは、エクスポートをマウントしているすべてのホストへの読み書きアクセスを許可しますが、これは特定のIPまたはIP範囲に制限することができます。
+デフォルトでは、NFSエクスポートは、エクスポートをマウントしているすべてのホストへの読み書きアクセスを許可しますが、今回のシナリオでは特定のIP範囲に読み書き制限をしています。
 
 #. **Next** をクリックします。
 
-#. **Summary** を確認し **Create** をクリックします。
+#. **Summary** を確認し **作成(Create)** をクリックします。
 
 エクスポートのテスト
 ..................
 
-最初に、ファイルエクスポートのクライアントとして使用するCentOS VMをプロビジョニングします。
+#. **Prism Element > 仮想マシン(VM)** と進み、画面右側にある、**search in table** に *Initials*\ を入力し表示をフィルターします。
 
-.. note:: 他の演習で :ref:`linux_tools_vm` を作成している場合は新たに作成は不要です。
+#. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。既に電源オンの場合次の手順に進みます。
 
-#. **Prism**  > VM >Table** と進み、**+ Create VM** をクリックします。
-
-#. Fill out the following fields:
-
-   - **Name** - *Initials*\ -NFS-Client
-   - **Description** - CentOS VM for testing Files NFS export
-   - **vCPU(s)** - 2
-   - **Number of Cores per vCPU** - 1
-   - **Memory** - 2 GiB
-   - **+ Add New Disk** を選択
-      - **Operation** - Clone from Image Service
-      - **Image** - CentOS
-      - **Add** を選択
-   - **Add New NIC** を選択
-      - **VLAN Name** - Secondary
-      - Select **Add**
-
-#. **Save** をクリックします。
-
-#. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。
-
-#. Prismで *Initials*\ **-NFS-Client** VMのIPアドレスをメモし、次の認証情報を使用してSSH経由で接続します。
+#. *Initials*\ **-NFS-Client** VMをクリックし、 IP Addressesの項目から IPアドレスを確認し、次の認証情報を使用してSSH経由で接続します。
 
    - **ユーザー名** - root
    - **パスワード** - nutanix/4u
@@ -330,7 +287,7 @@ NFSプロトコルの有効化
 
        [root@CentOS ~]# yum install -y nfs-utils #This installs the NFSv4 client
        [root@CentOS ~]# mkdir /filesmnt
-       [root@CentOS ~]# mount.nfs4 <Intials>-Files.ntnxlab.local:/ /filesmnt/
+       [root@CentOS ~]# mount.nfs4 BootcampFS.ntnxlab.local:/ /filesmnt/
        [root@CentOS ~]# df -kh
        Filesystem                      Size  Used Avail Use% Mounted on
        /dev/mapper/centos_centos-root  8.5G  1.7G  6.8G  20% /
@@ -340,27 +297,28 @@ NFSプロトコルの有効化
        tmpfs                           1.9G     0  1.9G   0% /sys/fs/cgroup
        /dev/sda1                       494M  141M  353M  29% /boot
        tmpfs                           377M     0  377M   0% /run/user/0
-       *intials*-Files.ntnxlab.local:/             1.0T  7.0M  1.0T   1% /afsmnt
+       iBootcampFS..ntnxlab.local:/             1.0T  7.0M  1.0T   1% /filesmnt
        [root@CentOS ~]# ls -l /filesmnt/
        total 1
-       drwxrwxrwx. 2 root root 2 Mar  9 18:53 logs
+       drwxrwxrwx. 2 root root 2 Mar  9 18:53 *Initials*\ -logs
 
-#. 実行結果から ``/filesmnt/logs`` のように、 logsディレクトリがマウントされたことを確認します。
+
+#. 実行結果から ``/filesmnt/*Initials*\ -logs``のように、ディレクトリがマウントされたことを確認します。
 
 #. VMを再起動するとマウントが外れるため、起動時にマウントするように以下のコマンドを実行し ``/etc/fstab`` に追記します。
 
      .. code-block:: bash
 
-       echo 'Intials-Files.ntnxlab.local:/ /filesmnt nfs4' >> /etc/fstab
+       echo 'BootcampFS.ntnxlab.local:/ /filesmnt nfs4' >> /etc/fstab
 
 #. 以下のコマンドを実行し、 ``/filesmnt/logs`` ディレクトリに2MBのランダムデータを100個作成します。
 
      .. code-block:: bash
 
-       mkdir /filesmnt/logs/host1
-       for i in {1..100}; do dd if=/dev/urandom bs=8k count=256 of=/filesmnt/logs/host1/file$i; done
+       mkdir /filesmnt/*Initials*\ -logs/host1
+       for i in {1..100}; do dd if=/dev/urandom bs=8k count=256 of=/filesmnt/*Initials*\ -logs/host1/file$i; done
 
-#. **Prism > File Server > Share > logs** に戻り、パフォーマンスと使用状況を監視します。.
+#. **Prism Element> ファイルサーバー(File Server) > Share/Export > *Initials*\ -logs** にを選択し、パフォーマンスと使用状況を監視します。
 
    使用率のデータは10分毎の更新であることに注意してください。
 
@@ -368,7 +326,7 @@ NFSプロトコルの有効化
 マルチプロトコル共有
 +++++++++++++++++++++
 
-Files は、SMB 共有と NFS エクスポートの両方を別々にプロビジョニングする機能を提供しますが、同じ共有にマルチプロトコルアクセスを提供する機能もサポートしています。
+Nutanix Files は、SMB 共有と NFS エクスポートの両方を別々にプロビジョニングする機能を提供しますが、同じ共有にマルチプロトコルアクセスを提供する機能もサポートしています。
 
 
 ユーザーマッピングの構成
@@ -381,27 +339,28 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
 
 最初にデフォルトのマッピングを設定します。
 
-#. **Prism Element > File Server**  と進み、あなたのファイルサーバーを選択し **Protocol Management > User Mapping** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management) を選択、 ユーザーマッピング(User Mapping)** をクリックします。
 
-#. **Next** を2回クリックし **Default Mapping** に進みます。
+#. デフォルト設定のまま **Next** を2回クリックし **デフォルトのマッピング(Default Mapping)** ページに進みます。
 
-#. **Default Mapping** ページにて **Deny access to NFS export** と **Deny access to SMB share** を指定します。
+#. **デフォルトのマッピング(Default Mapping)** ページにて **NFSエクスポートへのアクセス拒否(Deny access to NFS export)** と **SMB共有へのアクセスを拒否する(Deny access to SMB share)** を指定します。既に設定されている場合は次の項目へ進みます。
 
    .. figure:: images/31.png
 
-#.  **Next > Save** とクリックし、デフォルトマッピングの設定を完了します。
+#.  サマリー画面で **Save** をクリックし、デフォルトマッピングの設定を完了します。完了後、**閉じる(close)** をクリックしします。
 
-#. **Prism Element > File Server** と進み、 *Initials*\ **-FiestaShare** を選択し **Update** をクリックします。
 
-#. **Basics** ページ下部の **Enable multiprotocol access for NFS** にチェックを入れ **Next** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > Share/Export(画面左側のボタン)** と進み、 *Initials*\ **-FiestaShare** を選択し、画面中段右の **Update** をクリックします。
+
+#. **ベーシック(Basics)** ページ下部の **ネイティブではないNFSアクセスも有効化します** にチェックを入れ **Next** をクリックします。
 
    .. figure:: images/32.png
 
-#.  **Settings > Multiprotocol Access** にて、 **Simultaneous access to the same files from both protocols** にチェックを入れます。
+#.  **設定ページの下部、マルチプロトコルアクセス(Multiprotocol Access)** にて、 **両方のプロトコルから同じファイルへの同時アクセス(Simultaneous access to the same files from both protocols)** にチェックを入れます。
 
    .. figure:: images/33.png
 
-#. **Next > Save** とクリックし、共有設定の更新を完了します。
+#. **Next > 保存(Save)** とクリックし、共有設定の更新を完了します。
 
 エクスポートのテスト
 .......................
@@ -436,21 +395,21 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
        uid=0(root) gid=0(root) groups=0(root)
        [root@CentOS ~]#
 
-#. **Prism Element > File Server**  と進み、あなたのファイルサーバーを選択し **Protocol Management > User Mapping** をクリックします。
+#. **Prism Element > ファイルサーバー(File Server) > File Server(画面左側のボタン)**  と進み、 **BootcampFS** を選択し、 **プロトコル管理(Protocol Management)** を選択、 **ユーザーマッピング(User Mapping)** をクリックします。
 
-#. **Next** をクリックし **Explicit Mapping** まで進みます。
+#. **Next** をクリックし **明示的なマッピング(Explicit Mapping)** まで進みます。
 
-#. **One-to-onemapping list** で手動で追加します。
+#. **1対1のマッピングリスト(One-to-onemapping list)** で **手動で追加** をクリックします。
 
 #.  次のフィールドに入力します。
 
-   - **SMB Name** - NTNXLAB\\devuser01
+   - **SMB名(SMB Name)** - NTNXLAB\devuser *Initials*\
    - **NFS ID** - UID from previous step (0 if root)
-   - **User/Group** - User
+   - **User/Group** - ユーザー(User)
 
    .. figure:: images/34.png
 
-#. **Actions** の **Save** をクリックします。
+#. **アクション(Actions)** の **保存(Save)** をクリックします。
 
 #. **Next > Next > Save** とクリックし、ユーザーマッピングを更新します。
 
@@ -459,11 +418,14 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
      .. code-block:: bash
 
        [root@CentOS ~]# dir /filesmulti
-       Documents\ -\ Copy  Graphics\ -\ Copy  Pictures\ -\ Copy  Presentations\ -\ Copy  Recordings\ -\ Copy  Technical\ PDFs\ -\ Copy  XYZ-MyFolder
+       Sample\ Data
        [root@CentOS ~]#
 
 #. SSHセッションでテキストファイルを作成し、Windowsクライアントからファイルにアクセス出来ることを確認します。
 
+.. code-block:: bash
+
+  [root@CentOS ~]# touch /filesmulti/memo.txt
 
 まとめ
 +++++++++

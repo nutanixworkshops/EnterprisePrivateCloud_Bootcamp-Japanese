@@ -31,7 +31,7 @@ STIGsは、米国国防総省およびPCI-DSSの複数のベースライン要�
 
   .. note::
 
-      Nutanix AOS および AHV STIGs は Nutanix ポータルの `ココ <https://portal.nutanix.com/#/page/static/stigs>`_ からダウンロード出来ます。
+      Nutanix AOS および AHV STIGs は Nutanix ポータルの `こちら <https://portal.nutanix.com/#/page/static/stigs>`_ からダウンロード出来ます。
 
 STIGレポートの実行
 .....................
@@ -200,7 +200,7 @@ STIGレポートは、セキュリティコンプライアンスの検証およ�
 
       識別された問題を修正するためにこのラボで手動で行われますが、すべてのSTIG関連の処理はデフォルトで24時間ごとに1回行われます。
 
-#. ファイルの所有者が**nutanix**ではなく**root**グループによって再び所有されていることを確認します。
+#. ファイルの所有者が **nutanix** ではなく **root** グループによって再び所有されていることを確認します。
 
    .. code-block:: bash
 
@@ -265,7 +265,7 @@ STIGレポートは、セキュリティコンプライアンスの検証およ�
      sudo -u root /root/report_stig.sh
      sudo -u root grep -A 4 -B 1 "All world-writable directories " /home/log/STIG-report-**-**-****-**-**-**
 
-#. チェックの結果が**no**であることを確認します。
+#. チェックの結果が **no** であることを確認します。
 
 
 #. 脆弱性を修正する為に、salt-callを実行します。
@@ -336,7 +336,7 @@ AOS 5.16 の新機能である Secure Boot for user VMs は、ゲスト OS ブ�
 
 - Nutanixは、次のようなセキュアなプラットフォームを提供します。
 
-   - STIGの自動化されたアプリケーションとリメディエーション
+   - STIGの自動適用と修復
    - Data at Rest暗号化を提供するための複数のオプション（ソフトウェアベースも含む）
-   - システムログとフローログを外部のsyslogサーバに送信する機能を含む監査ログ
+   - システムログとFlowログを外部のsyslogサーバに送信する機能を含む監査ログ
    - AHV上で動作するゲストVMのための信頼性の高いブート技術
