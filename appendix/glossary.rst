@@ -1,5 +1,5 @@
 -------------
-Glossary
+用語集
 -------------
 
 Nutanix Core
@@ -8,59 +8,59 @@ Nutanix Core
 AOS
 ...
 
-AOS stands for Acropolis Operating System, and it is the OS running on the Controller VMs (CVMs).
+AOSはAcropolisオペレーティングシステムの略で、コントローラーVM（CVM）で実行されているOSです。
 
 Pulse
 .....
 
-Pulse provides diagnostic system data to Nutanix customer support teams so that they can deliver proactive, context-aware support for Nutanix solutions.
+Pulseは、Nutanixのカスタマーサポートチームに診断システムデータを提供し、Nutanixソリューションのプロアクティブな状況認識サポートを提供できるようにします。
 
 Prism Element
 .............
 
-Prism Element is the native management plane for Nutanix. Because its design is based on consumer product interfaces, it is more intuitive and easier to use than many enterprise application interfaces.
+Prism Elementは、Nutanixのネイティブ管理プレーンです。その設計は消費者向け製品（スマートフォンなど）のインターフェイスに基づいているため、多くのエンタープライズアプリケーションインターフェイスよりも直感的で使いやすいです。
 
 Prism Central
 .............
 
-Prism Central is the multicloud control and management interface for Nutanix. Prism Central can manage multiple Nutanix clusters and serves as an aggregation point for monitoring and analytics.
+Prism Centralは、Nutanixのマルチクラウド制御および管理インターフェースです。 Prism Centralは複数のNutanixクラスターを管理でき、監視と分析の集約ポイントとして機能します。
 
 Node
 ....
 
-Industry standard x86 server with server-attached SSD and optional HDD (All Flash & Hybrid Options).
+SSDとHDD（オールフラッシュとハイブリッドのオプションあり）を備えた業界標準のx86サーバー。
 
 Block
 .....
 
-2U rack mount chassis that contains 1, 2 or 4 nodes with shared power and fans, and no shared no backplane.
+2Uラックマウントシャーシ。1つ、2つ、または4つのノードを含み、電源とファンは共有されていますが、バックプレーンは共有されていません。
 
 Storage Pool
 ............
 
-A storage pool is a group of physical storage devices including PCIe SSD, SSD, and HDD devices for the cluster.
+ストレージプールは、クラスターのPCIe SSD、SSD、およびHDDデバイスを含む物理ストレージデバイスのグループです。
 
 Storage Container
 .................
 
-A container is a subset of available storage used to implement storage policies.
+コンテナは、ストレージポリシーの実装に使用される利用可能なストレージのサブセットです。
 
-Anatomy of a Read I/O
+Read I/Oの構造
 .....................
 
-Performance and Availability
+性能と可用性
 
-- Data is read locally
-- Remote access only if data is not locally present
+- データはローカルから読み込まれる
+- データがローカルにない場合に限りリモートノードから読み込まれる
 
-Anatomy of a Write I/O
+Write I/Oの構造
 ......................
 
-Performance and Availability
+性能と可用性
 
-- Data is written locally
-- Replicated on other nodes for high availability
-- Replicas are spread across cluster for high performance
+- データはまずローカルに書き込まれる
+- 可用性のために他ノードにコピーされる
+- データコピーは高性能のためにクラスター全体に分散される
 
 Nutanix flow
 ++++++++++++
@@ -68,33 +68,33 @@ Nutanix flow
 Application Security Policy
 ...........................
 
-Use an application security policy when you want to secure an application by specifying allowed traffic sources and destinations.
+許可されたトラフィックの送信元と宛先を指定してアプリケーションを保護する場合は、アプリケーションセキュリティポリシーを使用します。
 
 Isolation Environment Policy
 ............................
 
-Use an isolation environment policy when you want to block all traffic, regardless of direction, between two groups of VMs identified by their category. VMs within a group can communicate with each other.
+分離環境ポリシーは、方向に関係なく、カテゴリで識別されるVMの2つのグループ間のすべてのトラフィックをブロックする場合に使用します。グループ内のVMは相互に通信できます。
 
 Quarantine Policy
 .................
 
-Use a quarantine policy when you want to isolate a compromised or infected VM and optionally want to subject it to forensics. You cannot modify this policy. The two modes to quarantine a VM are Strict or Forensic.
+感染したVMを隔離します。VMを隔離する2つのモードは、Strict（厳格）またはForensic（フォレンジック）です。
 
-Strict: Use this value when you want to block all inbound and outbound traffic.
+Strict: すべての受信および送信トラフィックをブロックする場合は、この値を使用します。
 
-Forensic: Use this value when you want to block all inbound and outbound traffic except the traffic to and from categories that contain forensic tools.
+Forensic: フォレンジックツールを含むカテゴリとの間のトラフィックを除くすべてのインバウンドおよびアウトバウンドトラフィックをブロックする場合は、この値を使用します。
 
 AppTier
 .......
 
-Add values for the tiers in your application (such as web, application_logic, and database) to this category and use the values to divide the application into tiers when configuring a security policy.
+アプリケーションの層（web、app、データベースなど）の値をこのカテゴリに追加し、セキュリティポリシーを構成するときに、その値を使用してアプリケーションを層に分割します。
 
 AppType
 .......
 
-Associate the VMs in your application with the appropriate built-in application type such as Exchange and Apache_Spark. You can also update the category to add values for applications not listed in this category.
+アプリケーションのVMを、ExchangeやApache_Sparkなどの適切な組み込みアプリケーションタイプに関連付けます。カテゴリを更新して、このカテゴリにリストされていないアプリケーションの値を追加することもできます。
 
 Environment
 ...........
 
-Add values for environments that you want to isolate from each other and then associate VMs with the values.
+相互に分離する環境の値を追加し、VMをその値に関連付けます。

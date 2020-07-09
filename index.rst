@@ -36,89 +36,63 @@
 .. _getting_started:
 
 ---------------
-Getting Started
+はじめに
 ---------------
 
-Welcome to the Nutanix Enterprise Private Cloud Bootcamp! This workbook accompanies an instructor-led session that introduces Nutanix Core technologies and many common management tasks.
+Nutanix Enterprise Private Cloud Bootcampへようこそ！この演習では、Nutanix Enterprise Cloud OSを利用して一般的な管理タスクがいかに簡略化されるかを、実運用を想定したシナリオに沿ってご体験頂きます。
 
-You will explore Prism Central and become familiar with its features and navigation. You will use Prism to perform basic cluster administration tasks, including storage and networking. You will also walk through basic VM deployment and management tasks with Prism and AHV. Finally, you will explore VM data protection, including snapshots and replication. The instructor explains the exercises and answers any additional questions that you may have.
-
-At the end of the bootcamp, attendees should understand the Core concepts and technologies that make up the Nutanix Enterprise Cloud stack and should be well prepared for a hosted or onsite proof-of-concept (POC) engagement.
-
-What's New
-++++++++++
-
-- Workshop updated for the following software versions:
-    - AOS & PC 5.11.2.x
-
-- Optional Lab Updates:
-
-
-Agenda
+アジェンダ
 ++++++
 
-- Introductions
-- Nutanix Presentation
-- A Day in the Life
-- Prism Ops
-- Platform Security
+- はじめに
+- ある情シス部員の日常
+- Prism Pro
+- プラットフォームのセキュリティ
 - Files
 - Flow
 
-Introductions
+初期セットアップ
 +++++++++++++
 
-- Name
-- Familiarity with Nutanix
+- 使用されているパスワードをメモします。
+- 仮想デスクトップにログインします（以下の接続情報）
 
-Initial Setup
-+++++++++++++
-
-- Take note of the *Passwords* being used.
-- Log into your virtual desktops (connection info below)
-
-Environment Details
+環境の詳細
 +++++++++++++++++++
 
-Nutanix Workshops are intended to be run in the Nutanix Hosted POC environment. Your cluster will be provisioned with all necessary images, networks, and VMs required to complete the exercises.
+Nutanixワークショップは、Nutanix Hosted POC環境を利用します。演習を完了するために必要なイメージ、ネットワーク、VMは事前に構築されています。
 
-Networking
+ネットワーク
 ..........
 
-Hosted POC clusters follow a standard naming convention:
+Hosted POC クラスタは 以下の命名規則に従い命名されています:
 
 - **Cluster Name** - POC\ *XYZ*
 - **Subnet** - 10.**21**.\ *XYZ*\ .0
 - **Cluster IP** - 10.**21**.\ *XYZ*\ .37
 
-If provisioned from the marketing pool:
-
-- **Cluster Name** - MKT\ *XYZ*
-- **Subnet** - 10.**20**.\ *XYZ*\ .0
-- **Cluster IP** - 10.**20**.\ *XYZ*\ .37
-
-For example:
+例:
 
 - **Cluster Name** - POC055
 - **Subnet** - 10.21.55.0
 - **Cluster IP** - 10.21.55.37
 
-Throughout the Workshop there are multiple instances where you will need to substitute *XYZ* with the correct octet for your subnet, for example:
+環境内には、* XYZ *をサブネットの正しいオクテットに置き換える必要があるVMが存在しています。たとえば：
 
 .. list-table::
    :widths: 25 75
    :header-rows: 1
 
    * - IP Address
-     - Description
+     - 説明
    * - 10.21.\ *XYZ*\ .37
-     - Nutanix Cluster Virtual IP
+     - Nutanix Cluster 仮想IP
    * - 10.21.\ *XYZ*\ .39
      - **PC** VM IP, Prism Central
    * - 10.21.\ *XYZ*\ .40
-     - **DC** VM IP, NTNXLAB.local Domain Controller
+     - **DC** VM IP, NTNXLAB.local ドメインコントローラー
 
-Each cluster is configured with 2 VLANs which can be used for VMs:
+各クラスタは、VMに使用できる2つのVLANで構成されています。
 
 .. list-table::
   :widths: 25 25 10 40
@@ -137,20 +111,20 @@ Each cluster is configured with 2 VLANs which can be used for VMs:
     - *XYZ1*
     - 10.21.\ *XYZ*\ .132-10.21.\ *XYZ*\ .253
 
-Credentials
+認証情報
 ...........
 
 .. note::
 
-  The *<Cluster Password>* is unique to each cluster and will be provided by the leader of the Workshop.
+  <クラスタ・パスワード>は各クラスタに固有であり、講師よって提供されます。
 
 .. list-table::
    :widths: 25 35 40
    :header-rows: 1
 
-   * - Credential
-     - Username
-     - Password
+   * - ノード
+     - ユーザ名
+     - パスワード
    * - Prism Element
      - admin
      - *<Cluster Password>*
@@ -164,15 +138,15 @@ Credentials
      - nutanix
      - *<Cluster Password>*
 
-Each cluster has a dedicated domain controller VM, **DC**, responsible for providing AD services for the **NTNXLAB.local** domain. The domain is populated with the following Users and Groups:
+各クラスタには専用のドメインコントローラーVM、DCが存在し、ntnxlab.localドメインにActive Directoryサービスを提供します。ドメインには、次のユーザーとグループが格納されています。
 
 .. list-table::
    :widths: 25 35 40
    :header-rows: 1
-   
-   * - Group
-     - Username(s)
-     - Password
+
+   * - グループ
+     - ユーザ名
+     - パスワード
    * - Administrators
      - Administrator
      - nutanix/4u
@@ -195,66 +169,35 @@ Each cluster has a dedicated domain controller VM, **DC**, responsible for provi
      - user01-user25
      - nutanix/4u
 
-Access Instructions
+アクセス手順
 +++++++++++++++++++
 
-The Nutanix Hosted POC environment can be accessed a number of different ways:
+Nutanix Hosted POC 環境には以下の方法で接続できます。:
 
-Lab Access User Credentials
+ユーザ名、パスワード
 ...........................
 
-PHX Based Clusters:
-**Username:** PHX-POCxxx-User01 (up to PHX-POCxxx-User20), **Password:** *<Provided by Instructor>*
+PHX クラスタ:
+**Username:** PHX-POCxxx-User01 〜 PHX-POCxxx-User20, **Password:** *<講師から提供>*
 
-RTP Based Clusters:
-**Username:** RTP-POCxxx-User01 (up to RTP-POCxxx-User20), **Password:** *<Provided by Instructor>*
+RTP クラスタ:
+**Username:** RTP-POCxxx-User01 〜 RTP-POCxxx-User20, **Password:** *<講師から提供>*
 
 Frame VDI
 .........
 
-Login to: https://frame.nutanix.com/x/labs
+ログイン: https://frame.nutanix.com/x/labs
 
-**Nutanix Employees** - Use your **NUTANIXDC** credentials
-**Non-Employees** - Use **Lab Access User** Credentials
+上記 **Username**, **Password** を入力
 
 Parallels VDI
 .................
 
-PHX Based Clusters Login to: https://xld-uswest1.nutanix.com
+PHX クラスタ: https://xld-uswest1.nutanix.com
 
-RTP Based Clusters Login to: https://xld-useast1.nutanix.com
+RTP クラスタ: https://xld-useast1.nutanix.com
 
-**Nutanix Employees** - Use your **NUTANIXDC** credentials
-**Non-Employees** - Use **Lab Access User** Credentials
-
-Employee Pulse Secure VPN
-..........................
-
-Download the client:
-
-PHX Based Clusters Login to: https://xld-uswest1.nutanix.com
-
-RTP Based Clusters Login to: https://xld-useast1.nutanix.com
-
-**Nutanix Employees** - Use your **NUTANIXDC** credentials
-**Non-Employees** - Use **Lab Access User** Credentials
-
-Install the client.
-
-In Pulse Secure Client, **Add** a connection:
-
-For PHX:
-
-- **Type** - Policy Secure (UAC) or Connection Server
-- **Name** - X-Labs - PHX
-- **Server URL** - xlv-uswest1.nutanix.com
-
-For RTP:
-
-- **Type** - Policy Secure (UAC) or Connection Server
-- **Name** - X-Labs - RTP
-- **Server URL** - xlv-useast1.nutanix.com
-
+上記 **Username**, **Password** を入力
 
 Nutanix Version Info
 ++++++++++++++++++++
