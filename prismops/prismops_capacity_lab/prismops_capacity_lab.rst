@@ -1,163 +1,161 @@
 ------------------------
-Prism Ops Capacity Runway
+Prism Pro によるキャパシティランウェイ
 ------------------------
 
 .. figure:: images/operationstriangle.png
 
-Prism Ops brings smart automation to our customer’s daily IT operations. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Ops mirrors traditional IT Admin's workflows to improve operations efficiency. With Prism Ops, IT Admins are able to connect insights from machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
+Prism Proは、お客様のIT運用にスマートな自動化をもたらします。典型的な運用ワークフローは、必要に応じて監視、分析、およびアクションを実行する連続サイクルです。 Prism Proは、従来のIT管理者のワークフローを反映して、運用効率を向上させます。Prism Proを使用すると、IT管理者は、機械学習エンジンX-FITおよびX-Play自動化エンジンを使用して、この典型的なフローを自動化できます。
 
-In this lab you will learn how Prism Ops can help IT Admins monitor, analyze and automatically act when cluster runway is low.
+この演習では、Prism Proを使用した監視、分析、および自動化の方法を学習します。
 
-Lab Setup
+ラボの準備
 +++++++++
 
-#. Open your **Prism Central** and navigate to the **VMs** page. Note down the IP Address of the **GTSPrismOpsLabUtilityServer**. You will need to access this IP Address throughout this lab.
+#. **Prism Central** にて **仮想マシン（VMs）** ページに移動し、 **PrismProLabUtilityServer** のIPアドレスをメモします。※この後の演習にてこのIPアドレスにアクセスします。
 
    .. figure:: images/init1.png
 
-#. Open a new tab in the browser, and navigate to http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts [example http://10.42.113.52/alerts]. It is possible you may need to log into the VM if you are the first one to use it. Just fill out the **Prism Central IP**, **Username** and **Password** and click **Login**.
+#. ブラウザを起動し、http://`<PrismProLabUtilityServer_IP_ADDRESS>`/alerts に接続する。[例 http://10.42.113.52/alerts] 下図のようなログイン画面が表示された場合は **Prism Central IP** と、Prismログインのための **Username**  **Password** を入力し **Login** をクリックする。
 
    .. figure:: images/init2.png
 
-#. Once you have landed on the alerts page, leave the tab open. It will be used in a later portion of this lab.
+#. 下図のようなページが表示されたら、タブを開いたままにする。このラボの後の部分で使用します。
 
    .. figure:: images/init2b.png
 
-#. In a separate tab, navigate to http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ to complete the lab from [example http://10.42.113.52/]. Use the UI at this URL to complete the lab.
+#. また別のタブで、 http://`<PrismProLabUtilityServer_IP_ADDRESS>`/ にアクセスします。 [例 http://10.42.113.52/] このURLのPrismUIを利用して演習を進めます。
 
    .. figure:: images/init3.png
 
-Capacity Planning Runway Monitoring
+ランウェイ機能を利用したキャパシティプランニング
 ++++++++++++++++++++++++++++++++++++++
 
-Capacity runway is a measure of the remaining capacity left within a given cluster or node. There is an overall cluster runway as well as individual runway measurements for CPU, Memory and storage capacity. The Capacity Runway is calculated using X-FIT, Prism Ops's machine intelligence engine. Lets view the Capacity Runway of your lab cluster.
+キャパシティランウェイとは、特定のクラスタまたはノード内のリソース残量の尺度です。 全体的なクラスタのランウェイだけでなく、CPU、メモリ、ストレージ容量の個々の測定値があります。キャパシティランウェイは、Prism Proの機械学習エンジンであるX-FITを使用して計算されます。
 
-#. In **Prism Central > Operations > Planning > Capacity Runway**.
+#. **Prism Central > オペレーション（Operations） > 計画（Planning） > 容量のランウェイ（Capacity Runway）** と進む。
 
-   - Note the runway summaries showing the days left for each cluster.
-   - How long does the current cluster has before it runs out of memory, CPU, and storage?
+   - ランウェイのサマリから各クラスタのランウェイを確認する
+   - メモリ、CPU、ストレージが枯渇するまでどれくらいとなっていますか？
 
-#. Click on the **Prism-Pro-Cluster** cluster.
-
-. You can now take a look at the Runway for Storage, CPU, and Memory.
+#. **Prism-Pro-Cluster** をクリックする。
 
    .. figure:: images/ppro_12.png
 
-#. When selecting the Memory tab, you can see a Red Exclamation mark, indicating where this cluster will run out of Memory. You can hover the chart at this point to see on which day this will occur.
+#. メモリタブを選択すると、このクラスタでメモリが不足する時期を示す赤いマークが表示されます。このマークにカーソルを合わせると、発生する日を確認できます。
 
    .. figure:: images/ppro_13.png
 
-#. Click on the **‘Optimize Resources’** button on left. This is where you can see the inefficient VMs in the environment with suggestions on how you can optimize these resources to be as efficient as possible.
+#. 画面左側の **リソースの最適化（Optimize Resources）** をクリックする。※PrismProは環境内の非効率的なVMを確認し、これらのリソースを可能な限り効率的に最適化する方法を提案します。
 
    .. figure:: images/ppro_14.png
 
-#. Close the optimize resources popup.
+#. リソース最適化のポップアップを閉じる。
 
-Capacity Planning Runway Analysis
+キャパシティランウェイの分析
 ++++++++++++++++++++++++++++++++++++++
 
-Prism Ops's X-FIT engine also provides the capability to plan for future workloads and identifies the hardware that can be added to account for the new workloads resource requirements.
+Prism ProのX-FITエンジンは、将来のワークロードを計画する機能も提供し、新しいワークロードのリソース要件に対応するために追加できるハードウェアを提案します。
 
-#. Under the **‘Adjust Resources’** section in the left side of this page, click the **‘Get Started’** button. We can now use this to start planning for new workloads and see how runway will need to be extended in the future.
+#. ページ左側にある **リソースの調整（Adjust Resources）** にて、 **はじめに（Get Started）** ボタンをクリックする。※ここで、新しいワークロードの計画を入力し、今後のリソースランウェイを延長する必要があるかどうかを確認できます。
 
-#. Click the **add/adjust** button in the left side underneath the ‘Workloads’ item.
+#. 画面左側の **追加/調整（add/adjust）** をクリックする。
 
    .. figure:: images/ppro_15.png
 
-#. Add one for VDI and select 1000 Users. You can also set a date for when this workload should be added to the system. Save this workload when you are done.
+#. VDIを選択し、1000ユーザーを選択し、保存する。　※このワークロードをシステムに追加する日付を設定することもできます。
 
    .. figure:: images/ppro_16.png
 
    .. figure:: images/ppro_17.png
 
-#. Add another workload of your choice.
+#. 同様の操作を実施し、適当なワークロードを追加する。
 
-#. Now click the **‘Recommend’** button on the right side of the page.
+#. **推奨（Recommend）** ボタンをクリックする。
 
    .. figure:: images/ppro_18.png
 
-#. Once the Recommendation is available, toggle between list and chart view to get a better overview of your Scenario.
+#. 推奨事項が利用できるようになったら、リストビューとグラフビューを切り替えて、シナリオの概要を確認する。
 
    .. figure:: images/ppro_19.png
 
-#. Click the **Generate PDF** button in the upper right hand corner. This will open a new tab with a PDF report for the scenario/workloads you have created.
+#. 画面右上にある **PDFを作成（Generate PDF）** ボタンをクリックする。※これにより作成したシナリオの報告書を自動生成してくれます。
 
    .. figure:: images/ppro_19b.png
 
-#. View your report.
+#. PDFレポートを確認する。
 
    .. figure:: images/ppro_20.png
 
-Automate Capacity Forecast Report Generation with X-Play
+X-Playによる容量予測レポートの自動生成
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Now let's look at how we can take automated action to generate this report when the Capacity Runway is low. We will use X-Play, Prism Ops's simple automation engine.
+次に、キャパシティランウェイが残り少なくなった際にこのレポートを生成するアクションを自動的に実行する方法を体験します。この演習ではPrism Proのシンプルな自動化エンジンであるX-Playを使用します。
 
-#. Use the search bar to navigate to the **Playbooks** page.
+#. PrismCentralで検索バーを利用して **Playbooks** を検索する。
 
    .. figure:: images/cap1.png
 
-#. Click **Create Playbook** at the top of the table view.
+#. **プレイブックの作成（Create Playbook）** をクリックする。
 
    .. figure:: images/cap2.png
 
-#. Select the **Alert** as the trigger.
+#. トリガーとして **Alert** を選択する。
 
    .. figure:: images/cap3.png
 
-#. Search and select **Cluster running out of Memory Capacity (low runway)** as the alert policy, since this is the issue we are looking to take automated steps to generate a report for.
+#. アラートポリシーとして **Cluster running out of Memory Capacity (low runway)** を検索して選択する。 ※この演習ではメモリ不足をシミュレートした自動対応を検証します。
 
    .. figure:: images/cap4.png
 
-#. First, we would like to Generate a Forecast report for this alert. Click **Add Action** on the left side and select the **Generate Forecast Report** action.
+#. 左側のアクションにて **アクションの追加（Add Action）** を選択し、 **Generate Forecast Report** を選択する。　※これは前項で設定したアラートを検知した後に、まずレポートを生成するということを意味します。
 
    .. figure:: images/cap5.png
 
-#. The Alert Source Entity in this case will be the Cluster that the alert is generated on. You can also change the Runway Period if you would like.
+#. Cluster項目には **Alert Source Entity** が設定される。　※必要に応じて、ランウェイの期間を変更することもできます。
 
    .. figure:: images/cap6.png
 
-#. Next we would like to notify someone that the ticket was created by X-Play. Click **Add Action** and select the **Email** action.
+#. 次に、X-Playによってチケットが生成されたことを管理者に通知するタスクを追加する。 **Add Action** を選択し、 **Email** を選択する。
 
    .. figure:: images/cap7.png
 
-#. Fill in the field in the email action. Here are the examples
+#. 以下を入力する。
 
-   - **Recipient:** - Fill in your email address.
-   - **Subject :** - ``Playbook {{playbook.playbook_name}} was executed.``
-   - **Message:** - `As a result of the alert, {{trigger[0].alert_entity_info.name}}, the playbook, {{playbook.playbook_name}}, was executed. The generated report is attached to this email.``
+   - **Recipient:** - メールアドレスを入力
+   - **Subject :** - ``Playbook {{playbook.playbook_name}} が実行されました``
+   - **Message:** - `アラート {{trigger[0].alert_entity_info.name}}が発生し、プレイブック {{playbook.playbook_name}}が実行されました。レポートが添付されます。``
 
    .. note::
 
-      You are welcome to compose your own subject message. The above is just an example. You could use the “parameters” to enrich the message.
+      独自の件名メッセージを作成してください。上記のような「パラメータ」を使用してメッセージを充実させることができます。
 
    .. figure:: images/cap8.png
 
-#. Click **Save & Close** button and save it with a name “*Initials* - Automatically Generate Forecast Report”. **Be sure to enable the ‘Enabled’ toggle.**
+#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 **‘Enabled’ のトグルで有効にしてください。** 
 
    .. figure:: images/cap9.png
 
-#. The alert simulation portion of this lab is not working today, instead we will show you what it would look like if the alert were to successfully generate. From the table view click to open the details for the “*Initials* - Automatically Generate Forecast Report” Playbook.
+#. **演習用に用意されたメタデータだけの環境であるため、この環境では実際にこのPlaybookをシミュレートすることはできません。** 代わりに、アラートが正常に生成された場合の外観を示します。 “*Initials* - Automatically Generate Forecast Report” Playbookをクリックして開きます。
 
    .. figure:: images/cap11.png
 
-#. Switch to the **Plays** tab. If an alert were to generate for this playbook you would see a play like this in this tab.
+#. **プレイ（Plays）** タブに切り替える。もし実際にアラートが発生したら、下図の様な画面でPlaybookの実行を確認できます。
 
    .. figure:: images/cap12.png
 
-#. Clicking on it would show this view. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view.
+#. クリックすると、下図の様なビューが表示されます。このビューのセクションを展開して、各アイテムの詳細を表示できます。エラーがある場合は、このビューでもエラーが表示されます。
 
    .. figure:: images/cap13.png
 
-#. You would also get an email that looks something like this.
+#. また、下図のようなメールが届きます。
 
    .. figure:: images/cap14.png
 
-Takeaways
+まとめ
 .........
 
-- Prism Ops is our solution to make IT OPS smarter and automated. It covers the IT OPS process ranging from intelligent detection to automated remediation.
+- Prism Proは、IT Proをよりスマートかつ自動化するためのソリューションです。インテリジェントな検出から自動修復まで、IT Proプロセスを対象としています。
 
-- X-FIT is our machine learning engine to support smart IT OPS, including capacity forecasting.
+- X-FITは、容量予測などのスマートIT Proをサポートする機械学習エンジンです。
 
-- X-Play, the IFTTT for the enterprise, is our engine to enable the automation of daily operations tasks, making it so easy that automation can be built by every admin.
+- 企業向けIFTTTであるX-Playは、日々の運用タスクの自動化を可能にするためのエンジンであり、すべての管理者が自動化を簡単に構築できるようにします。
