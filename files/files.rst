@@ -109,7 +109,7 @@ SMB共有の管理
 #.  **Prism Element > 仮想マシン(VM)** と進み、*Initials*\ **-WinTools** を選択、画面下部の **Launch Console** をクリックし、コンソールを開きます。
 
 以下のユーザを使用し、ログインします。既にログインされている場合はAdministratorであるため、一度サインアウトし再度サインインします。
-   - **user** user*Initials* (Initialsにパラメーターシート記載の2桁の数字を入れてください。user01 - user25)
+   - **user** ntnxlab\userXX (XXにパラメーターシート記載の2桁の数字を入れてください。例えばuser01 - user25 です)
    - **Password** nutanix/4u
 
    .. figure:: images/16.png
