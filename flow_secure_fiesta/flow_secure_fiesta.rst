@@ -85,7 +85,7 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
 
    .. figure:: images/19.png
 
-#. **+移行元を追加(+ Add Tier)** をクリックします。
+#. **+階層を追加(+ Add Tier)** をクリックします。
 
 #. **AppTier:**\ *Initials*-**Web** をドロップダウンから追加します。
 
@@ -174,8 +174,6 @@ Fiestaアプリケーションを保護するセキュリティポリシーを�
    .. figure:: images/27.png
 
 #. **AppTier:**\ *Initials*-**Web** を選択し **No** をクリックして、この層内のVM間の通信を禁止します。層内に存在するWeb VMは1つのみです。
-
-#. While **AppTier:**\ *Initials*-**Web** is still selected, click the :fa:`plus-circle` icon to the right of **AppTier:**\ *Initials*-**DB** to create a tier to tier rule.
 
 #. 続いて、**AppTier:**\ *Initials*-**Web** を選択した状態で **AppTier:**\ *Initials*-**DB** の :fa:`plus-circle` アイコンをクリックして、層間のルールを作成します。
 

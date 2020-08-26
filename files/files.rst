@@ -109,7 +109,7 @@ SMB共有の管理
 #.  **Prism Element > 仮想マシン(VM)** と進み、*Initials*\ **-WinTools** を選択、画面下部の **Launch Console** をクリックし、コンソールを開きます。
 
 以下のユーザを使用し、ログインします。既にログインされている場合はAdministratorであるため、一度サインアウトし再度サインインします。
-   - **user** user *Initials*
+   - **user** ntnxlab\\userXX (XXにパラメーターシート記載の2桁の数字を入れてください。例えばuser01 - user25 です)
    - **Password** nutanix/4u
 
    .. figure:: images/16.png
@@ -274,9 +274,9 @@ NFSプロトコルの有効化
 
 #. **Prism Element > 仮想マシン(VM)** と進み、画面右側にある、**search in table** に *Initials*\ を入力し表示をフィルターします。
 
-#. *Initials*\ **-NFS-Client** VM を選択し **Power on** をクリックします。既に電源オンの場合次の手順に進みます。
+#. *Initials*\ **LinuxToolsVM** VM を選択し **Power on** をクリックします。既に電源オンの場合次の手順に進みます。
 
-#. *Initials*\ **-NFS-Client** VMをクリックし、 IP Addressesの項目から IPアドレスを確認し、次の認証情報を使用してSSH経由で接続します。
+#. *Initials*\ **-LinuxToolsVM** VMをクリックし、 IP Addressesの項目から IPアドレスを確認し、次の認証情報を使用してSSH経由で接続します。
 
    - **ユーザー名** - root
    - **パスワード** - nutanix/4u
@@ -403,7 +403,7 @@ Nutanixファイル共有には、ネイティブプロトコルと非ネイテ�
 
 #.  次のフィールドに入力します。
 
-   - **SMB名(SMB Name)** - NTNXLAB\devuser *Initials*\
+   - **SMB名(SMB Name)** - NTNXLAB\devuser01
    - **NFS ID** - UID from previous step (0 if root)
    - **User/Group** - ユーザー(User)
 
