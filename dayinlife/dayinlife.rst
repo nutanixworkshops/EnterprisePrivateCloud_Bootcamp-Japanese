@@ -219,7 +219,7 @@ PrismやacliはVMを作成するための簡単なワークフローを提供し
 
 #. **Save（保存）** をクリックします。
 
-#. 既存の **Environment** カテゴリをクリックして、次のフィールドに入力します。 **Environment** は **SYSTEM** カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
+#. 既存の **Environment** カテゴリをクリックして、利用可能な値を確認します。 **Environment** は **SYSTEM** カテゴリーであり、追加の値を追加することはできますが、カテゴリーまたはそのままの値を変更または削除することはできません。
 
    .. figure:: images/16.png
 
@@ -626,15 +626,15 @@ Nutanix Calmのブループリントは、アプリケーションをモデル�
 5.11 Prism Element LCM Interactive Demo
 =======================================
 
-.. figure:: https://demo-captures.s3-us-west-1.amazonaws.com/pe-5.11-lcm/story_content/thumbnail.jpg
-   :target: https://demo-captures.s3-us-west-1.amazonaws.com/pe-5.11-lcm/story.html
+.. figure:: https://demo-captures.s3-us-west-1.amazonaws.com/LCM_PE/story/thumbnail.jpg
+   :target: https://demo-captures.s3-us-west-1.amazonaws.com/LCM_PE/story.html
    :alt: Prism Element 5.11 LCM Interactive Demo
 
 5.11 Prism Central LCM Interactive Demo
 =======================================
 
-.. figure:: https://demo-captures.s3-us-west-1.amazonaws.com/pc-5.11-lcm/story_content/thumbnail.jpg
-   :target: https://demo-captures.s3-us-west-1.amazonaws.com/pc-5.11-lcm/story.html
+.. figure:: https://demo-captures.s3-us-west-1.amazonaws.com/LCM_PC/story/thumbnail.jpg
+   :target: https://demo-captures.s3-us-west-1.amazonaws.com/LCM_PC/story.html
    :alt: Prism Central 5.11 LCM Interactive Demo
 
 次のステップ

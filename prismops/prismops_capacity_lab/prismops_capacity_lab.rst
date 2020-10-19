@@ -62,7 +62,7 @@ Prism ProのX-FITエンジンは、将来のワークロードを計画する機
 
    .. figure:: images/ppro_15.png
 
-#. VDIを選択し、1000ユーザーを選択し、保存する。　※このワークロードをシステムに追加する日付を設定することもできます。
+#. VDIを選択し、ユーザ数に1000と入力し、保存する。　※このワークロードをシステムに追加する日付を設定することもできます。
 
    .. figure:: images/ppro_16.png
 
@@ -131,7 +131,7 @@ X-Playによる容量予測レポートの自動生成
 
    .. figure:: images/cap8.png
 
-#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 **‘Enabled’ のトグルで有効にしてください。** 
+#. **保存して閉じる（Save & Close）** をクリックし、 “*Initials* - Automatically Generate Forecast Report” という名前で保存する。 **‘Enabled’ のトグルで有効にしてください。**
 
    .. figure:: images/cap9.png
 
